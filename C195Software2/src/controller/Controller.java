@@ -1,4 +1,7 @@
 package controller;
 
-public class Controller {
+import javafx.fxml.Initializable;
+
+public class Controller{
+
 }
