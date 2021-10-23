@@ -4,14 +4,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Usermain">
+<AnchorPane fx:id="MainScreenLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="619.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UsermainController">
    <children>
-      <Button layoutX="274.0" layoutY="347.0" mnemonicParsing="false" text="Exit" />
-      <Label layoutX="43.0" layoutY="31.0" text="Welcome">
+      <Label alignment="TOP_CENTER" layoutX="183.0" layoutY="21.0" prefHeight="80.0" prefWidth="271.0" text="Welcome!" textAlignment="CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="DengXian Light" size="38.0" />
          </font>
       </Label>
+      <Button fx:id="MainCustomersButton" graphicTextGap="10.0" layoutX="30.0" layoutY="144.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" text="Customers" textAlignment="CENTER">
+         <font>
+            <Font name="Droid Sans" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="MainAppointmentsButton" layoutX="244.0" layoutY="144.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" text="Appointments">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="MainReportsButton" layoutX="443.0" layoutY="144.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" text="Reports">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="MainExitButton" layoutX="240.0" layoutY="263.0" mnemonicParsing="false"  prefHeight="19.0" prefWidth="157.0" text="Exit">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

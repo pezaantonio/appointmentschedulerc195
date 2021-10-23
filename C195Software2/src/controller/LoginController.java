@@ -60,7 +60,7 @@ public class LoginController implements Initializable {
         String passwordInput = PasswordTextField.getText();
 
         if (checkUser(usernameInput, passwordInput)) {
-            Parent root = FXMLLoader.load(getClass().getResource("usermain.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -76,16 +76,30 @@ public class LoginController implements Initializable {
 
     }
 
-    private boolean checkUser(String username,String password) throws SQLException {
+    private boolean checkUser(String username, String password) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
-        String sqlStatement = "SELECT password FROM user WHERE username ='" + username + "'";
-        ResultSet result = statement.executeQuery(sqlStatement);
+        String sqlQuery = "SELECT User_Name, Password FROM users WHERE User_Name = '" + username + "'";
+        ResultSet result = statement.executeQuery(sqlQuery);
 
-        if (result.getString("password").equals(password)){
-            return true;
+        while(result.next()){
+            if(result.getString("Password").equals(password)){
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
     }
+
+   /* private boolean checkPassword(String username, String password) throws SQLException{
+        Statement statement = DatabaseConnection.connection.createStatement();
+        String sqlQuery = "SELECT Password FROM users WHERE User_Name ='" + username + "'";
+        ResultSet result = statement.executeQuery(sqlQuery);
+
+        while(result.next()){
+            if(result.getString("Password").equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }*/
+
 }
