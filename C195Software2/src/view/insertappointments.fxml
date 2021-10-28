@@ -63,9 +63,9 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="AppointmentTitleTextField" onAction="#AppointmentTitleTextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="AppointmentDescriptionTextField" onAction="#AppointmentDescriptionTextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <DatePicker fx:id="AppointmentDatePicker" onAction="#AppointmentDatePickerHandler" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <TextField fx:id="AppointmentTitleTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="AppointmentDescriptionTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <DatePicker fx:id="AppointmentDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 <Label fx:id="AppointmentStartTimeLabel" text="Start Time" GridPane.rowIndex="7">
                     <font>
                         <Font size="18.0" />
@@ -81,7 +81,7 @@
                 <ComboBox fx:id="AppointmentLocationComboBox" prefHeight="26.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <ComboBox fx:id="AppointmentStartComboBox" prefHeight="26.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 <ComboBox fx:id="AppointmentEndComboBox" prefHeight="26.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                <TextField fx:id="AppointmentCustomerTextField" onAction="#AppointmentCustomerTextFieldHandler" GridPane.columnIndex="1" />
+                <TextField fx:id="AppointmentCustomerTextField" GridPane.columnIndex="1" />
             </children>
         </GridPane>
         <TableView fx:id="AppointmentCustomerTable" layoutX="72.0" layoutY="102.0" prefHeight="606.0" prefWidth="343.0">
@@ -95,8 +95,8 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Button fx:id="AppointmentBackButton" layoutX="326.0" layoutY="790.0" mnemonicParsing="false" onAction="#AppointmentBackButtonHandler" prefHeight="26.0" prefWidth="90.0" text="Back" />
-          <Button fx:id="AppointmentSaveButton" layoutX="574.0" layoutY="791.0" mnemonicParsing="false" onAction="#AppointmentSaveButtonHandler" text="Add" />
-          <Button fx:id="AppointmentCancelButton" layoutX="664.0" layoutY="791.0" mnemonicParsing="false" onAction="#AppointmentCancelButtonHandler" text="Cancel" />
+        <Button fx:id="AppointmentBackButton" layoutX="326.0" layoutY="790.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Back" />
+          <Button fx:id="AppointmentSaveButton" layoutX="574.0" layoutY="791.0" mnemonicParsing="false" text="Add" />
+          <Button fx:id="AppointmentCancelButton" layoutX="664.0" layoutY="791.0" mnemonicParsing="false" text="Cancel" />
     </children>
 </AnchorPane>

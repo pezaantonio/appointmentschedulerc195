@@ -25,20 +25,20 @@
             <TableColumn fx:id="AppointmentConsultantColumn1111" prefWidth="82.0" text="User ID" />
             </columns>
         </TableView>
-        <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="448.0" layoutY="656.0" mnemonicParsing="false" onAction="#AppointmentWeekRadioButtonHandler" text="Current Week">
+        <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="448.0" layoutY="656.0" mnemonicParsing="false" text="Current Week">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </RadioButton>
-        <RadioButton fx:id="AppointmentMonthRadioButton" layoutX="707.0" layoutY="656.0" mnemonicParsing="false" onAction="#AppointmentMonthRadioButtonHandler" text="Current Month">
+        <RadioButton fx:id="AppointmentMonthRadioButton" layoutX="707.0" layoutY="656.0" mnemonicParsing="false" text="Current Month">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </RadioButton>
-        <Button fx:id="AppointmentsBackButton" layoutX="564.0" layoutY="697.0" mnemonicParsing="false" onAction="#AppointmentsBackButtonHandler" prefHeight="26.0" prefWidth="143.0" text="Return to main menu" />
-          <Button fx:id="AddNewAppointmentButton" layoutX="166.0" layoutY="581.0" mnemonicParsing="false" onAction="#AddNewAppointmentButtonHandler" prefHeight="26.0" prefWidth="186.0" text="Add New Appointment" />
-          <Button fx:id="DeleteAppointmentButton" layoutX="854.0" layoutY="581.0" mnemonicParsing="false" onAction="#DeleteAppointmentButtonHandler" prefHeight="26.0" prefWidth="214.0" text="Delete Appointment" />
-          <Button fx:id="UpdateAppointmentButton" layoutX="567.0" layoutY="582.0" mnemonicParsing="false" onAction="#UpdateAppointmentButtonHandler" text="Update Appointment" />
+        <Button fx:id="AppointmentsBackButton" layoutX="564.0" layoutY="697.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Return to main menu" />
+          <Button fx:id="AddNewAppointmentButton" layoutX="166.0" layoutY="581.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="186.0" text="Add New Appointment" />
+          <Button fx:id="DeleteAppointmentButton" layoutX="854.0" layoutY="581.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="214.0" text="Delete Appointment" />
+          <Button fx:id="UpdateAppointmentButton" layoutX="567.0" layoutY="582.0" mnemonicParsing="false" text="Update Appointment" />
       <Label layoutX="562.0" layoutY="621.0" text="Change View">
          <font>
             <Font size="24.0" />

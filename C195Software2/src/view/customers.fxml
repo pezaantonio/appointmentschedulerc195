@@ -46,7 +46,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TextField fx:id="CustomerCustomerIDTextField" editable="false" onAction="#CustomerCustomerIDTextFieldHandler" GridPane.columnIndex="1" />
+                        <TextField fx:id="CustomerCustomerIDTextField" editable="false" GridPane.columnIndex="1" />
                         <Label fx:id="CustomerCustomerIDLabel" text="Customer ID" />
                         <Label fx:id="CustomerCustomerNameLabel" text="Customer Name" GridPane.rowIndex="1" />
                         <Label fx:id="CustomerAddressLabel" text="Address" GridPane.rowIndex="3" />
@@ -55,13 +55,13 @@
                         <Label fx:id="CustomerCountryLabel" text="Country" GridPane.rowIndex="5" />
                         <Label fx:id="CustomerPostalCodeLabel" text="Postal Code" GridPane.rowIndex="6" />
                         <Label fx:id="CustomerPhoneLabel" text="Phone No." GridPane.rowIndex="7" />
-                        <TextField fx:id="CustomerCustomerNameTextField" onAction="#CustomerCustomerNameTextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="CustomerAddressTextField" onAction="#CustomerAddressTextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField fx:id="CustomerAddress2TextField" onAction="#CustomerAddress2TextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="CustomerCityComboBox" onAction="#CustomerCityComboBoxHandler" prefHeight="26.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="CustomerCountryComboBox" onAction="#CustomerCountryComboBoxHandler" prefHeight="26.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="CustomerPostalCodeTextField" onAction="#CustomerPostalCodeTextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField fx:id="CustomerPhoneTextField" onAction="#CustomerPhoneTextFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="CustomerCustomerNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="CustomerAddressTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="CustomerAddress2TextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="CustomerCityComboBox" prefHeight="26.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="CustomerCountryComboBox" prefHeight="26.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="CustomerPostalCodeTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="CustomerPhoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     </children>
                 </GridPane>
             </content>
