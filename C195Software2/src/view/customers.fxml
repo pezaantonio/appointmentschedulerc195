@@ -15,15 +15,15 @@
             <children>
                 <TableView fx:id="CustomerTable" layoutY="1.0" prefHeight="403.0" prefWidth="1156.0" style="-fx-border-color: black; -fx-border-radius: 5;">
                     <columns>
-                        <TableColumn fx:id="CustomerCustomerIDColumn" prefWidth="63.0" text="ID" />
-                        <TableColumn fx:id="CustomerCustomerNameColumn" prefWidth="166.0" text="Name" />
-                        <TableColumn fx:id="CustomerPhoneColumn" prefWidth="132.0" text="Address" />
-                  <TableColumn fx:id="CustomerPhoneColumn1" prefWidth="132.0" text="Postal Code" />
-                  <TableColumn fx:id="CustomerPhoneColumn11" prefWidth="132.0" text="Phone" />
-                  <TableColumn fx:id="CustomerPhoneColumn111" prefWidth="132.0" text="Created" />
-                  <TableColumn fx:id="CustomerPhoneColumn1111" prefWidth="132.0" text="Last Update" />
-                  <TableColumn fx:id="CustomerPhoneColumn11111" prefWidth="132.0" text="Last Updated By" />
-                  <TableColumn fx:id="CustomerPhoneColumn111111" prefWidth="132.0" text="Country ID" />
+                        <TableColumn fx:id="CustomerCustIDColumn" prefWidth="63.0" text="ID" />
+                        <TableColumn fx:id="CustomerCustNameColumn" prefWidth="166.0" text="Name" />
+                        <TableColumn fx:id="CustomerAddressColumn" prefWidth="132.0" text="Address" />
+                  <TableColumn fx:id="CustomerPostalCodeColumn" prefWidth="132.0" text="Postal Code" />
+                  <TableColumn fx:id="CustomerPhoneColumn" prefWidth="132.0" text="Phone" />
+                  <TableColumn fx:id="CustomerCreatedColumn" prefWidth="132.0" text="Created" />
+                  <TableColumn fx:id="CustomerLastUpdateColumn" prefWidth="132.0" text="Last Update" />
+                  <TableColumn fx:id="CustomerLastUpdateByColumn" prefWidth="132.0" text="Last Updated By" />
+                  <TableColumn fx:id="CustomerCountryIdColumn" prefWidth="132.0" text="Country ID" />
                     </columns>
                 </TableView>
             </children>
