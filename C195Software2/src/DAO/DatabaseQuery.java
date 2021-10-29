@@ -1,4 +1,9 @@
 package DAO;
+/**
+ * This is the class to hold the Database Queries
+ * @author Antonio Peza
+ *
+ * */
 
 import java.sql.SQLException;
 import java.sql.Statement;

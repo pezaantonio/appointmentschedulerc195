@@ -1,4 +1,9 @@
 package DAO;
+/**
+ * This is the class to hold the Data Class interface
+ * @author Antonio Peza
+ *
+ * */
 
 import javafx.collections.ObservableList;
 

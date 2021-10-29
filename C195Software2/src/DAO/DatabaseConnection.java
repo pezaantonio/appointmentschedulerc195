@@ -1,4 +1,9 @@
 package DAO;
+/**
+ * This is the class to hold the Database connection
+ * @author Antonio Peza
+ *
+ * */
 
 import java.sql.Connection;
 import java.sql.DriverManager;

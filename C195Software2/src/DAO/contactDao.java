@@ -1,4 +1,9 @@
 package DAO;
+/**
+ * This is the class to hold the contact Data Access Object
+ * @author Antonio Peza
+ *
+ * */
 
 import javafx.collections.ObservableList;
 import model.Contact;
