@@ -47,14 +47,14 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ResourceBundle rb = ResourceBundle.getBundle("properties.login/", Locale.getDefault());
+            ResourceBundle rb = ResourceBundle.getBundle("properties.login", Locale.getDefault());
             UsernameLabel.setText(rb.getString("username"));
             UsernameTextField.setPromptText(rb.getString("username"));
             PasswordLabel.setText(rb.getString("password"));
             PasswordTextField.setPromptText(rb.getString("password"));
             LoginButton.setText(rb.getString("signin"));
-        } catch (MissingResourceException e) {
-            System.out.println("Missing resource");
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -99,7 +99,7 @@ public class LoginController implements Initializable {
     * */
     private void loginLogger(String user) {
         try{
-            String logFile = "loginlogs";
+            String logFile = "loginlogs.txt";
             PrintWriter pWriter = new PrintWriter(logFile);
             pWriter.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
             System.out.println("New login recorded in log file.");
