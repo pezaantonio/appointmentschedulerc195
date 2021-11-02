@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.DatabaseConnection;
+import DAO.DateTime;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,6 +64,7 @@ public class LoginController implements Initializable {
         String passwordInput = PasswordTextField.getText();
 
         if (checkUser(usernameInput, passwordInput)) {
+            loginLogger(usernameInput);
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -89,17 +94,19 @@ public class LoginController implements Initializable {
         return false;
     }
 
-   /* private boolean checkPassword(String username, String password) throws SQLException{
-        Statement statement = DatabaseConnection.connection.createStatement();
-        String sqlQuery = "SELECT Password FROM users WHERE User_Name ='" + username + "'";
-        ResultSet result = statement.executeQuery(sqlQuery);
-
-        while(result.next()){
-            if(result.getString("Password").equals(password)){
-                return true;
-            }
+    /**
+    *
+    * */
+    private void loginLogger(String user) {
+        try{
+            String logFile = "loginlogs";
+            PrintWriter pWriter = new PrintWriter(logFile);
+            pWriter.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
+            System.out.println("New login recorded in log file.");
+            pWriter.flush();
+            pWriter.close();
+        } catch (IOException e) {
+            System.out.println(e);
         }
-        return false;
-    }*/
-
+    }
 }
