@@ -1,6 +1,9 @@
 package controller;
 
 import DAO.CustomerDao;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -15,7 +18,7 @@ import java.util.ResourceBundle;
 public class CustomersController implements Initializable {
 
     @FXML
-    private TableView<Customer> CustomerTableView;
+    protected TableView<Customer> CustomerTableView;
     @FXML
     private TableColumn<Customer, Integer> CustomerCustIdColumn;
     @FXML
@@ -35,6 +38,8 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> CustomerCountryIdColumn;
 
+    CustomerDao customerDB = new CustomerDao();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
@@ -48,9 +53,10 @@ public class CustomersController implements Initializable {
         CustomerCountryIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerCountryIdColumn"));
 
         try {
-            CustomerTableView.setItems(CustomerDao.getAll());
+            CustomerTableView.setItems(customerDB.getAll());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
     }
 }

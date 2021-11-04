@@ -5,6 +5,7 @@ package DAO;
  *
  * */
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
 
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 
 public class CustomerDao implements DataAccess{
 
-    private ObservableList<Customer> customerList;
+    public ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
     @Override
     public ObservableList<Customer> getAll() throws SQLException {
@@ -36,7 +37,7 @@ public class CustomerDao implements DataAccess{
             customer.setCustomerLastUpdatedBy(result.getString("Last_Updated_By"));
             customer.setCustomerDivisionID(result.getString("Division_Id"));
         }
-        customerList.add(customer);
+        customerList.addAll(customer);
         return customerList;
     }
 
