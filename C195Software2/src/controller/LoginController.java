@@ -1,7 +1,7 @@
 package controller;
 
-import DAO.DatabaseConnection;
 import DAO.DateTime;
+import DAO.UserDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,20 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.User;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -63,7 +55,7 @@ public class LoginController implements Initializable {
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
 
-        if (checkUser(usernameInput, passwordInput)) {
+        if (UserDao.checkUser(usernameInput, passwordInput)) {
             loginLogger(usernameInput);
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -81,18 +73,6 @@ public class LoginController implements Initializable {
 
     }
 
-    private boolean checkUser(String username, String password) throws SQLException {
-        Statement statement = DatabaseConnection.connection.createStatement();
-        String sqlQuery = "SELECT User_Name, Password FROM users WHERE User_Name = '" + username + "'";
-        ResultSet result = statement.executeQuery(sqlQuery);
-
-        while(result.next()){
-            if(result.getString("Password").equals(password)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
     *

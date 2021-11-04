@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.CustomerDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -8,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
@@ -42,7 +44,13 @@ public class CustomersController implements Initializable {
         CustomerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerPhone"));
         CustomerCreatedColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerCreated"));
         CustomerLastUpdateColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerLastUpdate"));
-        CustomerLastUpdatedByColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerCountryIdColumn"));
+        CustomerLastUpdatedByColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerLastUpdatedBy"));
+        CustomerCountryIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerCountryIdColumn"));
 
+        try {
+            CustomerTableView.setItems(CustomerDao.getAll());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

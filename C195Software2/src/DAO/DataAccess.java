@@ -7,9 +7,11 @@ package DAO;
 
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+
 public abstract interface DataAccess<T> {
 
-    ObservableList<T> getAll();
+    ObservableList<T> getAll() throws SQLException;
 
     boolean insert(T t);
 

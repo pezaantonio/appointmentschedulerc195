@@ -8,12 +8,57 @@ public class Customer {
     private String customerCity;
     private String customerZip;
     private String customerPhone;
+    private String customerCreateDate;
+    private String customerCreatedBy;
+    private String customerLastUpdate;
+    private String customerLastUpdatedBy;
+    private String customerDivisionID;
+
+    public String getCustomerCreateDate() {
+        return customerCreateDate;
+    }
+
+    public void setCustomerCreateDate(String customerCreateDate) {
+        this.customerCreateDate = customerCreateDate;
+    }
+
+    public String getCustomerLastUpdate() {
+        return customerLastUpdate;
+    }
+
+    public void setCustomerLastUpdate(String customerLastUpdate) {
+        this.customerLastUpdate = customerLastUpdate;
+    }
+
+    public String getCustomerLastUpdatedBy() {
+        return customerLastUpdatedBy;
+    }
+
+    public void setCustomerLastUpdatedBy(String customerLastUpdatedBy) {
+        this.customerLastUpdatedBy = customerLastUpdatedBy;
+    }
+
+    public String getCustomerDivisionID() {
+        return customerDivisionID;
+    }
+
+    public void setCustomerDivisionID(String customerDivisionID) {
+        this.customerDivisionID = customerDivisionID;
+    }
+
+    public String getCustomerCreatedBy() {
+        return customerCreatedBy;
+    }
+
+    public void setCustomerCreatedBy(String customerCreatedBy) {
+        this.customerCreatedBy = customerCreatedBy;
+    }
 
     /*
      *
      * Constructor
      */
-    public Customer(int customerID, String customerName, String customerAddress, String customerCity, String customerZip, String customerPhone){
+    public Customer(){
         this.customerID = customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
