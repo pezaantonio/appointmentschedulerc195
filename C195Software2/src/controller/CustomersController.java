@@ -38,8 +38,6 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> CustomerCountryIdColumn;
 
-    CustomerDao customerDB = new CustomerDao();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
@@ -53,7 +51,7 @@ public class CustomersController implements Initializable {
         CustomerCountryIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerCountryIdColumn"));
 
         try {
-            CustomerTableView.setItems(customerDB.getAll());
+            CustomerTableView.setItems(CustomerDao.getAllCustomers());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -13,7 +13,7 @@ public class FirstLevelDivisionDao implements DataAccess{
     private ObservableList<FirstLevelDivisions> firstLevelDivisionsList;
 
     @Override
-    public ObservableList getAll() {
+    public ObservableList<FirstLevelDivisions> getAll() {
         return null;
     }
 

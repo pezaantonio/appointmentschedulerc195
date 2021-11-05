@@ -15,29 +15,37 @@ import java.sql.SQLException;
 
 public class CustomerDao implements DataAccess{
 
-    public ObservableList<Customer> customerList = FXCollections.observableArrayList();
+    public static ObservableList<Customer> getAllCustomers() throws SQLException {
+        CustomerDao cDao = new CustomerDao();
+
+        return cDao.getAll();
+    }
 
     @Override
     public ObservableList<Customer> getAll() throws SQLException {
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
         String sqlQuery = "SELECT * FROM customers";
         PreparedStatement statement = DatabaseConnection.connection.prepareStatement(sqlQuery);
 
-        ResultSet result = statement.executeQuery(sqlQuery);
+        ResultSet result = statement.executeQuery();
 
-        Customer customer = new Customer();
         while (result.next()) {
-            customer.setCustomerID(result.getInt("Customer_ID"));
-            customer.setCustomerName(result.getString("Customer_Name"));
-            customer.setCustomerAddress(result.getString("Address"));
-            customer.setCustomerZip(result.getString("Postal_Code"));
-            customer.setCustomerPhone(result.getString("Phone"));
-            customer.setCustomerCreateDate(result.getString("Create_Date"));
-            customer.setCustomerCreatedBy(result.getString("Created_By"));
-            customer.setCustomerLastUpdate(result.getString("Last_Update"));
-            customer.setCustomerLastUpdatedBy(result.getString("Last_Updated_By"));
-            customer.setCustomerDivisionID(result.getString("Division_Id"));
+            Customer customer = new Customer(
+            result.getInt("Customer_ID"),
+            result.getString("Customer_Name"),
+            result.getString("Address"),
+            result.getString("Postal_Code"),
+            result.getString("Phone"),
+            result.getTimestamp("Create_Date").toLocalDateTime(),
+            result.getString("Created_By"),
+            result.getTimestamp("Last_Update").toLocalDateTime(),
+            result.getString("Last_Updated_By"),
+            result.getInt("Division_Id")
+            );
+
+            customerList.add(customer);
         }
-        customerList.addAll(customer);
+
         return customerList;
     }
 

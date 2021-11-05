@@ -1,5 +1,8 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Customer {
 
     private int customerID;
@@ -8,25 +11,52 @@ public class Customer {
     private String customerCity;
     private String customerZip;
     private String customerPhone;
-    private String customerCreateDate;
+    private LocalDateTime customerCreateDate;
     private String customerCreatedBy;
-    private String customerLastUpdate;
+    private LocalDateTime customerLastUpdate;
     private String customerLastUpdatedBy;
-    private String customerDivisionID;
+    private int customerDivisionID;
 
-    public String getCustomerCreateDate() {
+    /**
+     * Constructor for Customer object (fully parameterized)
+     *
+     * @param customerID
+     * @param customerName
+     * @param customerAddress
+     * @param customerZip
+     * @param customerPhone
+     * @param customerCreateDate
+     * @param customerCreatedBy
+     * @param customerLastUpdate
+     * @param customerLastUpdatedBy
+     * @param customerDivisionID
+     */
+    public Customer(int customerID, String customerName, String customerAddress, String customerZip, String customerPhone, LocalDateTime customerCreateDate, String customerCreatedBy, LocalDateTime customerLastUpdate, String customerLastUpdatedBy, int customerDivisionID) {
+        this.customerID = customerID;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerZip = customerZip;
+        this.customerPhone = customerPhone;
+        this.customerCreateDate = customerCreateDate;
+        this.customerCreatedBy = customerCreatedBy;
+        this.customerLastUpdate = customerLastUpdate;
+        this.customerLastUpdatedBy = customerLastUpdatedBy;
+        this.customerDivisionID = customerDivisionID;
+    }
+
+    public LocalDateTime getCustomerCreateDate() {
         return customerCreateDate;
     }
 
-    public void setCustomerCreateDate(String customerCreateDate) {
+    public void setCustomerCreateDate(LocalDateTime customerCreateDate) {
         this.customerCreateDate = customerCreateDate;
     }
 
-    public String getCustomerLastUpdate() {
+    public LocalDateTime getCustomerLastUpdate() {
         return customerLastUpdate;
     }
 
-    public void setCustomerLastUpdate(String customerLastUpdate) {
+    public void setCustomerLastUpdate(LocalDateTime customerLastUpdate) {
         this.customerLastUpdate = customerLastUpdate;
     }
 
@@ -38,11 +68,11 @@ public class Customer {
         this.customerLastUpdatedBy = customerLastUpdatedBy;
     }
 
-    public String getCustomerDivisionID() {
+    public int getCustomerDivisionID() {
         return customerDivisionID;
     }
 
-    public void setCustomerDivisionID(String customerDivisionID) {
+    public void setCustomerDivisionID(int customerDivisionID) {
         this.customerDivisionID = customerDivisionID;
     }
 
@@ -52,19 +82,6 @@ public class Customer {
 
     public void setCustomerCreatedBy(String customerCreatedBy) {
         this.customerCreatedBy = customerCreatedBy;
-    }
-
-    /*
-     *
-     * Constructor
-     */
-    public Customer(){
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.customerCity = customerCity;
-        this.customerZip = customerZip;
-        this.customerPhone = customerPhone;
     }
 
     /*

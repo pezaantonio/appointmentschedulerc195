@@ -13,7 +13,7 @@ public class CountryDao implements DataAccess{
     private ObservableList<Country> countryList;
 
     @Override
-    public ObservableList getAll() {
+    public ObservableList<Country> getAll() {
         return null;
     }
 

@@ -13,7 +13,7 @@
         </Label>
         <AnchorPane layoutX="16.0" layoutY="102.0" prefHeight="404.0" prefWidth="363.0" style="-fx-background-color: white;">
             <children>
-                <TableView fx:id="CustomerTable" layoutY="1.0" prefHeight="403.0" prefWidth="1156.0" style="-fx-border-color: black; -fx-border-radius: 5;">
+                <TableView fx:id="CustomerTableView" layoutY="1.0" prefHeight="403.0" prefWidth="1156.0" style="-fx-border-color: black; -fx-border-radius: 5;">
                     <columns>
                         <TableColumn fx:id="CustomerCustIdColumn" prefWidth="63.0" text="ID" />
                         <TableColumn fx:id="CustomerCustNameColumn" prefWidth="166.0" text="Name" />

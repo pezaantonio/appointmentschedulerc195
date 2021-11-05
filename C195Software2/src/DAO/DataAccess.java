@@ -9,14 +9,14 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
-public abstract interface DataAccess<T> {
+public interface DataAccess<T> {
 
-    ObservableList<T> getAll() throws SQLException;
+    public ObservableList<T> getAll() throws SQLException;
 
-    boolean insert(T t);
+    public boolean insert(T t);
 
-    boolean update(int id, T t);
+    public boolean update(int id, T t);
 
-    boolean delete(int id);
+    public boolean delete(int id);
 
 }
