@@ -32,9 +32,6 @@ public class LoginController implements Initializable {
     private Label PasswordLabel;
     @FXML
     private Button LoginButton;
-    //ObservableList<Appointment> appointmentReminderOL = FXCollections.observableArrayList();
-    //private DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    //private ZoneId localZoneId = ZoneId.systemDefault();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,6 +48,9 @@ public class LoginController implements Initializable {
     }
 
     @FXML
+    /**
+     * Method to handle Login button
+     */
     private void LoginButtonHandler(ActionEvent actionEvent) throws SQLException, IOException {
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
@@ -73,10 +73,10 @@ public class LoginController implements Initializable {
 
     }
 
-
     /**
-    *
-    * */
+     * Method to add logged in user to a log file
+     * @param user
+     */
     private void loginLogger(String user) {
         try{
             String logFile = "loginlogs.txt";

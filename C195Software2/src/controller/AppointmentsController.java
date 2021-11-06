@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.AppointmentDao;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -35,21 +36,8 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, Integer> AppointmentUserIdColumn;
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*PropertyValueFactory<Appointment, String> appointmentId = new PropertyValueFactory<>("AppointmentId");
-        PropertyValueFactory<Appointment, String> appointmentTitle = new PropertyValueFactory<>("AppointmentTitle");
-        PropertyValueFactory<Appointment, String> appointmentDescription = new PropertyValueFactory<>("AppointmentDescription");
-        PropertyValueFactory<Appointment, String> appointmentLocation = new PropertyValueFactory<>("AppointmentLocation");
-        PropertyValueFactory<Appointment, String> appointmentContact = new PropertyValueFactory<>("AppointmentContact");
-        PropertyValueFactory<Appointment, String> appointmentType = new PropertyValueFactory<>("AppointmentType");
-        PropertyValueFactory<Appointment, String> appointmentStart = new PropertyValueFactory<>("AppointmentStart");
-        PropertyValueFactory<Appointment, String> appointmentEnd = new PropertyValueFactory<>("AppointmentEnd");
-        PropertyValueFactory<Appointment, String> appointmentCustId = new PropertyValueFactory<>("AppointmentCustId");
-        PropertyValueFactory<Appointment, String> appointmentUserId = new PropertyValueFactory<>("AppointmentUserId");*/
 
         AppointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
         AppointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
@@ -61,6 +49,8 @@ public class AppointmentsController implements Initializable {
         AppointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentEnd"));
         AppointmentCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustId"));
         AppointmentUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserId"));
+
+        AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
 
     }
 }

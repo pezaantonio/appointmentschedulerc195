@@ -1,20 +1,21 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Country{
     
     private int countryID;
     private String country;
-    private Date createDate;
+    private LocalDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
     /*
      * Constructor
      */
-    public Country(int countryID, String country, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy){
+    public Country(int countryID, String country, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy){
         this.countryID = countryID;
         this.country = country;
         this.createDate = createDate;
@@ -59,7 +60,7 @@ public class Country{
     * returns create date
     * @return createDate
     * */
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
@@ -67,7 +68,7 @@ public class Country{
     * sets createDate
     * @param createDate
     * */
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -91,7 +92,7 @@ public class Country{
      * returns lastUpdate
      * @return lastUpdate
      */
-    public Date getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
@@ -99,7 +100,7 @@ public class Country{
     * sets last Update
     * @param lastUpdate
     * */
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

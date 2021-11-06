@@ -18,6 +18,9 @@ public class UsermainController {
     }
 
     @FXML
+    /**
+     * Method to handle the customers button on the main screen. Will send user to Customers page
+     */
     private void toCustomers(javafx.event.ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/customers.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

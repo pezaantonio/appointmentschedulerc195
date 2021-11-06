@@ -15,6 +15,11 @@ import java.sql.SQLException;
 
 public class CustomerDao implements DataAccess{
 
+    /**
+     * Method to return all customers to an observable list
+     * @return ObservableList
+     * @throws SQLException
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         CustomerDao cDao = new CustomerDao();
 

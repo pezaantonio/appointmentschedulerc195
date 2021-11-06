@@ -1,21 +1,29 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class FirstLevelDivisions{
     
     private int divisionID;
     private String division;
-    private Date createDate;
+    private LocalDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
     private int countryID;
 
-    /*
-     * Constructor
+    /**
+     * First Level Divisions fully parameterized constructor
+     * @param divisionID
+     * @param division
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdatedBy
+     * @param countryID
      */
-    public FirstLevelDivisions(int divisionID, String division, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int countryID){
+    public FirstLevelDivisions(int divisionID, String division, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryID){
         this.divisionID = divisionID;
         this.division = division;
         this.createDate = createDate;
@@ -61,7 +69,7 @@ public class FirstLevelDivisions{
     * returns createDate
     * @return createDate
     * */
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
@@ -69,7 +77,7 @@ public class FirstLevelDivisions{
     * set create Date
     * @param createDate
     * */
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -93,7 +101,7 @@ public class FirstLevelDivisions{
      * returns lastUpdate
      * @return lastUpdate
      */
-    public Date getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
@@ -101,7 +109,7 @@ public class FirstLevelDivisions{
     * set lastUPdate
     * @param lastUpdate
     * */
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
