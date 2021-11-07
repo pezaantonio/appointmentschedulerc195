@@ -48,7 +48,7 @@ public class AppointmentDao implements DataAccess{
         return appointmentList;
     }
 
-    public ObservableList<Appointment> getAllAppointments() throws SQLException {
+    public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         AppointmentDao aDao = new AppointmentDao();
 
         return aDao.getAll();

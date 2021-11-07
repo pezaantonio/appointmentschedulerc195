@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Appointment;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -50,7 +51,11 @@ public class AppointmentsController implements Initializable {
         AppointmentCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustId"));
         AppointmentUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserId"));
 
-        AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
+        try {
+            AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 }
