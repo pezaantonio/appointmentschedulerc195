@@ -27,7 +27,7 @@ public class AppointmentDao implements DataAccess{
         while (result.next()) {
             Appointment appointment = new Appointment(
                     result.getInt("Appointment_ID"),
-                    result.getString("title"),
+                    result.getString("Title"),
                     result.getString("Description"),
                     result.getString("Location"),
                     result.getString("Type"),

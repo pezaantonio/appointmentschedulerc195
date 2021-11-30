@@ -6,8 +6,8 @@ public class Appointment {
 
     private int appointmentID;
     private String appointmentTitle;
-    private String appointmentDesc;
-    private String appointmentLoc;
+    private String appointmentDescription;
+    private String appointmentLocation;
     private String appointmentType;
     private LocalDateTime appointmentStart;
     private LocalDateTime appointmentEnd;
@@ -19,11 +19,11 @@ public class Appointment {
     private int appointmentUserId;
     private int appointmentContactId;
 
-    public Appointment(int appointmentID, String appointmentTitle, String appointmentDesc, String appointmentLoc, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, LocalDateTime appointmentCreateDate, String appointmentCreatedBy, LocalDateTime appointmentLastUpdate, String appointmentUpdatedBy, int appointmentCustId, int appointmentUserId, int appointmentContactId) {
+    public Appointment(int appointmentID, String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, LocalDateTime appointmentCreateDate, String appointmentCreatedBy, LocalDateTime appointmentLastUpdate, String appointmentUpdatedBy, int appointmentCustId, int appointmentUserId, int appointmentContactId) {
         this.appointmentID = appointmentID;
         this.appointmentTitle = appointmentTitle;
-        this.appointmentDesc = appointmentDesc;
-        this.appointmentLoc = appointmentLoc;
+        this.appointmentDescription = appointmentDescription;
+        this.appointmentLocation = appointmentLocation;
         this.appointmentType = appointmentType;
         this.appointmentStart = appointmentStart;
         this.appointmentEnd = appointmentEnd;
@@ -52,20 +52,20 @@ public class Appointment {
         this.appointmentTitle = appointmentTitle;
     }
 
-    public String getAppointmentDesc() {
-        return appointmentDesc;
+    public String getAppointmentDescription() {
+        return appointmentDescription;
     }
 
-    public void setAppointmentDesc(String appointmentDesc) {
-        this.appointmentDesc = appointmentDesc;
+    public void setAppointmentDescription(String appointmentDescription) {
+        this.appointmentDescription = appointmentDescription;
     }
 
-    public String getAppointmentLoc() {
-        return appointmentLoc;
+    public String getAppointmentLocation() {
+        return appointmentLocation;
     }
 
-    public void setAppointmentLoc(String appointmentLoc) {
-        this.appointmentLoc = appointmentLoc;
+    public void setAppointmentLocation(String appointmentLocation) {
+        this.appointmentLocation = appointmentLocation;
     }
 
     public String getAppointmentType() {

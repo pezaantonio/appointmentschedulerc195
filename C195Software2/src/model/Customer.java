@@ -9,7 +9,7 @@ public class Customer {
     private String customerName;
     private String customerAddress;
     private String customerCity;
-    private String customerZip;
+    private String customerPostalCode;
     private String customerPhone;
     private LocalDateTime customerCreateDate;
     private String customerCreatedBy;
@@ -23,7 +23,7 @@ public class Customer {
      * @param customerID
      * @param customerName
      * @param customerAddress
-     * @param customerZip
+     * @param customerPostalCode
      * @param customerPhone
      * @param customerCreateDate
      * @param customerCreatedBy
@@ -31,11 +31,11 @@ public class Customer {
      * @param customerLastUpdatedBy
      * @param customerDivisionID
      */
-    public Customer(int customerID, String customerName, String customerAddress, String customerZip, String customerPhone, LocalDateTime customerCreateDate, String customerCreatedBy, LocalDateTime customerLastUpdate, String customerLastUpdatedBy, int customerDivisionID) {
+    public Customer(int customerID, String customerName, String customerAddress, String customerPostalCode, String customerPhone, LocalDateTime customerCreateDate, String customerCreatedBy, LocalDateTime customerLastUpdate, String customerLastUpdatedBy, int customerDivisionID) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
-        this.customerZip = customerZip;
+        this.customerPostalCode = customerPostalCode;
         this.customerPhone = customerPhone;
         this.customerCreateDate = customerCreateDate;
         this.customerCreatedBy = customerCreatedBy;
@@ -150,18 +150,18 @@ public class Customer {
 
     /*
      * Function to set customer Zip
-     * @param customerZip
+     * @param customerPostalCode
      */
-    public void setCustomerZip(String customerZip){
-        this.customerZip = customerZip;
+    public void setCustomerPostalCode(String customerPostalCode){
+        this.customerPostalCode = customerPostalCode;
     }
 
     /*
-     * Function to return customerZip
-     * @return customerZip
+     * Function to return customerPostalCode
+     * @return customerPostalCode
      */
-    public String getCustomerZip(){
-        return customerZip;
+    public String getCustomerPostalCode(){
+        return customerPostalCode;
     }
 
     /*
