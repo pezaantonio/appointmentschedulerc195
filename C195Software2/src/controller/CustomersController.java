@@ -44,6 +44,26 @@ public class CustomersController implements Initializable {
     private TableColumn<Customer, String> CustomerLastUpdatedByColumn;
     @FXML
     private TableColumn<Customer, String> CustomerCountryIdColumn;
+    @FXML
+    private TextField CustomerCustomerNameTextField;
+    @FXML
+    private TextField CustomerCustomerIDTextField;
+    @FXML
+    private TextField CustomerAddressTextField;
+    @FXML
+    private TextField CustomerAddress2TextField;
+    @FXML
+    private TextField CustomerPostalCodeTextField;
+    @FXML
+    private TextField CustomerPhoneTextField;
+    @FXML
+    private RadioButton CustomerActiveRadioButton;
+    @FXML
+    private RadioButton CustomerInactiveRadioButton;
+    @FXML
+    private ToggleGroup RadioButtonToggleGroup;
+    @FXML
+    private Button CustomerBackButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,6 +81,54 @@ public class CustomersController implements Initializable {
             throwables.printStackTrace();
         }
 
+        CustomerCustomerIDTextField.setText("Auto-Generated");
+    }
+
+    public void updateCustomer(){
+        Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
+        System.out.println(selectedCustomer);
+
+        CustomerCustomerIDTextField.setText(Integer.toString(selectedCustomer.getInt("customerId")));
+        CustomerCustomerNameTextField.setText(selectedCustomer.getString("customerName"));
+        CustomerAddressTextField.setText(selectedCustomer.getString("address"));
+        CustomerAddress2TextField.setText(selectedCustomer.getString("address2"));
+        CustomerCityComboBox.setValue(selectedCustomer.getString("city"));
+        CustomerCountryComboBox.setValue(selectedCustomer.getString("country"));
+        CustomerPostalCodeTextField.setText(selectedCustomer.getString("postalCode"));
+        CustomerPhoneTextField.setText(selectedCustomer.getString("phone"));
+
+    }
+
+    @FXML
+    private void CustomerCustomerIDTextFieldHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerCustomerNameTextFieldHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerAddressTextFieldHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerAddress2TextFieldHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerCityComboBoxHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerCountryComboBoxHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerPostalCodeTextFieldHandler(ActionEvent event) {
+    }
+
+    @FXML
+    private void CustomerPhoneTextFieldHandler(ActionEvent event) {
     }
 
     public void toUsermain(ActionEvent actionEvent) throws IOException {

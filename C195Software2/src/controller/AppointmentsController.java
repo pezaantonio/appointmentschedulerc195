@@ -45,6 +45,12 @@ public class AppointmentsController implements Initializable {
     private TableColumn<Appointment, Integer> AppointmentCustIdColumn;
     @FXML
     private TableColumn<Appointment, Integer> AppointmentUserIdColumn;
+    @FXML
+    private RadioButton AppointmentWeekRadioButton;
+    @FXML
+    private RadioButton AppointmentMonthRadioButton;
+    private ToggleGroup RadioButtonToggleGroup;
+    private boolean isWeekly;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,6 +71,8 @@ public class AppointmentsController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        isWeekly = true;
 }
 
     public void toUsermain(ActionEvent actionEvent) throws IOException {
