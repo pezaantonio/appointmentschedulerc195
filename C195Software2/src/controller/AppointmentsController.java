@@ -45,11 +45,7 @@ public class AppointmentsController implements Initializable {
     private TableColumn<Appointment, Integer> AppointmentCustIdColumn;
     @FXML
     private TableColumn<Appointment, Integer> AppointmentUserIdColumn;
-    @FXML
-    private RadioButton AppointmentWeekRadioButton;
-    @FXML
-    private RadioButton AppointmentMonthRadioButton;
-    private ToggleGroup RadioButtonToggleGroup;
+
     private boolean isWeekly;
 
     @Override

@@ -1,7 +1,7 @@
 package controller;
 
 import DAO.CustomerDao;
-import javafx.beans.Observable;
+import DAO.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,14 +11,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -43,7 +47,7 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> CustomerLastUpdatedByColumn;
     @FXML
-    private TableColumn<Customer, String> CustomerCountryIdColumn;
+    private TableColumn<Customer, String> CustomerDivisionColumn;
     @FXML
     private TextField CustomerCustomerNameTextField;
     @FXML
@@ -57,13 +61,11 @@ public class CustomersController implements Initializable {
     @FXML
     private TextField CustomerPhoneTextField;
     @FXML
-    private RadioButton CustomerActiveRadioButton;
+    private ComboBox<String> CustomerCityComboBox;
     @FXML
-    private RadioButton CustomerInactiveRadioButton;
-    @FXML
-    private ToggleGroup RadioButtonToggleGroup;
-    @FXML
-    private Button CustomerBackButton;
+    private ComboBox<String> CustomerDivisionComboBox;
+
+    ObservableList<String> countryComboBox = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,8 +74,7 @@ public class CustomersController implements Initializable {
         CustomerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
         CustomerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerPostalCode"));
         CustomerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerPhone"));
-        CustomerLastUpdateColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerLastUpdate"));
-        CustomerCountryIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerCountryIdColumn"));
+        CustomerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerDivisionID"));
 
         try {
             CustomerTableView.setItems(CustomerDao.getAllCustomers());
@@ -82,53 +83,38 @@ public class CustomersController implements Initializable {
         }
 
         CustomerCustomerIDTextField.setText("Auto-Generated");
+        try {
+            setCustomerCountryComboBox();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     public void updateCustomer(){
         Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
-        System.out.println(selectedCustomer);
 
-        CustomerCustomerIDTextField.setText(Integer.toString(selectedCustomer.getInt("customerId")));
-        CustomerCustomerNameTextField.setText(selectedCustomer.getString("customerName"));
-        CustomerAddressTextField.setText(selectedCustomer.getString("address"));
-        CustomerAddress2TextField.setText(selectedCustomer.getString("address2"));
-        CustomerCityComboBox.setValue(selectedCustomer.getString("city"));
-        CustomerCountryComboBox.setValue(selectedCustomer.getString("country"));
-        CustomerPostalCodeTextField.setText(selectedCustomer.getString("postalCode"));
-        CustomerPhoneTextField.setText(selectedCustomer.getString("phone"));
+        CustomerCustomerIDTextField.setText(Integer.toString(selectedCustomer.getCustomerID()));
+        CustomerCustomerNameTextField.setText(selectedCustomer.getCustomerName());
+        CustomerAddressTextField.setText(selectedCustomer.getCustomerAddress());
+        CustomerPostalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
+        CustomerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
+        //CustomerDivisionComboBox.setValue(selectedCustomer.getCustomerDivisionID());
 
     }
 
-    @FXML
-    private void CustomerCustomerIDTextFieldHandler(ActionEvent event) {
-    }
+    public void setCustomerCountryComboBox() throws SQLException {
+        String countrySQL = "SELECT division FROM first_level_divisions";
+        PreparedStatement ps = DatabaseConnection.connection.prepareStatement(countrySQL);
+        ResultSet result = ps.executeQuery();
 
-    @FXML
-    private void CustomerCustomerNameTextFieldHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void CustomerAddressTextFieldHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void CustomerAddress2TextFieldHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void CustomerCityComboBoxHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void CustomerCountryComboBoxHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void CustomerPostalCodeTextFieldHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void CustomerPhoneTextFieldHandler(ActionEvent event) {
+        while (result.next()){
+            String comboDivisions = result.getString("division");
+            countryComboBox.add(comboDivisions);
+            CustomerDivisionComboBox.setItems(countryComboBox);
+        }
+        ps.close();
+        result.close();
     }
 
     public void toUsermain(ActionEvent actionEvent) throws IOException {
