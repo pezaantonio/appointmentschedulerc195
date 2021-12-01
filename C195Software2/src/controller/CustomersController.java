@@ -11,19 +11,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
@@ -61,11 +60,7 @@ public class CustomersController implements Initializable {
     @FXML
     private TextField CustomerPhoneTextField;
     @FXML
-    private ComboBox<String> CustomerCityComboBox;
-    @FXML
     private ComboBox<String> CustomerDivisionComboBox;
-
-    ObservableList<String> countryComboBox = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -78,45 +73,53 @@ public class CustomersController implements Initializable {
 
         try {
             CustomerTableView.setItems(CustomerDao.getAllCustomers());
+            CustomerDivisionComboBox.setItems(CustomerDao.setCustomerCountryComboBox());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         CustomerCustomerIDTextField.setText("Auto-Generated");
-        try {
-            setCustomerCountryComboBox();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
     }
 
+    /**
+     * This controls the button that will auto populate a form with selected form
+     */
     public void updateCustomer(){
         Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
 
-        CustomerCustomerIDTextField.setText(Integer.toString(selectedCustomer.getCustomerID()));
-        CustomerCustomerNameTextField.setText(selectedCustomer.getCustomerName());
-        CustomerAddressTextField.setText(selectedCustomer.getCustomerAddress());
-        CustomerPostalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
-        CustomerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
-        //CustomerDivisionComboBox.setValue(selectedCustomer.getCustomerDivisionID());
-
-    }
-
-    public void setCustomerCountryComboBox() throws SQLException {
-        String countrySQL = "SELECT division FROM first_level_divisions";
-        PreparedStatement ps = DatabaseConnection.connection.prepareStatement(countrySQL);
-        ResultSet result = ps.executeQuery();
-
-        while (result.next()){
-            String comboDivisions = result.getString("division");
-            countryComboBox.add(comboDivisions);
-            CustomerDivisionComboBox.setItems(countryComboBox);
+        if (selectedCustomer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Please select a customer to update");
+            Optional<ButtonType> result=alert.showAndWait();
+        } else {
+            CustomerCustomerIDTextField.setText(Integer.toString(selectedCustomer.getCustomerID()));
+            CustomerCustomerNameTextField.setText(selectedCustomer.getCustomerName());
+            CustomerAddressTextField.setText(selectedCustomer.getCustomerAddress());
+            CustomerPostalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
+            CustomerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
+            //CustomerDivisionComboBox.setValue(selectedCustomer.getCustomerDivisionID());
         }
-        ps.close();
-        result.close();
     }
 
+    /**
+     * sends user to insert customer page
+     * @param actionEvent
+     * @throws IOException
+     */
+    public void toInsertCustomer(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/insertcustomer.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Main menu");
+        stage.setScene(scene);
+        stage.show();
+    }
+    /**
+     * Sends user to the main menu
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toUsermain(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

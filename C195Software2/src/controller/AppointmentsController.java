@@ -26,7 +26,7 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableView<Appointment> AppointmentTableView;
     @FXML
-    private TableColumn<Appointment, Integer> AppointmentIdColumn;
+    private TableColumn<Appointment, Integer> AppointmentIDColumn;
     @FXML
     private TableColumn<Appointment, String> AppointmentTitleColumn;
     @FXML
@@ -51,7 +51,7 @@ public class AppointmentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        AppointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
+        AppointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
         AppointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
         AppointmentDescColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentDescription"));
         AppointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
@@ -71,6 +71,24 @@ public class AppointmentsController implements Initializable {
         isWeekly = true;
 }
 
+    /**
+     * Send user to the add new appointments form
+     * @param actionEvent
+     */
+    public void toInsertAppointments(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/insertappointments.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Main menu");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * Send user back to main menu
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toUsermain(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

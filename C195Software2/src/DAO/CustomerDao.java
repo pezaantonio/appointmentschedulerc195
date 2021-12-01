@@ -7,6 +7,7 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import model.Customer;
 
 import java.sql.PreparedStatement;
@@ -14,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerDao implements DataAccess{
+
+    private ComboBox<String> CustomerDivisionComboBox;
 
     /**
      * Method to return all customers to an observable list
@@ -67,5 +70,24 @@ public class CustomerDao implements DataAccess{
     @Override
     public boolean delete(int id) {
         return false;
+    }
+
+    /**
+     * Sets the combo box
+     * @throws SQLException
+     */
+    public static ObservableList<String> setCustomerCountryComboBox() throws SQLException {
+        ObservableList<String> countryComboBox = FXCollections.observableArrayList();
+        String countrySQL = "SELECT division FROM first_level_divisions";
+        PreparedStatement ps = DatabaseConnection.connection.prepareStatement(countrySQL);
+        ResultSet result = ps.executeQuery();
+
+        while (result.next()){
+            String comboDivisions = result.getString("division");
+            countryComboBox.add(comboDivisions);
+        }
+        ps.close();
+        result.close();
+        return countryComboBox;
     }
 }

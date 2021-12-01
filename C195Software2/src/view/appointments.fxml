@@ -8,16 +8,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="1287.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="1298.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsController">
     <children>
         <Label fx:id="AppointmentScreenLabel" layoutX="530.0" layoutY="22.0" text="Appointments">
             <font>
                 <Font name="Consolas" size="32.0" />
             </font>
         </Label>
-        <TableView fx:id="AppointmentTableView" layoutX="-24.0" layoutY="94.0" prefHeight="357.0" prefWidth="1311.0">
+        <TableView fx:id="AppointmentTableView" layoutY="94.0" prefHeight="357.0" prefWidth="1298.0">
             <columns>
-                <TableColumn fx:id="AppointmentIdColumn" prefWidth="112.0" text="Appt ID" />
+                <TableColumn fx:id="AppointmentIDColumn" prefWidth="112.0" text="Appt ID" />
                 <TableColumn fx:id="AppointmentTitleColumn" prefWidth="169.0" text="Title" />
                 <TableColumn fx:id="AppointmentDescColumn" prefWidth="271.0" text="Description" />
                 <TableColumn fx:id="AppointmentLocationColumn" prefWidth="120.7999267578125" text="Location" />
@@ -40,7 +40,7 @@
             </font>
         </RadioButton>
         <Button fx:id="AppointmentsBackButton" layoutX="562.0" layoutY="579.0" mnemonicParsing="false" onAction="#toUsermain" prefHeight="26.0" prefWidth="143.0" text="Return to main menu" />
-          <Button fx:id="AddNewAppointmentButton" layoutX="164.0" layoutY="463.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="186.0" text="Add New Appointment" />
+          <Button fx:id="AddNewAppointmentButton" layoutX="164.0" layoutY="463.0" mnemonicParsing="false" onAction="#toInsertAppointments" prefHeight="26.0" prefWidth="186.0" text="Add New Appointment" />
           <Button fx:id="DeleteAppointmentButton" layoutX="852.0" layoutY="463.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="214.0" text="Delete Appointment" />
           <Button fx:id="UpdateAppointmentButton" layoutX="565.0" layoutY="464.0" mnemonicParsing="false" text="Update Appointment" />
       <Label layoutX="560.0" layoutY="503.0" text="Change View">
