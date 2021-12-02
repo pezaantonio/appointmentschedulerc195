@@ -50,7 +50,8 @@ public class CustomerDao implements DataAccess{
             result.getString("Last_Updated_By"),
             result.getInt("Division_Id")
             );
-
+            customer.getCountryName();
+            customer.getDivisionName();
             customerList.add(customer);
         }
 
@@ -70,24 +71,5 @@ public class CustomerDao implements DataAccess{
     @Override
     public boolean delete(int id) {
         return false;
-    }
-
-    /**
-     * Sets the combo box
-     * @throws SQLException
-     */
-    public static ObservableList<String> setCustomerCountryComboBox() throws SQLException {
-        ObservableList<String> countryComboBox = FXCollections.observableArrayList();
-        String countrySQL = "SELECT division FROM first_level_divisions";
-        PreparedStatement ps = DatabaseConnection.connection.prepareStatement(countrySQL);
-        ResultSet result = ps.executeQuery();
-
-        while (result.next()){
-            String comboDivisions = result.getString("division");
-            countryComboBox.add(comboDivisions);
-        }
-        ps.close();
-        result.close();
-        return countryComboBox;
     }
 }

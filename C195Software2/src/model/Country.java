@@ -12,6 +12,10 @@ public class Country{
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
+    public Country(int countryID, String country) {
+        this(countryID, country, LocalDateTime.now(), "", LocalDateTime.now(),"");
+    }
+
     /*
      * Constructor
      */
@@ -88,6 +92,8 @@ public class Country{
         this.createdBy = createdBy;
     }
 
+
+
     /*
      * returns lastUpdate
      * @return lastUpdate
@@ -118,5 +124,9 @@ public class Country{
     * */
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public String toString(){
+        return country;
     }
 }

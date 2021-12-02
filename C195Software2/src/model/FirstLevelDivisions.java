@@ -13,6 +13,10 @@ public class FirstLevelDivisions {
     private String lastUpdatedBy;
     private int countryID;
 
+    public FirstLevelDivisions(int divisionID, String division, int countryID) {
+        this(divisionID, division, LocalDateTime.now(), "", LocalDateTime.now(), "", countryID);
+    }
+
     public FirstLevelDivisions(int divisionID, String division, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryID) {
         this.divisionID = divisionID;
         this.division = division;
@@ -77,5 +81,9 @@ public class FirstLevelDivisions {
 
     public void setCountryID(int countryID) {
         this.countryID = countryID;
+    }
+
+    public String toString(){
+        return division;
     }
 }

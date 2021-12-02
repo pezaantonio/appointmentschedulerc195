@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="855.0" prefWidth="681.0" style="-fx-background-color: white; -fx-border-color: black;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InsertAppointmentsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="681.0" style="-fx-background-color: white; -fx-border-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InsertAppointmentsController">
     <children>
         <Label fx:id="AppointmentLabel" layoutX="182.0" layoutY="45.0" text="New Appointment">
             <font>
                 <Font name="Consolas Bold" size="34.0" />
             </font>
         </Label>
-        <GridPane layoutX="61.0" layoutY="95.0" prefHeight="606.0" prefWidth="559.0">
+        <GridPane layoutX="61.0" layoutY="95.0" prefHeight="346.0" prefWidth="559.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,6 +33,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <Label fx:id="AppointmentCustomerLabel" text="Appointment ID">
@@ -81,11 +90,22 @@
                 <ComboBox fx:id="AppointmentLocationComboBox" prefHeight="26.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <ComboBox fx:id="AppointmentStartComboBox" prefHeight="26.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 <ComboBox fx:id="AppointmentEndComboBox" prefHeight="26.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                <TextField fx:id="AppointmentCustomerTextField" editable="false" text="Auto-Filled" GridPane.columnIndex="1" />
+                <TextField fx:id="AppointmentCustomerTextField" disable="true" editable="false" text="Auto-Filled" GridPane.columnIndex="1" />
+            <Label fx:id="AppointmentEndTimeLabel1" layoutX="10.0" layoutY="265.0" text="Customer ID" GridPane.rowIndex="9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="AppointmentEndTimeLabel11" layoutX="10.0" layoutY="296.0" text="User ID" GridPane.rowIndex="10">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="AppointmentCustomerTextField1" disable="true" editable="false" layoutX="290.0" layoutY="14.0" text="Auto-Filled" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextField fx:id="AppointmentCustomerTextField11" disable="true" editable="false" layoutX="290.0" layoutY="297.0" text="Auto-Filled" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             </children>
         </GridPane>
-        <Button fx:id="AppointmentBackButton" layoutX="67.0" layoutY="721.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Back" />
-          <Button fx:id="AppointmentSaveButton" layoutX="322.0" layoutY="735.0" mnemonicParsing="false" text="Add" />
-          <Button fx:id="AppointmentCancelButton" layoutX="522.0" layoutY="722.0" mnemonicParsing="false" text="Cancel" />
+        <Button fx:id="AppointmentBackButton" layoutX="137.0" layoutY="469.0" mnemonicParsing="false" onAction="#toAppointments" prefHeight="26.0" prefWidth="90.0" text="Back" />
+          <Button fx:id="AppointmentSaveButton" layoutX="442.0" layoutY="469.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="115.0" text="Add" />
     </children>
 </AnchorPane>

@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.CustomerDao;
+import DAO.FirstLevelDivisionDao;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import model.FirstLevelDivisions;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -19,15 +22,11 @@ import java.util.ResourceBundle;
 
 public class InsertCustomerController implements Initializable {
     @FXML
-    private ComboBox<String> CustomerDivisionComboBox;
+    private ComboBox<FirstLevelDivisions> CustomerDivisionComboBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            CustomerDivisionComboBox.setItems(CustomerDao.setCustomerCountryComboBox());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(1));
     }
 
     public void toCustomerMain(ActionEvent actionEvent) throws IOException {

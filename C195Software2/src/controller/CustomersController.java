@@ -1,7 +1,9 @@
 package controller;
 
+import DAO.CountryDao;
 import DAO.CustomerDao;
 import DAO.DatabaseConnection;
+import DAO.FirstLevelDivisionDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +16,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Country;
 import model.Customer;
+import model.FirstLevelDivisions;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -40,7 +44,7 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> CustomerPhoneColumn;
     @FXML
-    private TableColumn<Customer, String> CustomerCreatedColumn;
+    private TableColumn<Customer, String> CustomerCountryColumn;
     @FXML
     private TableColumn<Customer, String> CustomerLastUpdateColumn;
     @FXML
@@ -60,8 +64,9 @@ public class CustomersController implements Initializable {
     @FXML
     private TextField CustomerPhoneTextField;
     @FXML
-    private ComboBox<String> CustomerDivisionComboBox;
-
+    private ComboBox<FirstLevelDivisions> CustomerDivisionComboBox;
+    @FXML
+    private ComboBox<Country> CustomerCountryComboBox;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
@@ -69,11 +74,17 @@ public class CustomersController implements Initializable {
         CustomerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
         CustomerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerPostalCode"));
         CustomerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerPhone"));
-        CustomerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerDivisionID"));
+        CustomerCountryColumn.setCellValueFactory(new PropertyValueFactory<>("CountryName"));
+        CustomerDivisionColumn.setCellValueFactory(new PropertyValueFactory<>("DivisionName"));
 
         try {
             CustomerTableView.setItems(CustomerDao.getAllCustomers());
-            CustomerDivisionComboBox.setItems(CustomerDao.setCustomerCountryComboBox());
+            CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
+            if (CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID() == 0) {
+                CustomerDivisionComboBox.setItems(null);
+            }else{
+                CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -115,6 +126,7 @@ public class CustomersController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
     /**
      * Sends user to the main menu
      * @param actionEvent

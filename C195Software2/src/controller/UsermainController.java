@@ -35,7 +35,7 @@ public class UsermainController {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/appointments.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setTitle("Customers");
+        stage.setTitle("Appointments");
         stage.setScene(scene);
         stage.show();
     }

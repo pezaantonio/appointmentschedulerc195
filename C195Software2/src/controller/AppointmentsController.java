@@ -55,12 +55,12 @@ public class AppointmentsController implements Initializable {
         AppointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
         AppointmentDescColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentDescription"));
         AppointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentLocation"));
+        AppointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentContactId"));
         AppointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentType"));
         AppointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentStart"));
         AppointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentEnd"));
         AppointmentCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustId"));
         AppointmentUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserId"));
-        AppointmentContactColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentContactId"));
 
         try {
             AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
@@ -79,7 +79,7 @@ public class AppointmentsController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/insertappointments.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setTitle("Main menu");
+        stage.setTitle("Add Appointments");
         stage.setScene(scene);
         stage.show();
     }

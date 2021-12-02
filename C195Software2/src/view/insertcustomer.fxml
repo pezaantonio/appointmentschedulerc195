@@ -28,6 +28,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
@@ -46,7 +47,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label fx:id="CustomerDivisionLabel" text="Division" GridPane.rowIndex="5">
+                <Label fx:id="CustomerDivisionLabel" text="Division" GridPane.rowIndex="6">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -63,10 +64,16 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="CustomerDivisionComboBox" prefHeight="26.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <ComboBox fx:id="CustomerDivisionComboBox" prefHeight="26.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 <TextField fx:id="CustomerIDTextField" disable="true" editable="false" text="Auto-Generated" GridPane.columnIndex="1" />
             <TextField fx:id="CustomerPostalCodeTextField" layoutX="290.0" layoutY="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="CustomerPhoneNumberLabel" layoutX="290.0" layoutY="235.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="CustomerDivisionLabel1" layoutX="10.0" layoutY="372.0" text="Country" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="CustomerCountryComboBox" layoutX="280.0" layoutY="373.0" prefHeight="26.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
         <Button fx:id="CustomerMainButton" layoutX="128.0" layoutY="521.0" mnemonicParsing="false" onAction="#toCustomerMain" prefHeight="26.0" prefWidth="90.0" text="Back" />

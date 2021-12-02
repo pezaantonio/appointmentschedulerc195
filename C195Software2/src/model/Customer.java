@@ -1,5 +1,10 @@
 package model;
 
+import DAO.DatabaseConnection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -8,7 +13,6 @@ public class Customer {
     private int customerID;
     private String customerName;
     private String customerAddress;
-    private String customerCity;
     private String customerPostalCode;
     private String customerPhone;
     private LocalDateTime customerCreateDate;
@@ -16,6 +20,9 @@ public class Customer {
     private LocalDateTime customerLastUpdate;
     private String customerLastUpdatedBy;
     private int customerDivisionID;
+
+    protected String customerDivisionName;
+    protected String customerCountryName;
 
     /**
      * Constructor for Customer object (fully parameterized)
@@ -132,26 +139,6 @@ public class Customer {
         return customerAddress;
     }
 
-    /*
-     * Function to set customerCity
-     * @param customerID
-     */
-    public void setCustomerCity(String customerCity){
-        this.customerCity = customerCity;
-    }
-
-    /*
-     * Function to return customer City
-     * @return customerCity
-     */
-    public String getCustomerCity(){
-        return customerCity;
-    }
-
-    /*
-     * Function to set customer Zip
-     * @param customerPostalCode
-     */
     public void setCustomerPostalCode(String customerPostalCode){
         this.customerPostalCode = customerPostalCode;
     }
@@ -178,5 +165,33 @@ public class Customer {
      */
     public String getCustomerPhone(){
         return customerPhone;
+    }
+
+    public String getDivisionName() {
+        // todo use division ID to return division name
+        try {
+            String divisionSQL = "SELECT * FROM first_level_divisions INNER JOIN countries WHERE Division_ID = " + customerDivisionID;
+            PreparedStatement ps = DatabaseConnection.connection.prepareStatement(divisionSQL);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                customerDivisionName = result.getString("Division");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customerDivisionName;
+    }
+    public String getCountryName(){
+        try {
+            String countrySQL = "SELECT * FROM countries JOIN first_level_divisions ON Countries.Country_ID = first_level_divisions.Country_ID WHERE Division_ID = " + customerDivisionID;
+            PreparedStatement ps = DatabaseConnection.connection.prepareStatement(countrySQL);
+            ResultSet result = ps.executeQuery();
+            while(result.next()) {
+                customerCountryName = result.getString("Country");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customerCountryName;
     }
 }
