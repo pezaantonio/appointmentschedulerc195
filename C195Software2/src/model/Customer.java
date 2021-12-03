@@ -1,6 +1,8 @@
 package model;
 
 import DAO.DatabaseConnection;
+import DAO.FirstLevelDivisionDao;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +25,8 @@ public class Customer {
 
     protected String customerDivisionName;
     protected String customerCountryName;
+    protected FirstLevelDivisions customerFirstLevelDivision;
+    protected Country customerCountry;
 
     /**
      * Constructor for Customer object (fully parameterized)
@@ -167,6 +171,10 @@ public class Customer {
         return customerPhone;
     }
 
+    /**
+     * Method to return customer division name based on division ID
+     * @return customerDivisionName
+     */
     public String getDivisionName() {
         // todo use division ID to return division name
         try {
@@ -181,6 +189,11 @@ public class Customer {
         }
         return customerDivisionName;
     }
+
+    /**
+     * method to return customer country name based on division id
+     * @return customer country name
+     */
     public String getCountryName(){
         try {
             String countrySQL = "SELECT * FROM countries JOIN first_level_divisions ON Countries.Country_ID = first_level_divisions.Country_ID WHERE Division_ID = " + customerDivisionID;
@@ -194,4 +207,47 @@ public class Customer {
         }
         return customerCountryName;
     }
+
+    /**
+     * Method to return first level division in order to populate combo box
+     * @return customerFirstLevelDivision
+     */
+    public FirstLevelDivisions getFirstLevelDivision(){
+        try {
+            String fldivisionSQL = "SELECT * FROM first_level_divisions WHERE Division_ID = " + customerDivisionID;
+            PreparedStatement ps = DatabaseConnection.connection.prepareStatement(fldivisionSQL);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                customerFirstLevelDivision = new FirstLevelDivisions(
+                        result.getInt("Division_ID"),
+                        result.getString("division"),
+                        result.getInt("Country_ID"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customerFirstLevelDivision;
+    }
+
+    /**
+     * Method to return the customer Country as a Country object in order to populate combo box
+     * @return customerCountry
+     */
+    public Country getCustomerCountry(){
+        try {
+            String countrySQL = "SELECT * FROM countries JOIN first_level_divisions ON Countries.Country_ID = first_level_divisions.Country_ID WHERE Division_ID = " + customerDivisionID;
+            PreparedStatement ps = DatabaseConnection.connection.prepareStatement(countrySQL);
+            ResultSet result = ps.executeQuery();
+            while(result.next()) {
+                customerCountry = new Country(
+                        result.getInt("Country_ID"),
+                        result.getString("Country")
+                        );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customerCountry;
+    }
 }
+

@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.CountryDao;
 import DAO.CustomerDao;
 import DAO.FirstLevelDivisionDao;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import model.Country;
 import model.FirstLevelDivisions;
 
 import javax.swing.*;
@@ -23,9 +25,12 @@ import java.util.ResourceBundle;
 public class InsertCustomerController implements Initializable {
     @FXML
     private ComboBox<FirstLevelDivisions> CustomerDivisionComboBox;
+    @FXML
+    private ComboBox<Country> CustomerCountryComboBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
         CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(1));
     }
 

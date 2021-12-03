@@ -20,6 +20,9 @@ public class CountryDao implements DataAccess{
     protected int countryID;
 
     @Override
+    /**
+     * Method to get all Countries from Countries table
+     */
     public ObservableList<Country> getAll() {
         try {
             countryList.clear();
@@ -55,7 +58,7 @@ public class CountryDao implements DataAccess{
     }
     /**
      * Returns firstleveldivisions list using getAll()
-     * @return
+     * @return countryList
      */
     public ObservableList<Country> getCountryList(){
         if (countryList.size() == 0){
