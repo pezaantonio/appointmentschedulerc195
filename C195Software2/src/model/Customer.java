@@ -27,6 +27,8 @@ public class Customer {
     protected String customerCountryName;
     protected FirstLevelDivisions customerFirstLevelDivision;
     protected Country customerCountry;
+    protected int prevCustomerId;
+    protected int nextCustomerId;
 
     /**
      * Constructor for Customer object (fully parameterized)
@@ -249,5 +251,6 @@ public class Customer {
         }
         return customerCountry;
     }
+
 }
 

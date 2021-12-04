@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -32,6 +33,10 @@ public class LoginController implements Initializable {
     private Label PasswordLabel;
     @FXML
     private Button LoginButton;
+    @FXML
+    private Label ZoneIdLabel;
+
+    private ZoneId localZoneId = ZoneId.systemDefault();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,6 +47,7 @@ public class LoginController implements Initializable {
             PasswordLabel.setText(rb.getString("password"));
             PasswordTextField.setPromptText(rb.getString("password"));
             LoginButton.setText(rb.getString("signin"));
+            ZoneIdLabel.setText(localZoneId.getId());
         } catch (Exception e) {
             System.out.println(e);
         }

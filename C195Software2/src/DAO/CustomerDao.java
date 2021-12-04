@@ -18,6 +18,9 @@ public class CustomerDao implements DataAccess{
 
     private ComboBox<String> CustomerDivisionComboBox;
 
+    protected int prevCustomerId;
+    protected int nextCustomerId;
+
     /**
      * Method to return all customers to an observable list
      * @return ObservableList
@@ -59,7 +62,8 @@ public class CustomerDao implements DataAccess{
     }
 
     @Override
-    public boolean insert(Object o) {
+    public boolean insert(Customer customer) {
+
         return false;
     }
 
@@ -72,4 +76,5 @@ public class CustomerDao implements DataAccess{
     public boolean delete(int id) {
         return false;
     }
+
 }

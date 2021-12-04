@@ -80,11 +80,11 @@ public class CustomersController implements Initializable {
         try {
             CustomerTableView.setItems(CustomerDao.getAllCustomers());
             CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
+            if(CustomerCountryComboBox.getValue() != null) {
 
-            if(CustomerCountryComboBox.getValue() == null){
-                CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getAll());
-            }else{
-                CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
+                CustomerDivisionComboBox.setItems(new
+
+                        FirstLevelDivisionDao().getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
             }
             } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -112,8 +112,8 @@ public class CustomersController implements Initializable {
             CustomerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
             CustomerCountryComboBox.setValue(selectedCustomer.getCustomerCountry());
             CustomerDivisionComboBox.setValue(selectedCustomer.getFirstLevelDivision());
+            }
         }
-    }
 
     /**
      * sends user to insert customer page
