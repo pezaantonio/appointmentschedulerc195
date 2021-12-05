@@ -13,6 +13,8 @@ import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CustomerDao implements DataAccess{
 
@@ -61,8 +63,22 @@ public class CustomerDao implements DataAccess{
         return customerList;
     }
 
-    @Override
-    public boolean insert(Customer customer) {
+    public boolean insert(Customer customer) throws SQLException {
+        String insertCustomer = "INSERT INTO CUSTOMER (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertCustomer);
+
+        insertCustomerSQL.setInt(1, customer.getCustomerID());
+        insertCustomerSQL.setString(2, customer.getCustomerName());
+        insertCustomerSQL.setString(3, customer.getCustomerAddress());
+        insertCustomerSQL.setString(4, customer.getCustomerPostalCode());
+        insertCustomerSQL.setString(5, customer.getCustomerPhone());
+        //insertCustomerSQL.setTimestamp(6, LocalDateTime.now());
+        insertCustomerSQL.setString(7, customer.getCustomerCreatedBy());
+        //insertCustomerSQL.setTimestamp(8, customer.getCustomerLastUpdate());
+        insertCustomerSQL.setString(9, customer.getCustomerLastUpdatedBy());
+        insertCustomerSQL.setInt(10, customer.getCustomerDivisionID());
+
+        insertCustomerSQL.executeUpdate();
 
         return false;
     }

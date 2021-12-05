@@ -63,7 +63,7 @@ public class InsertCustomerController implements Initializable {
                 "",
                 CustomerDivisionComboBox.getValue().getDivisionID()
         );
-        
+
 
         CustomerDao addCustomer = new CustomerDao();
         addCustomer.insert(customer);
