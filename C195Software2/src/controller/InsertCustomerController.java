@@ -50,8 +50,8 @@ public class InsertCustomerController implements Initializable {
         CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(1));
     }
 
-    public void insertCustomer(Customer customer) throws SQLException {
-        customer = new Customer(
+    public Customer insertCustomer() throws SQLException {
+        Customer customer = new Customer(
                 newCustomerId(),
                 CustomerNameTextField.getText(),
                 CustomerAddressTextField.getText(),
@@ -68,6 +68,7 @@ public class InsertCustomerController implements Initializable {
         CustomerDao addCustomer = new CustomerDao();
         addCustomer.insert(customer);
 
+        return customer;
     }
 
     public void toCustomerMain(ActionEvent actionEvent) throws IOException {
