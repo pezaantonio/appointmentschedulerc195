@@ -36,18 +36,18 @@ public class LoginController implements Initializable {
     @FXML
     private Label ZoneIdLabel;
 
-    private ZoneId localZoneId = ZoneId.systemDefault();
+    protected ZoneId localZoneId = ZoneId.systemDefault();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ResourceBundle rb = ResourceBundle.getBundle("properties.login", Locale.getDefault());
+            ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());
             UsernameLabel.setText(rb.getString("username"));
             UsernameTextField.setPromptText(rb.getString("username"));
             PasswordLabel.setText(rb.getString("password"));
             PasswordTextField.setPromptText(rb.getString("password"));
             LoginButton.setText(rb.getString("signin"));
-            ZoneIdLabel.setText(localZoneId.getId());
+            ZoneIdLabel.setText(localZoneId.toString());
         } catch (Exception e) {
             System.out.println(e);
         }

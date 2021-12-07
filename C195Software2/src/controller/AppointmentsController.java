@@ -67,8 +67,6 @@ public class AppointmentsController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-        isWeekly = true;
 }
 
     /**

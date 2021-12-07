@@ -73,21 +73,22 @@ public class CustomerDao implements DataAccess{
      * @throws SQLException
      */
     public boolean insert(Customer customer) throws SQLException {
-        String insertCustomer = "INSERT INTO CUSTOMER (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String insertCustomer = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,NOW(),?,NOW(),?,?)";
         PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertCustomer);
 
-        insertCustomerSQL.setInt(1, customer.getCustomerID());
-        insertCustomerSQL.setString(2, customer.getCustomerName());
-        insertCustomerSQL.setString(3, customer.getCustomerAddress());
-        insertCustomerSQL.setString(4, customer.getCustomerPostalCode());
-        insertCustomerSQL.setString(5, customer.getCustomerPhone());
-        //insertCustomerSQL.setTimestamp(6, LocalDateTime.now());
-        insertCustomerSQL.setString(7, customer.getCustomerCreatedBy());
-        //insertCustomerSQL.setTimestamp(8, customer.getCustomerLastUpdate());
-        insertCustomerSQL.setString(9, customer.getCustomerLastUpdatedBy());
-        insertCustomerSQL.setInt(10, customer.getCustomerDivisionID());
+        //insertCustomerSQL.setInt(1, customer.getCustomerID());
+        insertCustomerSQL.setString(1, customer.getCustomerName());
+        insertCustomerSQL.setString(2, customer.getCustomerAddress());
+        insertCustomerSQL.setString(3, customer.getCustomerPostalCode());
+        insertCustomerSQL.setString(4, customer.getCustomerPhone());
+        insertCustomerSQL.setString(5, customer.getCustomerCreatedBy());
+        insertCustomerSQL.setString(6, customer.getCustomerLastUpdatedBy());
+        insertCustomerSQL.setInt(7, customer.getCustomerDivisionID());
 
-        insertCustomerSQL.executeUpdate();
+        if(insertCustomerSQL.executeUpdate() > 0){
+            return true;
+        }
+        insertCustomerSQL.close();
 
         return false;
     }
@@ -99,6 +100,19 @@ public class CustomerDao implements DataAccess{
 
     @Override
     public boolean delete(int id) {
+        String deleteCustomer = "DELETE FROM customers WHERE CUSTOMER_ID =?";
+        try {
+            PreparedStatement deleteCustomerSQL = DatabaseConnection.connection.prepareStatement(deleteCustomer);
+
+            deleteCustomerSQL.setInt(1, id);
+
+            if(deleteCustomerSQL.executeUpdate() > 0){
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return false;
     }
 

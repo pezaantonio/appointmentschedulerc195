@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -19,11 +21,9 @@ import model.FirstLevelDivisions;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class InsertCustomerController implements Initializable {
@@ -47,13 +47,18 @@ public class InsertCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
-        CustomerDivisionComboBox.setPromptText("Please select a country");
-        CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(onCountrySelect()));
+        //CustomerDivisionComboBox.setPromptText("Please select a country");
+        //CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(1));
     }
 
-    public Customer insertCustomer() throws SQLException {
+    /**
+     * Method creates a new customer object and adds to database
+     * @return customer
+     * @throws SQLException
+     */
+    public Customer insertCustomer(ActionEvent actionEvent) throws SQLException {
         Customer customer = new Customer(
-                newCustomerId(),
+                0,
                 CustomerNameTextField.getText(),
                 CustomerAddressTextField.getText(),
                 CustomerPostalCodeTextField.getText(),
@@ -67,11 +72,17 @@ public class InsertCustomerController implements Initializable {
 
 
         CustomerDao addCustomer = new CustomerDao();
-        addCustomer.insert(customer);
 
+        if(addCustomer.insert(customer)){
+            saveRedirect(actionEvent);}
         return customer;
     }
 
+    /**
+     * Sends user to the main customer menu
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toCustomerMain(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/customers.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -81,30 +92,29 @@ public class InsertCustomerController implements Initializable {
         stage.show();
     }
 
-    public int newCustomerId() throws SQLException {
-        String customerIdSQL = "select Customer_ID from customers order by Customer_ID desc limit 1";
-        PreparedStatement ps = DatabaseConnection.connection.prepareStatement(customerIdSQL);
-        ResultSet result = ps.executeQuery();
+    public void onCountrySelect(ActionEvent actionEvent) {
+        CustomerDivisionComboBox.setItems(FirstLevelDivisionDao.getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
+    }
 
-        while(result.next()){
-            prevCustomerId = result.getInt("Customer_ID");
-            nextCustomerId = prevCustomerId + 1;
+    public void saveRedirect(ActionEvent actionEvent){
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save Successful");
+        alert.setContentText("Save Successful, returning to customers menu");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("view/customers.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Customers");
+            stage.setScene(scene);
+            stage.show();
+            }
         }
-        ps.close();
-        result.close();
-        return nextCustomerId;
     }
 
-    public int onCountrySelect(){
-        return Integer.parseInt(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountry());
-    }
-
-    public void onPull(ActionEvent actionEvent){
-        StringBuilder sb = new StringBuilder();
-
-        Country country = CustomerCountryComboBox.getSelectionModel().getSelectedItem();
-
-        sb.append(country.getCountryID());
-    }
-
-}

@@ -65,7 +65,7 @@
                         <TextField fx:id="CustomerPostalCodeTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="CustomerPhoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label fx:id="CustomerCountryLabel1" layoutX="20.0" layoutY="343.0" text="Country" GridPane.rowIndex="5" />
-                  <ComboBox fx:id="CustomerCountryComboBox" layoutX="124.0" layoutY="339.0" prefHeight="26.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ComboBox fx:id="CustomerCountryComboBox" layoutX="124.0" layoutY="339.0" onAction="#onCountrySelect" prefHeight="26.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>
             </content>
@@ -82,9 +82,9 @@
         </Label>
           <Button fx:id="CustomerSaveButton" layoutX="957.0" layoutY="533.0" minWidth="66.0" mnemonicParsing="false" prefHeight="26.0" text="Save" />
           <Button fx:id="CustomerAddButton" layoutX="269.0" layoutY="519.0" mnemonicParsing="false" onAction="#toInsertCustomer" prefHeight="27.0" prefWidth="101.0" text="Add" />
-          <Button fx:id="CustomerDeleteButton" layoutX="582.0" layoutY="519.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="101.0" text="Delete" />
+          <Button fx:id="CustomerDeleteButton" layoutX="582.0" layoutY="519.0" mnemonicParsing="false" onAction="#onDeleteCustomer" prefHeight="27.0" prefWidth="101.0" text="Delete" />
           <Button fx:id="CustomerCancelButton" layoutX="964.0" layoutY="576.0" mnemonicParsing="false" text="Cancel" />
-          <Button fx:id="CustomerBackButton" layoutX="370.0" layoutY="563.0" mnemonicParsing="false" onAction="#toUsermain" prefHeight="25.0" prefWidth="176.0" text="Return to Main" />
-      <Button fx:id="CustomerUpdateButton" layoutX="408.0" layoutY="519.0" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="27.0" prefWidth="101.0" text="Update" />
+          <Button fx:id="CustomerBackButton" layoutX="386.0" layoutY="564.0" mnemonicParsing="false" onAction="#toUsermain" prefHeight="25.0" prefWidth="176.0" text="Return to Main" />
+      <Button fx:id="CustomerUpdateButton" layoutX="423.0" layoutY="519.0" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="27.0" prefWidth="101.0" text="Update" />
     </children>
 </AnchorPane>

@@ -80,12 +80,6 @@ public class CustomersController implements Initializable {
         try {
             CustomerTableView.setItems(CustomerDao.getAllCustomers());
             CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
-            if(CustomerCountryComboBox.getValue() != null) {
-
-                CustomerDivisionComboBox.setItems(new
-
-                        FirstLevelDivisionDao().getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
-            }
             } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -114,6 +108,43 @@ public class CustomersController implements Initializable {
             CustomerDivisionComboBox.setValue(selectedCustomer.getFirstLevelDivision());
             }
         }
+
+
+    public void onCountrySelect(ActionEvent actionEvent) {
+        CustomerDivisionComboBox.setItems(FirstLevelDivisionDao.getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
+    }
+
+    /**
+     * Customer that is selected from the table view is deleted and then table is refreshed
+     * @param actionEvent
+     */
+    public void onDeleteCustomer(ActionEvent actionEvent){
+        Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
+        int selectedCustomerId = selectedCustomer.getCustomerID();
+
+        if(selectedCustomer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Please select a customer to delete");
+            Optional<ButtonType> result = alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete");
+            alert.setContentText("Are you sure you want to delete the selected customer?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                CustomerDao deleteCustomer = new CustomerDao();
+                deleteCustomer.delete(selectedCustomerId);
+                try {
+                    CustomerTableView.setItems(CustomerDao.getAllCustomers());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+    }
 
     /**
      * sends user to insert customer page
