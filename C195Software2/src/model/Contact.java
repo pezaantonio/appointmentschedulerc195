@@ -62,4 +62,9 @@ public class Contact {
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
+
+    public String toString(){
+        return contactName;
+    }
+
 }

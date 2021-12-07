@@ -16,11 +16,27 @@ import java.sql.SQLException;
 
 public class ContactDao implements DataAccess{
 
-    private ObservableList<Contact> contactList;
+    private ObservableList<Contact> contactList = FXCollections.observableArrayList();
 
     @Override
     public ObservableList<Contact> getAll() {
-        return null;
+        try {
+            contactList.clear();
+            String contactQuery = "SELECT * FROM contacts";
+            PreparedStatement contactSQL = DatabaseConnection.connection.prepareStatement(contactQuery);
+            ResultSet result = contactSQL.executeQuery();
+
+            while(result.next()){
+                int contactID = result.getInt("Contact_ID");
+                String contactName = result.getString("Contact_Name");
+                String contactEmail = result.getString("Email");
+
+                contactList.add(new Contact(contactID,contactName, contactEmail));;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return contactList;
     }
 
     @Override
@@ -37,4 +53,6 @@ public class ContactDao implements DataAccess{
     public boolean delete(int id) {
         return false;
     }
+
+
 }

@@ -1,7 +1,9 @@
 package controller;
 
 import DAO.AppointmentDao;
+import DAO.ContactDao;
 import DAO.DatabaseConnection;
+import DAO.DateTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -53,6 +55,13 @@ public class InsertAppointmentsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AppointmentContactComboBox.setItems(new ContactDao().getAll());
+        AppointmentStartComboBox.setPromptText("Please select a start time");
+        AppointmentStartComboBox.setItems(new DateTime().getStartList());
+        AppointmentEndComboBox.setPromptText("Please select an end time");
+        AppointmentEndComboBox.setItems(new DateTime().getEndList());
+
+        AppointmentStartComboBox.getSelectionModel().select(LocalDateTime.now());
 
     }
     /**
@@ -69,6 +78,11 @@ public class InsertAppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * This method grabs the information from text fields and creates an Appointment object with it that will be sent to DB
+     * @return
+     * @throws SQLException
+     */
     public Appointment insertAppointment() throws SQLException {
         Appointment appointment = new Appointment(
                 newAppointmentId(),
@@ -76,20 +90,28 @@ public class InsertAppointmentsController implements Initializable {
                 AppointmentDescriptionTextField.getText(),
                 AppointmentLocationTextField.getText(),
                 AppointmentTypeTextField.getText(),
-                AppointmentStartComboBox.getValue(),
-                AppointmentEndComboBox.getValue(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                //AppointmentStartComboBox.getValue(),
+                //AppointmentEndComboBox.getValue(),
                 LocalDateTime.now(),
                 "",
                 LocalDateTime.now(),
                 "",
                 Integer.parseInt(AppointmentCustomerIdTextField.getText()),
                 Integer.parseInt(AppointmentUserIdTextField.getText()),
-                Integer.parseInt(AppointmentContactComboBox.getValue())
+                1
+                //Integer.parseInt(AppointmentContactComboBox.getValue())
         );
 
         return appointment;
     }
 
+    /**
+     * Method grabs last Appointment ID and increases it by 1
+     * @return
+     * @throws SQLException
+     */
     public int newAppointmentId() throws SQLException {
         String appointmentIdSQL = "select Appointment_ID from appointments order by Appointment_ID desc limit 1";
         PreparedStatement ps = DatabaseConnection.connection.prepareStatement(appointmentIdSQL);

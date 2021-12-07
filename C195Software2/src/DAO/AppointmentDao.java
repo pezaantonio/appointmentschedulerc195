@@ -54,12 +54,25 @@ public class AppointmentDao implements DataAccess{
         return aDao.getAll();
     }
 
-    @Override
-    public boolean insert(Object o) {
-        boolean validInsert = false;
+
+    public boolean insert(Object o){
+        return true;
+    }
+
+    public boolean insert(Appointment appointment) {
+        boolean validInsert = true;
         //todo insert into tablename (list of columns) values(values in order of columns)
+        String insertAppointment = "INSERT INTO appointments(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertAppointment);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         // date and time for create_Date and last_updated use now()
         // executeUpdate or executeQuery (look for examples on PreparedStatement)
+
+
         return validInsert;
     }
 

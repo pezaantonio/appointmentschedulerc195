@@ -47,7 +47,8 @@ public class InsertCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
-        CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(1));
+        CustomerDivisionComboBox.setPromptText("Please select a country");
+        CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(onCountrySelect()));
     }
 
     public Customer insertCustomer() throws SQLException {
@@ -80,7 +81,6 @@ public class InsertCustomerController implements Initializable {
         stage.show();
     }
 
-
     public int newCustomerId() throws SQLException {
         String customerIdSQL = "select Customer_ID from customers order by Customer_ID desc limit 1";
         PreparedStatement ps = DatabaseConnection.connection.prepareStatement(customerIdSQL);
@@ -93,5 +93,18 @@ public class InsertCustomerController implements Initializable {
         ps.close();
         result.close();
         return nextCustomerId;
-    };
+    }
+
+    public int onCountrySelect(){
+        return Integer.parseInt(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountry());
+    }
+
+    public void onPull(ActionEvent actionEvent){
+        StringBuilder sb = new StringBuilder();
+
+        Country country = CustomerCountryComboBox.getSelectionModel().getSelectedItem();
+
+        sb.append(country.getCountryID());
+    }
+
 }

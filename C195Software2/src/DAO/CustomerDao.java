@@ -63,6 +63,15 @@ public class CustomerDao implements DataAccess{
         return customerList;
     }
 
+    public boolean insert(Object o){
+        return true;
+    }
+
+    /**
+     * Method to
+     * @return
+     * @throws SQLException
+     */
     public boolean insert(Customer customer) throws SQLException {
         String insertCustomer = "INSERT INTO CUSTOMER (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertCustomer);
