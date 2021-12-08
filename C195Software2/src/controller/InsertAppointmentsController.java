@@ -1,9 +1,6 @@
 package controller;
 
-import DAO.AppointmentDao;
-import DAO.ContactDao;
-import DAO.DatabaseConnection;
-import DAO.DateTime;
+import DAO.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
+import model.Customer;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -50,6 +48,8 @@ public class InsertAppointmentsController implements Initializable {
     private TextField AppointmentUserIdTextField;
     @FXML
     private ComboBox<Contact> AppointmentContactComboBox;
+    @FXML
+    private ComboBox<Customer> AppointmentCustomerIDComboBox;
 
     protected int prevAppointmentId;
     protected int nextAppointmentId;
@@ -59,6 +59,11 @@ public class InsertAppointmentsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentContactComboBox.setItems(new ContactDao().getAll());
         AppointmentStartComboBox.setItems(new DateTime().getStartList());
+        try {
+            AppointmentCustomerIDComboBox.setItems(new CustomerDao().getAll());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void onStartTimeSelect(ActionEvent actionEvent){
@@ -96,8 +101,8 @@ public class InsertAppointmentsController implements Initializable {
                 "",
                 LocalDateTime.now(),
                 "",
-                Integer.parseInt(AppointmentCustomerIdTextField.getText()),
-                curr
+                AppointmentCustomerIDComboBox.getValue().getCustomerID(),
+                LoginController.getCurrentUserID(),
                 AppointmentContactComboBox.getValue().getContactID()
         );
 

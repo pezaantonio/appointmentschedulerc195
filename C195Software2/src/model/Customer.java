@@ -252,5 +252,9 @@ public class Customer {
         return customerCountry;
     }
 
+    public String toString(){
+        return customerName;
+    }
+
 }
 

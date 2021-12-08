@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.DatabaseConnection;
 import DAO.DateTime;
 import DAO.UserDao;
 import javafx.event.ActionEvent;
@@ -16,6 +17,8 @@ import model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
@@ -38,8 +41,8 @@ public class LoginController implements Initializable {
     private Label ZoneIdLabel;
     @FXML
     private Label LoginErrorLabel;
-
-    public User currentUser;
+    @FXML
+    public int userIDFromUsername;
 
     protected ZoneId localZoneId = ZoneId.systemDefault();
 
@@ -74,8 +77,6 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-            currentUser = new User(currentUser.getUserIdFromUsername(usernameInput), usernameInput);
-
         } else {
             ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());
             LoginErrorLabel.setText(rb.getString("incorrect"));
@@ -103,5 +104,18 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    public int getCurrentUserID() throws SQLException {
+        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
+        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
+        ResultSet result = userQuerySQL.executeQuery();
+
+        while(result.next()){
+            userQuerySQL.setString(1, UsernameTextField.getText());
+
+            userIDFromUsername = result.getInt(1);
+        }
+        return userIDFromUsername;
     }
 }

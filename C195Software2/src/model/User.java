@@ -147,16 +147,14 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public int getUserIdFromUsername(String username) throws SQLException {
-        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
-        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
-        ResultSet result = userQuerySQL.executeQuery();
-
-        while(result.next()){
-            userIDFromUsername = result.getInt(1);
-        }
-
-
-        return userIDFromUsername;
-    }
+//    public int getUserIdFromUsername(String username) throws SQLException {
+//        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
+//        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
+//        ResultSet result = userQuerySQL.executeQuery();
+//
+//        while(result.next()){
+//            userIDFromUsername = result.getInt(1);
+//        }
+//        return userIDFromUsername;
+//    }
 }
