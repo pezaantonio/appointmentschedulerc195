@@ -77,8 +77,9 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="AppointmentContactComboBox" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                <ComboBox fx:id="AppointmentStartComboBox" prefHeight="26.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="AppointmentLocationTextField" layoutX="290.0" layoutY="78.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="AppointmentTypeTextField" layoutX="290.0" layoutY="110.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <ComboBox fx:id="AppointmentStartComboBox" onAction="#onStartTimeSelect" prefHeight="26.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <ComboBox fx:id="AppointmentEndComboBox" prefHeight="26.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 <TextField fx:id="AppointmentIdTextField" disable="true" editable="false" text="Auto-Filled" GridPane.columnIndex="1" />
             <Label fx:id="AppointmentEndTimeLabel1" layoutX="10.0" layoutY="265.0" text="Customer ID" GridPane.rowIndex="7">
@@ -93,8 +94,7 @@
             </Label>
             <TextField fx:id="AppointmentCustomerIdTextField" disable="true" editable="false" layoutX="290.0" layoutY="14.0" text="Auto-Filled" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="AppointmentUserIdTextField" disable="true" editable="false" layoutX="290.0" layoutY="297.0" text="Auto-Filled" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="AppointmentLocationTextField" layoutX="290.0" layoutY="78.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="AppointmentTypeTextField" layoutX="290.0" layoutY="110.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <ComboBox fx:id="AppointmentContactComboBox" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             </children>
         </GridPane>
         <Button fx:id="AppointmentBackButton" layoutX="137.0" layoutY="469.0" mnemonicParsing="false" onAction="#toAppointments" prefHeight="26.0" prefWidth="90.0" text="Back" />

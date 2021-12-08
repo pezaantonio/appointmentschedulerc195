@@ -4,17 +4,17 @@ import DAO.AppointmentDao;
 import DAO.ContactDao;
 import DAO.DatabaseConnection;
 import DAO.DateTime;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Contact;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -24,7 +24,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import controller.LoginController;
 
 public class InsertAppointmentsController implements Initializable {
 
@@ -39,15 +41,15 @@ public class InsertAppointmentsController implements Initializable {
     @FXML
     private DatePicker AppointmentDatePicker;
     @FXML
-    private ComboBox AppointmentStartComboBox;
+    private ComboBox<LocalDateTime> AppointmentStartComboBox;
     @FXML
-    private ComboBox AppointmentEndComboBox;
+    private ComboBox<LocalDateTime> AppointmentEndComboBox;
     @FXML
     private TextField AppointmentCustomerIdTextField;
     @FXML
     private TextField AppointmentUserIdTextField;
     @FXML
-    private ComboBox AppointmentContactComboBox;
+    private ComboBox<Contact> AppointmentContactComboBox;
 
     protected int prevAppointmentId;
     protected int nextAppointmentId;
@@ -56,13 +58,11 @@ public class InsertAppointmentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentContactComboBox.setItems(new ContactDao().getAll());
-        AppointmentStartComboBox.setPromptText("Please select a start time");
         AppointmentStartComboBox.setItems(new DateTime().getStartList());
-        AppointmentEndComboBox.setPromptText("Please select an end time");
-        AppointmentEndComboBox.setItems(new DateTime().getEndList());
+    }
 
-        AppointmentStartComboBox.getSelectionModel().select(LocalDateTime.now());
-
+    public void onStartTimeSelect(ActionEvent actionEvent){
+        AppointmentEndComboBox.setItems(new DateTime().getEndList(AppointmentStartComboBox.getSelectionModel().getSelectedItem()));
     }
     /**
      * Method to send user to appointments page
@@ -83,47 +83,51 @@ public class InsertAppointmentsController implements Initializable {
      * @return
      * @throws SQLException
      */
-    public Appointment insertAppointment() throws SQLException {
+    public Appointment insertAppointment(ActionEvent actionEvent) throws SQLException {
         Appointment appointment = new Appointment(
-                newAppointmentId(),
+                0,
                 AppointmentTitleTextField.getText(),
                 AppointmentDescriptionTextField.getText(),
                 AppointmentLocationTextField.getText(),
                 AppointmentTypeTextField.getText(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                //AppointmentStartComboBox.getValue(),
-                //AppointmentEndComboBox.getValue(),
+                AppointmentStartComboBox.getValue(),
+                AppointmentEndComboBox.getValue(),
                 LocalDateTime.now(),
                 "",
                 LocalDateTime.now(),
                 "",
                 Integer.parseInt(AppointmentCustomerIdTextField.getText()),
-                Integer.parseInt(AppointmentUserIdTextField.getText()),
-                1
-                //Integer.parseInt(AppointmentContactComboBox.getValue())
+                curr
+                AppointmentContactComboBox.getValue().getContactID()
         );
+
+        AppointmentDao newAppointment = new AppointmentDao();
+
+        if(newAppointment.insert(appointment)){
+            saveRedirect(actionEvent);
+        }
 
         return appointment;
     }
 
-    /**
-     * Method grabs last Appointment ID and increases it by 1
-     * @return
-     * @throws SQLException
-     */
-    public int newAppointmentId() throws SQLException {
-        String appointmentIdSQL = "select Appointment_ID from appointments order by Appointment_ID desc limit 1";
-        PreparedStatement ps = DatabaseConnection.connection.prepareStatement(appointmentIdSQL);
-        ResultSet result = ps.executeQuery();
+    public void saveRedirect(ActionEvent actionEvent){
 
-        while(result.next()){
-            prevAppointmentId = result.getInt("Customer_ID");
-            nextAppointmentId = prevAppointmentId + 1;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save Successful");
+        alert.setContentText("Save Successful, returning to Appointments menu");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("view/appointments.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Appointments");
+            stage.setScene(scene);
+            stage.show();
         }
-        ps.close();
-        result.close();
-        return nextAppointmentId;
     }
-
 }

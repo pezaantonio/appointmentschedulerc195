@@ -1,5 +1,11 @@
 package model;
 
+import DAO.DatabaseConnection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class User {
 
     private int userID;
@@ -9,6 +15,12 @@ public class User {
     private String createdBy;
     private String lastUpdate;
     private String lastUpdatedBy;
+
+    protected int userIDFromUsername;
+
+    public User(int userID, String username){
+        this(userID, username, "", "","","","");
+    }
 
     /*
      * Constructor
@@ -133,5 +145,18 @@ public class User {
     * */
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public int getUserIdFromUsername(String username) throws SQLException {
+        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
+        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
+        ResultSet result = userQuerySQL.executeQuery();
+
+        while(result.next()){
+            userIDFromUsername = result.getInt(1);
+        }
+
+
+        return userIDFromUsername;
     }
 }

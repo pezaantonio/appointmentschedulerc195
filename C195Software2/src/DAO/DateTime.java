@@ -15,6 +15,7 @@ public class DateTime {
     protected ObservableList<LocalDateTime> startList = FXCollections.observableArrayList();
     protected ObservableList<LocalDateTime> endList = FXCollections.observableArrayList();
     protected LocalDateTime startDateTime;
+    protected LocalDateTime endDateTime;
 
 
     /**
@@ -51,11 +52,15 @@ public class DateTime {
         return LocalTime.now();
     }
 
+    /**
+     * Method returns a list of start times
+     * @return startlist
+     */
     public ObservableList<LocalDateTime> getStartList(){
         startDateTime = LocalDateTime.of(getLocalDate(), LocalTime.of(8,0));
-        LocalDateTime endDateTime = startDateTime.plusDays(30);
+        LocalDateTime endDateTimeAppointment = startDateTime.plusDays(30);
 
-        while(startDateTime.isBefore(endDateTime)){
+        while(startDateTime.isBefore(endDateTimeAppointment)){
             startList.add(startDateTime);
             startDateTime = startDateTime.plusMinutes(15);
         }
@@ -63,11 +68,16 @@ public class DateTime {
         return startList;
     }
 
-    public ObservableList<LocalDateTime> getEndList(){
-        LocalDateTime endDateTime = startDateTime.plusMinutes(15);
+    /**
+     * method returns list of end times based on selected start time
+     * @param startOfAppointment
+     * @return endList
+     */
+    public ObservableList<LocalDateTime> getEndList(LocalDateTime startOfAppointment){
+        endDateTime = startOfAppointment.plusMinutes(15);
+        LocalDateTime endListAppointment = endDateTime.plusDays(30);
 
-        while(startDateTime.isBefore(startDateTime.plusDays(30))){
-
+        while(endDateTime.isBefore(endListAppointment)){
             endList.add(endDateTime);
             endDateTime = endDateTime.plusMinutes(15);
         }

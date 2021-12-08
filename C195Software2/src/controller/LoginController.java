@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,6 +38,8 @@ public class LoginController implements Initializable {
     private Label ZoneIdLabel;
     @FXML
     private Label LoginErrorLabel;
+
+    public User currentUser;
 
     protected ZoneId localZoneId = ZoneId.systemDefault();
 
@@ -70,6 +73,8 @@ public class LoginController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            currentUser = new User(currentUser.getUserIdFromUsername(usernameInput), usernameInput);
 
         } else {
             ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());

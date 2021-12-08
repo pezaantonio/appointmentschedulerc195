@@ -13,6 +13,7 @@ import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class AppointmentDao implements DataAccess{
 
@@ -59,15 +60,27 @@ public class AppointmentDao implements DataAccess{
         return true;
     }
 
-    public boolean insert(Appointment appointment) {
-        boolean validInsert = true;
+    public boolean insert(Appointment appointment) throws SQLException {
+        boolean validInsert = false;
         //todo insert into tablename (list of columns) values(values in order of columns)
-        String insertAppointment = "INSERT INTO appointments(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertAppointment);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        String insertAppointment = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
+        PreparedStatement insertAppointmentSQL = DatabaseConnection.connection.prepareStatement(insertAppointment);
+
+        insertAppointmentSQL.setString(1, appointment.getAppointmentTitle());
+        insertAppointmentSQL.setString(2, appointment.getAppointmentDescription());
+        insertAppointmentSQL.setString(3, appointment.getAppointmentType());
+        insertAppointmentSQL.setTimestamp(4, Timestamp.valueOf(appointment.getAppointmentStart()));
+        insertAppointmentSQL.setTimestamp(5, Timestamp.valueOf(appointment.getAppointmentEnd()));
+        insertAppointmentSQL.setString(6, appointment.getAppointmentCreatedBy());
+        insertAppointmentSQL.setString(7, appointment.getAppointmentUpdatedBy());
+        insertAppointmentSQL.setInt(8, appointment.getAppointmentCustId());
+        insertAppointmentSQL.setInt(9, appointment.getAppointmentUserId());
+        insertAppointmentSQL.setInt(10, appointment.getAppointmentContactId());
+
+        if (insertAppointmentSQL.executeUpdate() > 0){
+            validInsert = true;
         }
+        insertAppointmentSQL.close();
 
         // date and time for create_Date and last_updated use now()
         // executeUpdate or executeQuery (look for examples on PreparedStatement)
