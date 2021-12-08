@@ -5,6 +5,7 @@ package DAO;
  *
  * */
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -63,8 +64,14 @@ public class CustomerDao implements DataAccess{
         return customerList;
     }
 
-    public boolean insert(Object o){
-        return true;
+    @Override
+    public boolean insert(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean update(int id, Object o) {
+        return false;
     }
 
     /**
@@ -93,8 +100,24 @@ public class CustomerDao implements DataAccess{
         return false;
     }
 
-    @Override
-    public boolean update(int id, Object o) {
+    public boolean update(int id, Customer customer) throws SQLException{
+        String updateCustomer = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+        PreparedStatement updateCustomerSQL = DatabaseConnection.connection.prepareStatement(updateCustomer);
+
+        updateCustomerSQL.setString(1, customer.getCustomerName());
+        updateCustomerSQL.setString(2, customer.getCustomerAddress());
+        updateCustomerSQL.setString(3, customer.getCustomerPostalCode());
+        updateCustomerSQL.setString(4, customer.getCustomerPhone());
+        //updateCustomerSQL.setString(5, customer.getCustomerCreatedBy());
+        updateCustomerSQL.setString(5, customer.getCustomerLastUpdatedBy());
+        updateCustomerSQL.setInt(6, customer.getCustomerDivisionID());
+
+        updateCustomerSQL.setInt(7, id);
+
+        if(updateCustomerSQL.executeUpdate() > 0){
+            return true;
+        }
+        updateCustomerSQL.close();
         return false;
     }
 

@@ -59,6 +59,7 @@
                     </font>
                 </Label>
                 <TextField fx:id="CustomerNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="CustomerPostalCodeTextField" layoutX="290.0" layoutY="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="CustomerAddressTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <Label fx:id="CustomerPhoneNumberLabel" text="Phone Number" GridPane.rowIndex="4">
                     <font>
@@ -72,7 +73,6 @@
                </font>
             </Label>
             <ComboBox fx:id="CustomerCountryComboBox" layoutX="280.0" layoutY="373.0" onAction="#onCountrySelect" prefHeight="26.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="CustomerPostalCodeTextField" layoutX="290.0" layoutY="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <ComboBox fx:id="CustomerDivisionComboBox" prefHeight="26.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             </children>
         </GridPane>

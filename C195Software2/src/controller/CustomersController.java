@@ -67,6 +67,8 @@ public class CustomersController implements Initializable {
     private ComboBox<FirstLevelDivisions> CustomerDivisionComboBox;
     @FXML
     private ComboBox<Country> CustomerCountryComboBox;
+    @FXML
+    protected Customer selectedCustomer;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
@@ -90,9 +92,8 @@ public class CustomersController implements Initializable {
     /**
      * This controls the button that will auto populate a form with selected form
      */
-    public void updateCustomer(){
-        Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
-
+    public void updateCustomer() throws SQLException{
+        selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -106,9 +107,22 @@ public class CustomersController implements Initializable {
             CustomerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
             CustomerCountryComboBox.setValue(selectedCustomer.getCustomerCountry());
             CustomerDivisionComboBox.setValue(selectedCustomer.getFirstLevelDivision());
+        }
+    }
+
+    public void onSaveUpdate(ActionEvent actionEvent) throws SQLException {
+        CustomerDao updatedCustomer = new CustomerDao();
+
+        if (updatedCustomer.update(selectedCustomer.getCustomerID(), selectedCustomer)) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Success");
+            alert.setContentText("Customer has been updated");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK){
+                CustomerTableView.setItems(CustomerDao.getAllCustomers());
             }
         }
-
+    }
 
     public void onCountrySelect(ActionEvent actionEvent) {
         CustomerDivisionComboBox.setItems(FirstLevelDivisionDao.getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));

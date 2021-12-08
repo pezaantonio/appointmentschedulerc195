@@ -35,6 +35,8 @@ public class LoginController implements Initializable {
     private Button LoginButton;
     @FXML
     private Label ZoneIdLabel;
+    @FXML
+    private Label LoginErrorLabel;
 
     protected ZoneId localZoneId = ZoneId.systemDefault();
 
@@ -70,11 +72,13 @@ public class LoginController implements Initializable {
             stage.show();
 
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Login Error");
-            alert.setHeaderText("Incorrect Username and/or Password");
-            alert.setContentText("Enter valid Username and Password");
-            Optional<ButtonType> result = alert.showAndWait();
+            ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());
+            LoginErrorLabel.setText(rb.getString("incorrect"));
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Login Error");
+//            alert.setHeaderText("Incorrect Username and/or Password");
+//            alert.setContentText("Enter valid Username and Password");
+//            Optional<ButtonType> result = alert.showAndWait();
         }
 
     }
