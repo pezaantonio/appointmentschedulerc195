@@ -3,6 +3,7 @@ package controller;
 import DAO.AppointmentDao;
 import DAO.ContactDao;
 import DAO.DatabaseConnection;
+import DAO.DateTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,6 +56,12 @@ public class InsertAppointmentsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentContactComboBox.setItems(new ContactDao().getAll());
+        AppointmentStartComboBox.setPromptText("Please select a start time");
+        AppointmentStartComboBox.setItems(new DateTime().getStartList());
+        AppointmentEndComboBox.setPromptText("Please select an end time");
+        AppointmentEndComboBox.setItems(new DateTime().getEndList());
+
+        AppointmentStartComboBox.getSelectionModel().select(LocalDateTime.now());
 
     }
     /**

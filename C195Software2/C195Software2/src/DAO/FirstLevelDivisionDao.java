@@ -60,14 +60,14 @@ public class FirstLevelDivisionDao implements DataAccess{
      * Returns firstleveldivisions list using getAll()
      * @return
      */
-    public ObservableList<FirstLevelDivisions> getFirstLevelDivisionsList(){
+    public static ObservableList<FirstLevelDivisions> getFirstLevelDivisionsList(){
         if (firstLevelDivisionsList.size() == 0){
-            firstLevelDivisionsList = getAll();
+            firstLevelDivisionsList = new FirstLevelDivisionDao().getAll();
         }
         return firstLevelDivisionsList;
     }
 
-    public ObservableList<FirstLevelDivisions> getCountryDivision(int countryID){
+    public static ObservableList<FirstLevelDivisions> getCountryDivision(int countryID){
         ObservableList<FirstLevelDivisions> filteredList = FXCollections.observableArrayList();
         for (FirstLevelDivisions div : getFirstLevelDivisionsList()){
             if (div.getCountryID() == countryID){

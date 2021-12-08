@@ -35,19 +35,21 @@ public class LoginController implements Initializable {
     private Button LoginButton;
     @FXML
     private Label ZoneIdLabel;
+    @FXML
+    private Label LoginErrorLabel;
 
-    private ZoneId localZoneId = ZoneId.systemDefault();
+    protected ZoneId localZoneId = ZoneId.systemDefault();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ResourceBundle rb = ResourceBundle.getBundle("properties.login", Locale.getDefault());
+            ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());
             UsernameLabel.setText(rb.getString("username"));
             UsernameTextField.setPromptText(rb.getString("username"));
             PasswordLabel.setText(rb.getString("password"));
             PasswordTextField.setPromptText(rb.getString("password"));
             LoginButton.setText(rb.getString("signin"));
-            ZoneIdLabel.setText(localZoneId.getId());
+            ZoneIdLabel.setText(localZoneId.toString());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -70,11 +72,13 @@ public class LoginController implements Initializable {
             stage.show();
 
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Login Error");
-            alert.setHeaderText("Incorrect Username and/or Password");
-            alert.setContentText("Enter valid Username and Password");
-            Optional<ButtonType> result = alert.showAndWait();
+            ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());
+            LoginErrorLabel.setText(rb.getString("incorrect"));
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Login Error");
+//            alert.setHeaderText("Incorrect Username and/or Password");
+//            alert.setContentText("Enter valid Username and Password");
+//            Optional<ButtonType> result = alert.showAndWait();
         }
 
     }

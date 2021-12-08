@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="216.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane prefHeight="245.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <Label fx:id="UsernameLabel" layoutX="41.0" layoutY="35.0" prefHeight="33.0" prefWidth="119.0" text="Username">
          <font>
@@ -30,6 +30,11 @@
          </font>
       </PasswordField>
       <Button fx:id="LoginButton" layoutX="276.0" layoutY="156.0" mnemonicParsing="false" onAction="#LoginButtonHandler" prefHeight="31.0" prefWidth="101.0" text="Log in" />
-      <Label fx:id="ZoneIdLabel" layoutX="50.0" layoutY="179.0" />
+      <Label fx:id="ZoneIdLabel" layoutX="45.0" layoutY="156.0" prefHeight="33.0" prefWidth="171.0" text="Label" />
+      <Label fx:id="LoginErrorLabel" layoutX="133.0" layoutY="189.0" prefHeight="33.0" prefWidth="258.0" textFill="#f50303">
+         <font>
+            <Font name="Corbel Light" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

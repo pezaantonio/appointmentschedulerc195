@@ -5,6 +5,7 @@ package DAO;
  *
  * */
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -63,32 +64,8 @@ public class CustomerDao implements DataAccess{
         return customerList;
     }
 
-    public boolean insert(Object o){
-        return true;
-    }
-
-    /**
-     * Method to
-     * @return
-     * @throws SQLException
-     */
-    public boolean insert(Customer customer) throws SQLException {
-        String insertCustomer = "INSERT INTO CUSTOMER (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertCustomer);
-
-        insertCustomerSQL.setInt(1, customer.getCustomerID());
-        insertCustomerSQL.setString(2, customer.getCustomerName());
-        insertCustomerSQL.setString(3, customer.getCustomerAddress());
-        insertCustomerSQL.setString(4, customer.getCustomerPostalCode());
-        insertCustomerSQL.setString(5, customer.getCustomerPhone());
-        //insertCustomerSQL.setTimestamp(6, LocalDateTime.now());
-        insertCustomerSQL.setString(7, customer.getCustomerCreatedBy());
-        //insertCustomerSQL.setTimestamp(8, customer.getCustomerLastUpdate());
-        insertCustomerSQL.setString(9, customer.getCustomerLastUpdatedBy());
-        insertCustomerSQL.setInt(10, customer.getCustomerDivisionID());
-
-        insertCustomerSQL.executeUpdate();
-
+    @Override
+    public boolean insert(Object o) {
         return false;
     }
 
@@ -97,8 +74,68 @@ public class CustomerDao implements DataAccess{
         return false;
     }
 
+    /**
+     * Method to
+     * @return
+     * @throws SQLException
+     */
+    public boolean insert(Customer customer) throws SQLException {
+        String insertCustomer = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,NOW(),?,NOW(),?,?)";
+        PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertCustomer);
+
+        //insertCustomerSQL.setInt(1, customer.getCustomerID());
+        insertCustomerSQL.setString(1, customer.getCustomerName());
+        insertCustomerSQL.setString(2, customer.getCustomerAddress());
+        insertCustomerSQL.setString(3, customer.getCustomerPostalCode());
+        insertCustomerSQL.setString(4, customer.getCustomerPhone());
+        insertCustomerSQL.setString(5, customer.getCustomerCreatedBy());
+        insertCustomerSQL.setString(6, customer.getCustomerLastUpdatedBy());
+        insertCustomerSQL.setInt(7, customer.getCustomerDivisionID());
+
+        if(insertCustomerSQL.executeUpdate() > 0){
+            return true;
+        }
+        insertCustomerSQL.close();
+
+        return false;
+    }
+
+    public boolean update(int id, Customer customer) throws SQLException{
+        String updateCustomer = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+        PreparedStatement updateCustomerSQL = DatabaseConnection.connection.prepareStatement(updateCustomer);
+
+        updateCustomerSQL.setString(1, customer.getCustomerName());
+        updateCustomerSQL.setString(2, customer.getCustomerAddress());
+        updateCustomerSQL.setString(3, customer.getCustomerPostalCode());
+        updateCustomerSQL.setString(4, customer.getCustomerPhone());
+        //updateCustomerSQL.setString(5, customer.getCustomerCreatedBy());
+        updateCustomerSQL.setString(5, customer.getCustomerLastUpdatedBy());
+        updateCustomerSQL.setInt(6, customer.getCustomerDivisionID());
+//todo this isn't working because it's pushing the same info and not the updated info
+        updateCustomerSQL.setInt(7, id);
+
+        if(updateCustomerSQL.executeUpdate() > 0){
+            return true;
+        }
+        updateCustomerSQL.close();
+        return false;
+    }
+
     @Override
     public boolean delete(int id) {
+        String deleteCustomer = "DELETE FROM customers WHERE CUSTOMER_ID =?";
+        try {
+            PreparedStatement deleteCustomerSQL = DatabaseConnection.connection.prepareStatement(deleteCustomer);
+
+            deleteCustomerSQL.setInt(1, id);
+
+            if(deleteCustomerSQL.executeUpdate() > 0){
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return false;
     }
 
