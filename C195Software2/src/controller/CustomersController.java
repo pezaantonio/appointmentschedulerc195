@@ -26,6 +26,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -92,7 +93,7 @@ public class CustomersController implements Initializable {
     /**
      * This controls the button that will auto populate a form with selected form
      */
-    public void updateCustomer() throws SQLException{
+    public Customer updateCustomer() throws SQLException{
         selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -108,12 +109,30 @@ public class CustomersController implements Initializable {
             CustomerCountryComboBox.setValue(selectedCustomer.getCustomerCountry());
             CustomerDivisionComboBox.setValue(selectedCustomer.getFirstLevelDivision());
         }
+        return selectedCustomer;
     }
 
+    /**
+     * This will save the chagnes made by the user
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void onSaveUpdate(ActionEvent actionEvent) throws SQLException {
         CustomerDao updatedCustomer = new CustomerDao();
+        Customer customer = new Customer(
+                updateCustomer().getCustomerID(),
+                CustomerCustomerNameTextField.getText(),
+                CustomerAddressTextField.getText(),
+                CustomerPostalCodeTextField.getText(),
+                CustomerPhoneTextField.getText(),
+                LocalDateTime.now(),
+                "",
+                LocalDateTime.now(),
+                "",
+                CustomerDivisionComboBox.getValue().getDivisionID()
+        );
 
-        if (updatedCustomer.update(selectedCustomer.getCustomerID(), selectedCustomer)) {
+        if (updatedCustomer.update(customer.getCustomerID(), customer)) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Success");
             alert.setContentText("Customer has been updated");

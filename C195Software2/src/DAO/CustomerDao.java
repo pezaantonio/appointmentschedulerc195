@@ -111,7 +111,6 @@ public class CustomerDao implements DataAccess{
         //updateCustomerSQL.setString(5, customer.getCustomerCreatedBy());
         updateCustomerSQL.setString(5, customer.getCustomerLastUpdatedBy());
         updateCustomerSQL.setInt(6, customer.getCustomerDivisionID());
-
         updateCustomerSQL.setInt(7, id);
 
         if(updateCustomerSQL.executeUpdate() > 0){
