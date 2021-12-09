@@ -63,19 +63,20 @@ public class AppointmentDao implements DataAccess{
     public boolean insert(Appointment appointment) throws SQLException {
         boolean validInsert = false;
         //todo insert into tablename (list of columns) values(values in order of columns)
-        String insertAppointment = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
+        String insertAppointment = "INSERT INTO appointments(Title, Description, Location, Type, Start, End,Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
         PreparedStatement insertAppointmentSQL = DatabaseConnection.connection.prepareStatement(insertAppointment);
 
         insertAppointmentSQL.setString(1, appointment.getAppointmentTitle());
         insertAppointmentSQL.setString(2, appointment.getAppointmentDescription());
-        insertAppointmentSQL.setString(3, appointment.getAppointmentType());
-        insertAppointmentSQL.setTimestamp(4, Timestamp.valueOf(appointment.getAppointmentStart()));
-        insertAppointmentSQL.setTimestamp(5, Timestamp.valueOf(appointment.getAppointmentEnd()));
-        insertAppointmentSQL.setString(6, appointment.getAppointmentCreatedBy());
-        insertAppointmentSQL.setString(7, appointment.getAppointmentUpdatedBy());
-        insertAppointmentSQL.setInt(8, appointment.getAppointmentCustId());
-        insertAppointmentSQL.setInt(9, appointment.getAppointmentUserId());
-        insertAppointmentSQL.setInt(10, appointment.getAppointmentContactId());
+        insertAppointmentSQL.setString(3,appointment.getAppointmentLocation());
+        insertAppointmentSQL.setString(4, appointment.getAppointmentType());
+        insertAppointmentSQL.setTimestamp(5, Timestamp.valueOf(appointment.getAppointmentStart()));
+        insertAppointmentSQL.setTimestamp(6, Timestamp.valueOf(appointment.getAppointmentEnd()));
+        insertAppointmentSQL.setString(7, appointment.getAppointmentCreatedBy());
+        insertAppointmentSQL.setString(8, appointment.getAppointmentUpdatedBy());
+        insertAppointmentSQL.setInt(9, appointment.getAppointmentCustId());
+        insertAppointmentSQL.setInt(10, appointment.getAppointmentUserId());
+        insertAppointmentSQL.setInt(11, appointment.getAppointmentContactId());
 
         if (insertAppointmentSQL.executeUpdate() > 0){
             validInsert = true;
@@ -96,6 +97,19 @@ public class AppointmentDao implements DataAccess{
 
     @Override
     public boolean delete(int id) {
+        String deleteAppointment = "DELETE FROM appointments WHERE Appointment_ID =?";
+        try {
+            PreparedStatement deleteAppointmentSQL = DatabaseConnection.connection.prepareStatement(deleteAppointment);
+
+            deleteAppointmentSQL.setInt(1, id);
+
+            if(deleteAppointmentSQL.executeUpdate() > 0){
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return false;
     }
 }

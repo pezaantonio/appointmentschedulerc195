@@ -64,9 +64,9 @@ public class InsertCustomerController implements Initializable {
                 CustomerPostalCodeTextField.getText(),
                 CustomerPhoneNumberTextField.getText(),
                 LocalDateTime.now(),
-                "",
+                UserDao.getUserName(),
                 LocalDateTime.now(),
-                "",
+                UserDao.getUserName(),
                 CustomerDivisionComboBox.getValue().getDivisionID()
         );
 

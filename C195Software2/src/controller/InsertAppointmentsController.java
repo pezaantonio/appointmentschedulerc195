@@ -98,11 +98,11 @@ public class InsertAppointmentsController implements Initializable {
                 AppointmentStartComboBox.getValue(),
                 AppointmentEndComboBox.getValue(),
                 LocalDateTime.now(),
-                "",
+                UserDao.getUserName(),
                 LocalDateTime.now(),
-                "",
+                UserDao.getUserName(),
                 AppointmentCustomerIDComboBox.getValue().getCustomerID(),
-                LoginController.getCurrentUserID(),
+                UserDao.getUserId(),
                 AppointmentContactComboBox.getValue().getContactID()
         );
 

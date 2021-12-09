@@ -105,17 +105,17 @@ public class LoginController implements Initializable {
             System.out.println(e);
         }
     }
-
-    public int getCurrentUserID() throws SQLException {
-        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
-        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
-        ResultSet result = userQuerySQL.executeQuery();
-
-        while(result.next()){
-            userQuerySQL.setString(1, UsernameTextField.getText());
-
-            userIDFromUsername = result.getInt(1);
-        }
-        return userIDFromUsername;
-    }
+//
+//    public int getCurrentUserID() throws SQLException {
+//        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
+//        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
+//        ResultSet result = userQuerySQL.executeQuery();
+//
+//        while(result.next()){
+//            userQuerySQL.setString(1, UsernameTextField.getText());
+//
+//            userIDFromUsername = result.getInt(1);
+//        }
+//        return userIDFromUsername;
+//    }
 }
