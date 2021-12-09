@@ -7,6 +7,7 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Appointment;
 import model.Country;
 import model.FirstLevelDivisions;
 
@@ -53,6 +54,7 @@ public class CountryDao implements DataAccess{
     public boolean update(int id, Object o) {
         return false;
     }
+
 
     @Override
     public boolean delete(int id) {

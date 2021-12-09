@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContactDao implements DataAccess{
+public class ContactDao implements DataAccess {
 
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
 
@@ -26,12 +26,13 @@ public class ContactDao implements DataAccess{
             PreparedStatement contactSQL = DatabaseConnection.connection.prepareStatement(contactQuery);
             ResultSet result = contactSQL.executeQuery();
 
-            while(result.next()){
+            while (result.next()) {
                 int contactID = result.getInt("Contact_ID");
                 String contactName = result.getString("Contact_Name");
                 String contactEmail = result.getString("Email");
 
-                contactList.add(new Contact(contactID,contactName, contactEmail));;
+                contactList.add(new Contact(contactID, contactName, contactEmail));
+                ;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -53,6 +54,5 @@ public class ContactDao implements DataAccess{
     public boolean delete(int id) {
         return false;
     }
-
 
 }

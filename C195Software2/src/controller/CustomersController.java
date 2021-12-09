@@ -140,6 +140,10 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * This will populate the Customer Division Combo box based on country selection
+     * @param actionEvent
+     */
     public void onCountrySelect(ActionEvent actionEvent) {
         CustomerDivisionComboBox.setItems(FirstLevelDivisionDao.getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
     }
@@ -148,7 +152,7 @@ public class CustomersController implements Initializable {
      * Customer that is selected from the table view is deleted and then table is refreshed
      * @param actionEvent
      */
-    public void onDeleteCustomer(ActionEvent actionEvent){
+    public void onDeleteCustomer(ActionEvent actionEvent) throws SQLException {
         Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
         int selectedCustomerId = selectedCustomer.getCustomerID();
 

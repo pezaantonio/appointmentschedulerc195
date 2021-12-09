@@ -64,22 +64,14 @@ public class CustomerDao implements DataAccess{
         return customerList;
     }
 
-    @Override
-    public boolean insert(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean update(int id, Object o) {
-        return false;
-    }
-
     /**
      * Method to
      * @return
      * @throws SQLException
      */
-    public boolean insert(Customer customer) throws SQLException {
+    @Override
+    public boolean insert(Object o) throws SQLException {
+        Customer customer = (Customer) o;
         String insertCustomer = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,NOW(),?,NOW(),?,?)";
         PreparedStatement insertCustomerSQL = DatabaseConnection.connection.prepareStatement(insertCustomer);
 
@@ -100,7 +92,9 @@ public class CustomerDao implements DataAccess{
         return false;
     }
 
-    public boolean update(int id, Customer customer) throws SQLException{
+    @Override
+    public boolean update(int id, Object o) throws SQLException{
+        Customer customer = (Customer) o;
         String updateCustomer = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement updateCustomerSQL = DatabaseConnection.connection.prepareStatement(updateCustomer);
 
@@ -125,18 +119,14 @@ public class CustomerDao implements DataAccess{
     /**
      * Method to delete customer based on selected customer ID
      */
-    public boolean delete(int id) {
+    public boolean delete(int id) throws SQLException{
         String deleteCustomer = "DELETE FROM customers WHERE CUSTOMER_ID =?";
-        try {
-            PreparedStatement deleteCustomerSQL = DatabaseConnection.connection.prepareStatement(deleteCustomer);
+        PreparedStatement deleteCustomerSQL = DatabaseConnection.connection.prepareStatement(deleteCustomer);
 
-            deleteCustomerSQL.setInt(1, id);
+        deleteCustomerSQL.setInt(1, id);
 
-            if(deleteCustomerSQL.executeUpdate() > 0){
-                return true;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if(deleteCustomerSQL.executeUpdate() > 0){
+            return true;
         }
 
         return false;

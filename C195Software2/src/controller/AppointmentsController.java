@@ -48,6 +48,8 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, Integer> AppointmentUserIdColumn;
 
+    private static Appointment appointmentToUpdate;
+
     private boolean isWeekly;
 
     @Override
@@ -88,7 +90,11 @@ public class AppointmentsController implements Initializable {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 AppointmentDao deleteAppointment = new AppointmentDao();
-                deleteAppointment.delete(selectedAppointmentId);
+                try {
+                    deleteAppointment.delete(selectedAppointmentId);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 try {
                     AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
                 } catch (SQLException throwables) {
@@ -124,4 +130,21 @@ public class AppointmentsController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void toUpdateAppointment(ActionEvent actionEvent) throws IOException {
+
+        appointmentToUpdate = AppointmentTableView.getSelectionModel().getSelectedItem();
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/updateappointments.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Update Appointment");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static Appointment getAppointmentToUpdate(){
+        return appointmentToUpdate;
+    }
+
 }

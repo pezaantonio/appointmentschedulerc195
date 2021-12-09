@@ -1,5 +1,11 @@
 package model;
 
+import DAO.DatabaseConnection;
+
+import javax.xml.transform.Result;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -18,6 +24,9 @@ public class Appointment {
     private int appointmentCustId;
     private int appointmentUserId;
     private int appointmentContactId;
+
+    protected Contact contactFromContactId;
+    protected Customer customerFromCustomerId;
 
     public Appointment(int appointmentID, String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, LocalDateTime appointmentCreateDate, String appointmentCreatedBy, LocalDateTime appointmentLastUpdate, String appointmentUpdatedBy, int appointmentCustId, int appointmentUserId, int appointmentContactId) {
         this.appointmentID = appointmentID;
@@ -146,6 +155,44 @@ public class Appointment {
 
     public void setAppointmentContactId(int appointmentContactId) {
         this.appointmentContactId = appointmentContactId;
+    }
+
+
+    public Contact getContactFromContactId() throws SQLException {
+        String contactQuery = "SELECT * FROM contacts WHERE Contact_ID = " + appointmentContactId;
+        PreparedStatement contactQuerySQL = DatabaseConnection.connection.prepareStatement(contactQuery);
+        ResultSet result = contactQuerySQL.executeQuery();
+
+        while (result.next()) {
+            contactFromContactId = new Contact(
+                    appointmentContactId,
+                    result.getString("Contact_Name"),
+                    result.getString("Email")
+            );
+        }
+        return contactFromContactId;
+    }
+
+    public Customer getCustomerFromCustomerId() throws SQLException{
+        String customerQuery = "SELECT * FROM customers WHERE Customer_ID = " + appointmentCustId;
+        PreparedStatement customerQuerySQL = DatabaseConnection.connection.prepareStatement(customerQuery);
+        ResultSet result = customerQuerySQL.executeQuery();
+
+        while (result.next()) {
+            customerFromCustomerId = new Customer(
+                    appointmentCustId,
+                    result.getString("Customer_Name"),
+                    result.getString("Address"),
+                    result.getString("Postal_Code"),
+                    result.getString("Phone"),
+                    result.getTimestamp("Create_Date").toLocalDateTime(),
+                    result.getString("Created_By"),
+                    result.getTimestamp("Last_Update").toLocalDateTime(),
+                    result.getString("Last_Updated_By"),
+                    result.getInt("Division_Id")
+            );
+        }
+        return customerFromCustomerId;
     }
 }
 

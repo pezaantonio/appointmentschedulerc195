@@ -56,11 +56,15 @@ public class AppointmentDao implements DataAccess{
     }
 
 
-    public boolean insert(Object o){
-        return true;
+    @Override
+    public boolean update(int id, Object o) {
+        Appointment appointment = (Appointment) o;
+        return false;
     }
 
-    public boolean insert(Appointment appointment) throws SQLException {
+    @Override
+    public boolean insert(Object o) throws SQLException{
+        Appointment appointment = (Appointment) o;
         boolean validInsert = false;
         //todo insert into tablename (list of columns) values(values in order of columns)
         String insertAppointment = "INSERT INTO appointments(Title, Description, Location, Type, Start, End,Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
@@ -91,23 +95,14 @@ public class AppointmentDao implements DataAccess{
     }
 
     @Override
-    public boolean update(int id, Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws SQLException{
         String deleteAppointment = "DELETE FROM appointments WHERE Appointment_ID =?";
-        try {
-            PreparedStatement deleteAppointmentSQL = DatabaseConnection.connection.prepareStatement(deleteAppointment);
+        PreparedStatement deleteAppointmentSQL = DatabaseConnection.connection.prepareStatement(deleteAppointment);
 
-            deleteAppointmentSQL.setInt(1, id);
+        deleteAppointmentSQL.setInt(1, id);
 
-            if(deleteAppointmentSQL.executeUpdate() > 0){
-                return true;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if(deleteAppointmentSQL.executeUpdate() > 0){
+            return true;
         }
 
         return false;
