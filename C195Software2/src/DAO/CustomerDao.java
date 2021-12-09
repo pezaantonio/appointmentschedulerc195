@@ -111,6 +111,7 @@ public class CustomerDao implements DataAccess{
         //updateCustomerSQL.setString(5, customer.getCustomerCreatedBy());
         updateCustomerSQL.setString(5, customer.getCustomerLastUpdatedBy());
         updateCustomerSQL.setInt(6, customer.getCustomerDivisionID());
+
         updateCustomerSQL.setInt(7, id);
 
         if(updateCustomerSQL.executeUpdate() > 0){
@@ -121,6 +122,9 @@ public class CustomerDao implements DataAccess{
     }
 
     @Override
+    /**
+     * Method to delete customer based on selected customer ID
+     */
     public boolean delete(int id) {
         String deleteCustomer = "DELETE FROM customers WHERE CUSTOMER_ID =?";
         try {

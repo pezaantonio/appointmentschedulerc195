@@ -1,9 +1,6 @@
 package controller;
 
-import DAO.CountryDao;
-import DAO.CustomerDao;
-import DAO.DatabaseConnection;
-import DAO.FirstLevelDivisionDao;
+import DAO.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -120,7 +117,7 @@ public class CustomersController implements Initializable {
     public void onSaveUpdate(ActionEvent actionEvent) throws SQLException {
         CustomerDao updatedCustomer = new CustomerDao();
         Customer customer = new Customer(
-                updateCustomer().getCustomerID(),
+                Integer.parseInt(CustomerCustomerIDTextField.getText()),
                 CustomerCustomerNameTextField.getText(),
                 CustomerAddressTextField.getText(),
                 CustomerPostalCodeTextField.getText(),
@@ -128,7 +125,7 @@ public class CustomersController implements Initializable {
                 LocalDateTime.now(),
                 "",
                 LocalDateTime.now(),
-                "",
+                UserDao.getUserName(),
                 CustomerDivisionComboBox.getValue().getDivisionID()
         );
 

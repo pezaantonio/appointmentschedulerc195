@@ -92,10 +92,18 @@ public class InsertCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to populate Division combo box based on country selected
+     * @param actionEvent
+     */
     public void onCountrySelect(ActionEvent actionEvent) {
         CustomerDivisionComboBox.setItems(FirstLevelDivisionDao.getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
     }
 
+    /**
+     * Method to redirect user to main menu after successful save
+     * @param actionEvent
+     */
     public void saveRedirect(ActionEvent actionEvent){
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
