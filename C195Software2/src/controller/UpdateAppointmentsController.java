@@ -65,7 +65,7 @@ public class UpdateAppointmentsController implements Initializable {
 
         AppointmentIdTextField.setText(Integer.toString(appointmentToUpdate.getAppointmentID()));
         AppointmentTitleTextField.setText(appointmentToUpdate.getAppointmentTitle());
-        AppointmentDescriptionTextField.setText(appointmentToUpdate.getAppointmentTitle());
+        AppointmentDescriptionTextField.setText(appointmentToUpdate.getAppointmentDescription());
         AppointmentLocationTextField.setText(appointmentToUpdate.getAppointmentLocation());
         AppointmentTypeTextField.setText(appointmentToUpdate.getAppointmentType());
         AppointmentStartComboBox.setValue(appointmentToUpdate.getAppointmentStart());
@@ -113,9 +113,9 @@ public class UpdateAppointmentsController implements Initializable {
      * @return
      * @throws SQLException
      */
-    public Appointment insertAppointment(ActionEvent actionEvent) throws SQLException {
+    public Appointment onUpdateAppointment(ActionEvent actionEvent) throws SQLException {
         Appointment appointment = new Appointment(
-                0,
+                Integer.parseInt(AppointmentIdTextField.getText()),
                 AppointmentTitleTextField.getText(),
                 AppointmentDescriptionTextField.getText(),
                 AppointmentLocationTextField.getText(),
@@ -133,7 +133,7 @@ public class UpdateAppointmentsController implements Initializable {
 
         AppointmentDao newAppointment = new AppointmentDao();
 
-        if(newAppointment.insert(appointment)){
+        if(newAppointment.update(appointment.getAppointmentID(), appointment)){
             saveRedirect(actionEvent);
         }
 

@@ -98,6 +98,6 @@
             </children>
         </GridPane>
         <Button fx:id="AppointmentBackButton" layoutX="137.0" layoutY="469.0" mnemonicParsing="false" onAction="#toAppointments" prefHeight="26.0" prefWidth="90.0" text="Back" />
-          <Button fx:id="AppointmentSaveButton" layoutX="442.0" layoutY="469.0" mnemonicParsing="false" onAction="#insertAppointment" prefHeight="27.0" prefWidth="115.0" text="Add" />
+          <Button fx:id="AppointmentSaveButton" layoutX="442.0" layoutY="469.0" mnemonicParsing="false" onAction="#onUpdateAppointment" prefHeight="27.0" prefWidth="115.0" text="Update" />
     </children>
 </AnchorPane>

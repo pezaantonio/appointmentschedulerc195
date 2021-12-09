@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
 import model.Customer;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,8 +58,28 @@ public class AppointmentDao implements DataAccess{
 
 
     @Override
-    public boolean update(int id, Object o) {
+    public boolean update(int id, Object o) throws SQLException {
         Appointment appointment = (Appointment) o;
+
+        String updateAppointment = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = NOW(), Last_Updated_By = ?, Customer_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+        PreparedStatement updateAppointmentSQL = DatabaseConnection.connection.prepareStatement(updateAppointment);
+
+        updateAppointmentSQL.setString(1, appointment.getAppointmentTitle());
+        updateAppointmentSQL.setString(2, appointment.getAppointmentDescription());
+        updateAppointmentSQL.setString(3, appointment.getAppointmentLocation());
+        updateAppointmentSQL.setString(4, appointment.getAppointmentType());
+        updateAppointmentSQL.setTimestamp(5, Timestamp.valueOf(appointment.getAppointmentStart()));
+        updateAppointmentSQL.setTimestamp(6, Timestamp.valueOf(appointment.getAppointmentEnd()));
+        updateAppointmentSQL.setString(7, UserDao.getUserName());
+        updateAppointmentSQL.setInt(8, appointment.getAppointmentCustId());
+        updateAppointmentSQL.setInt(9, appointment.getAppointmentContactId());
+
+        updateAppointmentSQL.setInt(10, appointment.getAppointmentID());
+
+        if (updateAppointmentSQL.executeUpdate() > 0){
+            return true;
+        }
+
         return false;
     }
 
@@ -67,7 +88,7 @@ public class AppointmentDao implements DataAccess{
         Appointment appointment = (Appointment) o;
         boolean validInsert = false;
         //todo insert into tablename (list of columns) values(values in order of columns)
-        String insertAppointment = "INSERT INTO appointments(Title, Description, Location, Type, Start, End,Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
+        String insertAppointment = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,NOW(),?,NOW(),?,?,?,?)";
         PreparedStatement insertAppointmentSQL = DatabaseConnection.connection.prepareStatement(insertAppointment);
 
         insertAppointmentSQL.setString(1, appointment.getAppointmentTitle());
