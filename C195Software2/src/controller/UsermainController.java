@@ -40,6 +40,15 @@ public class UsermainController {
         stage.show();
     }
 
+    public void toReports(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/reports.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Appointments");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void onExitMain(ActionEvent actionEvent){
         System.exit(0);
     }

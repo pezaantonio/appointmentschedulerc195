@@ -147,7 +147,7 @@ public class InsertAppointmentsController implements Initializable {
             stage.show();
         }
     }
-    
+
     /**
      * Method to verify if appointment is within business hours and on a busines day
      * @param apptLocalStartDate
