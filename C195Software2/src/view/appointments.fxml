@@ -5,6 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -29,12 +30,15 @@
             <TableColumn fx:id="AppointmentUserIdColumn" prefWidth="79.0" text="User ID" />
             </columns>
         </TableView>
-        <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="446.0" layoutY="538.0" mnemonicParsing="false" text="Current Week">
+        <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="446.0" layoutY="538.0" mnemonicParsing="false" selected="true" text="Current Week">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="monthWeek" />
+         </toggleGroup>
         </RadioButton>
-        <RadioButton fx:id="AppointmentMonthRadioButton" layoutX="705.0" layoutY="538.0" mnemonicParsing="false" text="Current Month">
+        <RadioButton fx:id="AppointmentMonthRadioButton" layoutX="705.0" layoutY="538.0" mnemonicParsing="false" text="Current Month" toggleGroup="$monthWeek">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
