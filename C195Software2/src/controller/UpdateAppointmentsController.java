@@ -21,7 +21,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import controller.LoginController;
@@ -131,10 +135,20 @@ public class UpdateAppointmentsController implements Initializable {
                 AppointmentContactComboBox.getValue().getContactID()
         );
 
+        LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
+        LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();
+
         AppointmentDao newAppointment = new AppointmentDao();
 
-        if(newAppointment.update(appointment.getAppointmentID(), appointment)){
-            saveRedirect(actionEvent);
+        if (isBusinessHours(apptStartDate, apptStartTime)){
+            if (newAppointment.update(appointment.getAppointmentID(), appointment)) {
+                saveRedirect(actionEvent);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("The appointment cannot be scheduled outside of working business hours. Business hours are Monday - Friday 8am - 10pm EST");
+            Optional<ButtonType> result = alert.showAndWait();
         }
 
         return appointment;
@@ -159,5 +173,33 @@ public class UpdateAppointmentsController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    /**
+     * Method to verify if appointment is within business hours and on a busines day
+     * @param apptLocalStartDate
+     * @param apptStartTime
+     * @return isBusinessHours
+     */
+    public boolean isBusinessHours(LocalDate apptLocalStartDate, LocalTime apptStartTime) {
+        boolean businessTime = false;
+        boolean businessDay = false;
+        boolean withinBusinessHours = false;
+
+        DayOfWeek startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
+
+        if (apptStartTime.isAfter(LocalTime.of(8, 0)) && apptStartTime.isBefore(LocalTime.of(22, 0))) {
+            System.out.println("Inside of business hours");
+            businessTime = true;
+        }
+        if (startDayOfWeek != DayOfWeek.SATURDAY && startDayOfWeek != DayOfWeek.SUNDAY) {
+            System.out.println("on weekday");
+            businessDay = true;
+        }
+
+        if (businessDay && businessTime) {
+            withinBusinessHours = true;
+        }
+        return withinBusinessHours;
     }
 }
