@@ -158,6 +158,11 @@ public class Appointment {
     }
 
 
+    /**
+     * Method to get the entire contact based on the contact id
+     * @return Contact
+     * @throws SQLException
+     */
     public Contact getContactFromContactId() throws SQLException {
         String contactQuery = "SELECT * FROM contacts WHERE Contact_ID = " + appointmentContactId;
         PreparedStatement contactQuerySQL = DatabaseConnection.connection.prepareStatement(contactQuery);
@@ -173,6 +178,11 @@ public class Appointment {
         return contactFromContactId;
     }
 
+    /**
+     * method to return the entire customer based on customer Id
+     * @return Customer
+     * @throws SQLException
+     */
     public Customer getCustomerFromCustomerId() throws SQLException{
         String customerQuery = "SELECT * FROM customers WHERE Customer_ID = " + appointmentCustId;
         PreparedStatement customerQuerySQL = DatabaseConnection.connection.prepareStatement(customerQuery);

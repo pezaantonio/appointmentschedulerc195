@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class UsermainController {
@@ -38,5 +38,9 @@ public class UsermainController {
         stage.setTitle("Appointments");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onExitMain(ActionEvent actionEvent){
+        System.exit(0);
     }
 }

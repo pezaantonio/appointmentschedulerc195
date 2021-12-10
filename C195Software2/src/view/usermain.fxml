@@ -27,7 +27,7 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="MainExitButton" layoutX="240.0" layoutY="263.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="157.0" text="Exit">
+      <Button fx:id="MainExitButton" layoutX="240.0" layoutY="263.0" mnemonicParsing="false" onAction="#onExitMain" prefHeight="19.0" prefWidth="157.0" text="Exit">
          <font>
             <Font size="15.0" />
          </font>

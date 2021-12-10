@@ -131,6 +131,11 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Grab selected appointment and send it to update appointment
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toUpdateAppointment(ActionEvent actionEvent) throws IOException {
 
         appointmentToUpdate = AppointmentTableView.getSelectionModel().getSelectedItem();
@@ -143,6 +148,10 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * this method returns the appointment to update
+     * @return appointmentToUpdate
+     */
     public static Appointment getAppointmentToUpdate(){
         return appointmentToUpdate;
     }

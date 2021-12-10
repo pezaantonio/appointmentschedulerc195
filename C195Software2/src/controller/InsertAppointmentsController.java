@@ -17,11 +17,13 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoField;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import controller.LoginController;
@@ -105,6 +107,17 @@ public class InsertAppointmentsController implements Initializable {
                 UserDao.getUserId(),
                 AppointmentContactComboBox.getValue().getContactID()
         );
+
+        LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
+        DayOfWeek startDayOfWeek = DayOfWeek.of(apptStartDate.get(ChronoField.DAY_OF_WEEK));
+        LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();
+
+        if(apptStartTime.isBefore(LocalTime.of(8,0)) || apptStartTime.isAfter(LocalTime.of(22,0))){
+            System.out.println("Outside of business hours");
+        }
+        if(startDayOfWeek == DayOfWeek.SATURDAY || startDayOfWeek == DayOfWeek.SUNDAY){
+            System.out.println("no weekends");
+        }
 
         AppointmentDao newAppointment = new AppointmentDao();
 
