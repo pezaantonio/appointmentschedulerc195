@@ -16,15 +16,7 @@
             </font>
         </Label>
         <Button fx:id="ReportsMainMenuButton" layoutX="410.0" layoutY="562.0" mnemonicParsing="false" onAction="#toUsermain" text="Back" />
-      <TableView fx:id="ReportTableTop" layoutX="23.0" layoutY="79.0" prefHeight="114.0" prefWidth="523.0">
-        <columns>
-          <TableColumn fx:id="ReportColumnLeft" prefWidth="154.0" text="Customer" />
-          <TableColumn fx:id="ReportColumnCenter" minWidth="0.0" prefWidth="187.0" text="Appointments by Type" />
-            <TableColumn fx:id="ReportColumRight" minWidth="0.0" prefWidth="180.0" text="Appointments by Month" />
-        </columns>
-      </TableView>
-      <Button fx:id="ReportsAppointmentsButton" layoutX="609.0" layoutY="126.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="180.0" text="Customer Appointments" />
-      <TableView fx:id="AppointmentScheduleTable" layoutX="23.0" layoutY="231.0" prefHeight="114.0" prefWidth="523.0">
+      <TableView fx:id="AppointmentScheduleTable" layoutX="25.0" layoutY="289.0" prefHeight="114.0" prefWidth="523.0">
          <columns>
             <TableColumn fx:id="AppointmentIDColumn" prefWidth="53.0" text="ID" />
             <TableColumn fx:id="TitleColumn" minWidth="0.0" prefWidth="68.0" text="Title" />
@@ -35,7 +27,25 @@
             <TableColumn fx:id="CustIdColumn" minWidth="0.0" prefWidth="64.0" text="Cust ID" />
          </columns>
       </TableView>
-      <Button fx:id="SchedulesButton1" layoutX="609.0" layoutY="433.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="180.0" text="Login Audit" />
-      <ComboBox fx:id="ContactComboBox" layoutX="609.0" layoutY="276.0" onAction="#onContactSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a contact" />
+      <Button fx:id="SchedulesButton1" layoutX="610.0" layoutY="474.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="180.0" text="Login Audit" />
+      <ComboBox fx:id="ContactComboBox" layoutX="610.0" layoutY="334.0" onAction="#onContactSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a contact" />
+      <ComboBox fx:id="MonthComboBox" layoutX="53.0" layoutY="133.0" onAction="#onMonthSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a month" />
+      <Label layoutX="286.0" layoutY="76.0" text="Count of type by month">
+         <font>
+            <Font name="Consolas Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="304.0" layoutY="237.0" text="Schedule for contact">
+         <font>
+            <Font name="Consolas Bold" size="23.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="TypeComboBox" layoutX="53.0" layoutY="185.0" onAction="#onTypeSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a type" />
+      <TableView fx:id="countTable" layoutX="599.0" layoutY="146.0" prefHeight="51.0" prefWidth="203.0">
+        <columns>
+          <TableColumn fx:id="countColumn" prefWidth="202.0" text="Count" />
+        </columns>
+      </TableView>
+      <Button fx:id="countTypeButton" layoutX="349.0" layoutY="159.0" mnemonicParsing="false" onAction="#onGenerateCount" prefHeight="25.0" prefWidth="152.0" text="Generate Report" />
     </children>
 </AnchorPane>

@@ -56,7 +56,6 @@ public class AppointmentDao implements DataAccess{
         return aDao.getAll();
     }
 
-
     @Override
     public boolean update(int id, Object o) throws SQLException {
         Appointment appointment = (Appointment) o;

@@ -204,5 +204,9 @@ public class Appointment {
         }
         return customerFromCustomerId;
     }
+
+    public String toString(){
+        return appointmentType;
+    }
 }
 

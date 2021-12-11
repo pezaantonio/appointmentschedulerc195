@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.AppointmentDao;
 import DAO.ContactDao;
 import DAO.DatabaseConnection;
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
+import java.time.Month;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
@@ -54,19 +56,37 @@ public class ReportsController implements Initializable {
     private TableColumn<Appointment, String> CustIdColumn;
     @FXML
     private ComboBox<Contact> ContactComboBox;
+    @FXML
+    private ComboBox<Month> MonthComboBox;
+    @FXML
+    private ComboBox<Appointment> TypeComboBox;
 
     @FXML
     private ObservableList<Appointment> appointmentList;
+    private ObservableList<Month> monthList;
 
     private Appointment appointment;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ContactComboBox.setItems(new ContactDao().getAll());
+        MonthComboBox.setItems(listOfMonths());
+
+        try {
+            TypeComboBox.setItems(AppointmentDao.getAllAppointments());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
-    public void reportsByTypeAndMonth(){
-        // SELECT COUNT(*) FROM (SELECT DISTINCT Type FROM appointments) as report1;
+    public void reportsByTypeAndMonth() throws SQLException {
+        String countByType = "SELECT COUNT(*) FROM (SELECT DISTINCT Type FROM appointments) as report1";
+        PreparedStatement countyByTypeSQL = DatabaseConnection.connection.prepareStatement(countByType);
+
+
+
         //SELECT * from appointments
         //WHERE EXTRACT(MONTH from Start)
     }
@@ -125,6 +145,29 @@ public class ReportsController implements Initializable {
 
         AppointmentScheduleTable.setItems(reportsByContact(ContactComboBox.getValue()));
 
+    }
+
+    /**
+     * Uses the Month class and extracts all the months and puts them into an observable list
+     * @return monthList
+     */
+    public ObservableList<Month> listOfMonths(){
+        monthList = FXCollections.observableArrayList();
+
+        for(Month month : Month.values()){
+            monthList.add(month);
+        }
+
+        return monthList;
+    }
+
+    public void onMonthSelect(){
+    }
+
+    public void onTypeSelect(){
+    }
+
+    public void onGenerateCount(){
     }
 
     /**
