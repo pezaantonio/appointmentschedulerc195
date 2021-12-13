@@ -208,6 +208,10 @@ public class ReportsController implements Initializable {
         countLabel.setText(reportsByTypeAndMonth().get(0));
     }
 
+    /**
+     * Method to count how many times there are successful logins
+     * @throws FileNotFoundException
+     */
     public void loginAuditorSuccess() throws FileNotFoundException {
         unsuccessCounter = 0;
         File file = new File("./login_activity.txt");
@@ -221,6 +225,10 @@ public class ReportsController implements Initializable {
         }
     }
 
+    /**
+     * Method to count how many times there were unsuccessful logins
+     * @throws FileNotFoundException
+     */
     public void loginAuditorUnsuccess() throws FileNotFoundException {
         unsuccessCounter = 0;
 
@@ -235,6 +243,10 @@ public class ReportsController implements Initializable {
         }
     }
 
+    /**
+     * Calls the methods to count how many successful and unsuccessful logins there are in the login_activity.txt log
+     * @throws FileNotFoundException
+     */
     public void onLoginAudit() throws FileNotFoundException {
         loginAuditorSuccess();
         loginAuditorUnsuccess();

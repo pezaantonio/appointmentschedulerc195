@@ -47,6 +47,8 @@ public class AppointmentsController implements Initializable {
     private TableColumn<Appointment, Integer> AppointmentCustIdColumn;
     @FXML
     private TableColumn<Appointment, Integer> AppointmentUserIdColumn;
+    @FXML
+    private Label deleteAppointmentLabel;
 
     private static Appointment appointmentToUpdate;
 
@@ -97,6 +99,7 @@ public class AppointmentsController implements Initializable {
                 }
                 try {
                     AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
+                    deleteAppointmentLabel.setText(selectedAppointment.getAppointmentType() + " appointment has been deleted");
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }

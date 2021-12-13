@@ -56,6 +56,7 @@ public class InsertAppointmentsController implements Initializable {
     protected int prevAppointmentId;
     protected int nextAppointmentId;
 
+    public boolean validAppointment;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,7 +91,7 @@ public class InsertAppointmentsController implements Initializable {
      * @return
      * @throws SQLException
      */
-    public Appointment insertAppointment(ActionEvent actionEvent) throws SQLException {
+    public Appointment insertAppointment(ActionEvent actionEvent) throws SQLException, NullPointerException {
         Appointment appointment = new Appointment(
                 0,
                 AppointmentTitleTextField.getText(),
@@ -127,6 +128,36 @@ public class InsertAppointmentsController implements Initializable {
         return appointment;
     }
 
+    public boolean appointmentCheck(){
+        validAppointment = false;
+
+        if(AppointmentTitleTextField.getText() == null){
+            validAppointment = false;
+        }
+        if(AppointmentDescriptionTextField.getText() == null){
+            validAppointment = false;
+        }
+        if(AppointmentLocationTextField.getText() == null){
+            validAppointment = false;
+        }
+        if(AppointmentTypeTextField.getText() == null){
+            validAppointment = false;
+        }
+        if(AppointmentCustomerIDComboBox.getValue() == null){
+            validAppointment = false;
+        }
+        if(AppointmentContactComboBox.getValue() == null){
+            validAppointment = false;
+        }
+
+        return validAppointment = true;
+
+    }
+
+    /**
+     * sends user back to appointments main menu
+     * @param actionEvent
+     */
     public void saveRedirect(ActionEvent actionEvent){
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

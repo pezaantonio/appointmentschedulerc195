@@ -7,6 +7,8 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.fxml.FXML;
 import model.Appointment;
 import model.Customer;
 import model.User;
@@ -126,5 +128,12 @@ public class AppointmentDao implements DataAccess{
         }
 
         return false;
+    }
+
+    public ObservableList<Appointment> appointmentsByWeek(){
+        ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
+
+
+        return weekAppointments;
     }
 }
