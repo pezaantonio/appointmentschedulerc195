@@ -58,6 +58,8 @@ public class InsertAppointmentsController implements Initializable {
 
     public boolean validAppointment;
 
+    private Appointment appointment;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentContactComboBox.setItems(new ContactDao().getAll());
@@ -92,22 +94,29 @@ public class InsertAppointmentsController implements Initializable {
      * @throws SQLException
      */
     public Appointment insertAppointment(ActionEvent actionEvent) throws SQLException, NullPointerException {
-        Appointment appointment = new Appointment(
-                0,
-                AppointmentTitleTextField.getText(),
-                AppointmentDescriptionTextField.getText(),
-                AppointmentLocationTextField.getText(),
-                AppointmentTypeTextField.getText(),
-                AppointmentStartComboBox.getValue(),
-                AppointmentEndComboBox.getValue(),
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                AppointmentCustomerIDComboBox.getValue().getCustomerID(),
-                UserDao.getUserId(),
-                AppointmentContactComboBox.getValue().getContactID()
-        );
+        try {
+            appointment = new Appointment(
+                    0,
+                    AppointmentTitleTextField.getText(),
+                    AppointmentDescriptionTextField.getText(),
+                    AppointmentLocationTextField.getText(),
+                    AppointmentTypeTextField.getText(),
+                    AppointmentStartComboBox.getValue(),
+                    AppointmentEndComboBox.getValue(),
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    AppointmentCustomerIDComboBox.getValue().getCustomerID(),
+                    UserDao.getUserId(),
+                    AppointmentContactComboBox.getValue().getContactID()
+            );
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
 
         LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
         LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();
@@ -129,7 +138,7 @@ public class InsertAppointmentsController implements Initializable {
     }
 
     public boolean appointmentCheck(){
-        validAppointment = false;
+        validAppointment = true;
 
         if(AppointmentTitleTextField.getText() == null){
             validAppointment = false;
@@ -149,8 +158,13 @@ public class InsertAppointmentsController implements Initializable {
         if(AppointmentContactComboBox.getValue() == null){
             validAppointment = false;
         }
-
-        return validAppointment = true;
+        if(validAppointment = false){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        return validAppointment;
 
     }
 
@@ -190,7 +204,12 @@ public class InsertAppointmentsController implements Initializable {
         boolean businessDay = false;
         boolean withinBusinessHours = false;
 
-        DayOfWeek startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
+        DayOfWeek startDayOfWeek = null;
+        try {
+            startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
+        } catch (NullPointerException e) {
+            System.out.println("Pick start time");
+        }
 
         if(apptStartTime.isAfter(LocalTime.of(8,0)) && apptStartTime.isBefore(LocalTime.of(22,0))){
             System.out.println("Inside of business hours");

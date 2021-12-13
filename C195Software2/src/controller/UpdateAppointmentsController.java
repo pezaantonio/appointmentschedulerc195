@@ -62,6 +62,8 @@ public class UpdateAppointmentsController implements Initializable {
     protected int prevAppointmentId;
     protected int nextAppointmentId;
 
+    private Appointment appointment;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -118,22 +120,29 @@ public class UpdateAppointmentsController implements Initializable {
      * @throws SQLException
      */
     public Appointment onUpdateAppointment(ActionEvent actionEvent) throws SQLException {
-        Appointment appointment = new Appointment(
-                Integer.parseInt(AppointmentIdTextField.getText()),
-                AppointmentTitleTextField.getText(),
-                AppointmentDescriptionTextField.getText(),
-                AppointmentLocationTextField.getText(),
-                AppointmentTypeTextField.getText(),
-                AppointmentStartComboBox.getValue(),
-                AppointmentEndComboBox.getValue(),
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                AppointmentCustomerIDComboBox.getValue().getCustomerID(),
-                UserDao.getUserId(),
-                AppointmentContactComboBox.getValue().getContactID()
-        );
+        try {
+            appointment = new Appointment(
+                    Integer.parseInt(AppointmentIdTextField.getText()),
+                    AppointmentTitleTextField.getText(),
+                    AppointmentDescriptionTextField.getText(),
+                    AppointmentLocationTextField.getText(),
+                    AppointmentTypeTextField.getText(),
+                    AppointmentStartComboBox.getValue(),
+                    AppointmentEndComboBox.getValue(),
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    AppointmentCustomerIDComboBox.getValue().getCustomerID(),
+                    UserDao.getUserId(),
+                    AppointmentContactComboBox.getValue().getContactID()
+            );
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
 
         LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
         LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();

@@ -44,11 +44,11 @@ public class InsertCustomerController implements Initializable {
     @FXML
     protected int nextCustomerId;
 
+    private Customer customer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
-        //CustomerDivisionComboBox.setPromptText("Please select a country");
-        //CustomerDivisionComboBox.setItems(new FirstLevelDivisionDao().getCountryDivision(1));
     }
 
     /**
@@ -57,18 +57,25 @@ public class InsertCustomerController implements Initializable {
      * @throws SQLException
      */
     public Customer insertCustomer(ActionEvent actionEvent) throws SQLException {
-        Customer customer = new Customer(
-                0,
-                CustomerNameTextField.getText(),
-                CustomerAddressTextField.getText(),
-                CustomerPostalCodeTextField.getText(),
-                CustomerPhoneNumberTextField.getText(),
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                CustomerDivisionComboBox.getValue().getDivisionID()
-        );
+        try {
+            customer = new Customer(
+                    0,
+                    CustomerNameTextField.getText(),
+                    CustomerAddressTextField.getText(),
+                    CustomerPostalCodeTextField.getText(),
+                    CustomerPhoneNumberTextField.getText(),
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    CustomerDivisionComboBox.getValue().getDivisionID()
+            );
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
 
 
         CustomerDao addCustomer = new CustomerDao();

@@ -1,11 +1,13 @@
 package model;
 
 import DAO.DatabaseConnection;
+import DAO.UserDao;
 
 import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -157,6 +159,8 @@ public class Appointment {
         this.appointmentContactId = appointmentContactId;
     }
 
+    private static boolean appointmentComing = false;
+
 
     /**
      * Method to get the entire contact based on the contact id
@@ -207,6 +211,29 @@ public class Appointment {
 
     public String toString(){
         return appointmentType;
+    }
+
+    /**
+     * Method is used to check if the user has upcoming appointments
+     * @return boolean apppointmentComing
+     * @throws SQLException
+     */
+    public static boolean appointmentTimeCheck() throws SQLException {
+        LocalDateTime appointmentTime = null;
+        String timeCheck = "SELECT * FROM appointments WHERE User_ID = " + UserDao.getUserId();
+        PreparedStatement timeCheckSQL = DatabaseConnection.connection.prepareStatement(timeCheck);
+        ResultSet result = timeCheckSQL.executeQuery();
+
+        while(result.next()){
+            appointmentTime = result.getTimestamp("Start").toLocalDateTime();
+        }
+
+        if(appointmentTime.isAfter(LocalDateTime.now()) && appointmentTime.isBefore(LocalDateTime.now().plusMinutes(15))){
+            appointmentComing = true;
+        }
+
+        return appointmentComing;
+
     }
 }
 
