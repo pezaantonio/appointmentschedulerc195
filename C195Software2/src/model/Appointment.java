@@ -231,9 +231,8 @@ public class Appointment {
         if(appointmentTime.isAfter(LocalDateTime.now()) && appointmentTime.isBefore(LocalDateTime.now().plusMinutes(15))){
             appointmentComing = true;
         }
-
         return appointmentComing;
-
     }
+
 }
 

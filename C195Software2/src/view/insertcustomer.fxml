@@ -59,8 +59,8 @@
                     </font>
                 </Label>
                 <TextField fx:id="CustomerNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="CustomerPostalCodeTextField" layoutX="290.0" layoutY="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="CustomerAddressTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="CustomerPostalCodeTextField" layoutX="290.0" layoutY="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Label fx:id="CustomerPhoneNumberLabel" text="Phone Number" GridPane.rowIndex="4">
                     <font>
                         <Font size="18.0" />

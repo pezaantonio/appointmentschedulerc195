@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AppointmentDao implements DataAccess{
 
@@ -136,4 +138,31 @@ public class AppointmentDao implements DataAccess{
 
         return weekAppointments;
     }
+
+
+    public static Appointment getUpcomingAppointment() throws SQLException {
+        String appointmentCheck = "SELECT * FROM appointments WHERE Start > current_date() AND User_ID = " + UserDao.getUserId();
+        PreparedStatement appointmentCheckSQL= DatabaseConnection.connection.prepareStatement(appointmentCheck);
+        ResultSet result = appointmentCheckSQL.executeQuery();
+
+        result.next();
+        Appointment upcomingAppointment = new Appointment(
+                result.getInt("Appointment_ID"),
+                result.getString("Title"),
+                result.getString("Description"),
+                result.getString("Location"),
+                result.getString("Type"),
+                result.getTimestamp("Start").toLocalDateTime(),
+                result.getTimestamp("End").toLocalDateTime(),
+                result.getTimestamp("Create_Date").toLocalDateTime(),
+                result.getString("Created_By"),
+                result.getTimestamp("Last_Update").toLocalDateTime(),
+                result.getString("Last_Updated_By"),
+                result.getInt("Customer_ID"),
+                result.getInt("User_ID"),
+                result.getInt("Contact_ID")
+        );
+        return upcomingAppointment;
+    }
 }
+

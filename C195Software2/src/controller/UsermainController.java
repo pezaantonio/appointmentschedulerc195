@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.AppointmentDao;
 import DAO.UserDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class UsermainController implements Initializable {
 
         try {
             if(Appointment.appointmentTimeCheck()){
-                appointmentAlertLabel.setText("You have an appointment coming up in the next 15 minutes");
+                appointmentAlertLabel.setText("You have an appointment coming up in the next 15 minutes \n" + AppointmentDao.getUpcomingAppointment().getAppointmentID() + " : " + AppointmentDao.getUpcomingAppointment().getAppointmentTitle());
             } else{
                 appointmentAlertLabel.setText("No appointments coming up");
             }
