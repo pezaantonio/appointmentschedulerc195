@@ -3,6 +3,7 @@ package controller;
 import DAO.AppointmentDao;
 import DAO.ContactDao;
 import DAO.DatabaseConnection;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,16 +13,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
 
+import javax.security.auth.callback.Callback;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -29,15 +29,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.Month;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
-
-    public TableColumn ReportColumnLeft;
     public AnchorPane Schedules;
     public Button ReportsMainMenuButton;
-    public TableView ReportTableTop;
-    public TableColumn ReportColumnCenter;
+    public Label countLabel;
     @FXML
     private TableView<Appointment> AppointmentScheduleTable;
     @FXML
@@ -64,6 +62,7 @@ public class ReportsController implements Initializable {
     @FXML
     private ObservableList<Appointment> appointmentList;
     private ObservableList<Month> monthList;
+    public ObservableList<String> countList;
 
     private Appointment appointment;
 
@@ -81,11 +80,23 @@ public class ReportsController implements Initializable {
 
     }
 
-    public void reportsByTypeAndMonth() throws SQLException {
-        String countByType = "SELECT COUNT(*) FROM (SELECT DISTINCT Type FROM appointments) as report1";
-        PreparedStatement countyByTypeSQL = DatabaseConnection.connection.prepareStatement(countByType);
+    public ObservableList<String> reportsByTypeAndMonth() throws SQLException {
+        countList = FXCollections.observableArrayList();
+        String countByType = "SELECT Count(*) FROM appointments WHERE EXTRACT(MONTH FROM Start) = ? AND Type = ?";
+        PreparedStatement countByTypeSQL = DatabaseConnection.connection.prepareStatement(countByType);
 
+        countByTypeSQL.setInt(1, MonthComboBox.getValue().getValue());
+        countByTypeSQL.setString(2, TypeComboBox.getValue().getAppointmentType());
 
+        ResultSet result = countByTypeSQL.executeQuery();
+
+        while (result.next()){
+            countList.add(result.getString("Count(*)"));
+        }
+
+        countByTypeSQL.close();
+
+        return countList;
 
         //SELECT * from appointments
         //WHERE EXTRACT(MONTH from Start)
@@ -167,7 +178,22 @@ public class ReportsController implements Initializable {
     public void onTypeSelect(){
     }
 
-    public void onGenerateCount(){
+    public void onGenerateCount() throws SQLException {
+
+        if(MonthComboBox.getValue() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Please select a month");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        if(TypeComboBox.getValue() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Please select a type");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        
+        countLabel.setText(reportsByTypeAndMonth().get(0));
     }
 
     /**

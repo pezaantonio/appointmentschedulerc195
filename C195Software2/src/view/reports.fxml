@@ -16,7 +16,7 @@
             </font>
         </Label>
         <Button fx:id="ReportsMainMenuButton" layoutX="410.0" layoutY="562.0" mnemonicParsing="false" onAction="#toUsermain" text="Back" />
-      <TableView fx:id="AppointmentScheduleTable" layoutX="25.0" layoutY="289.0" prefHeight="114.0" prefWidth="523.0">
+      <TableView fx:id="AppointmentScheduleTable" layoutX="34.0" layoutY="290.0" prefHeight="114.0" prefWidth="523.0">
          <columns>
             <TableColumn fx:id="AppointmentIDColumn" prefWidth="53.0" text="ID" />
             <TableColumn fx:id="TitleColumn" minWidth="0.0" prefWidth="68.0" text="Title" />
@@ -41,11 +41,16 @@
          </font>
       </Label>
       <ComboBox fx:id="TypeComboBox" layoutX="53.0" layoutY="185.0" onAction="#onTypeSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a type" />
-      <TableView fx:id="countTable" layoutX="599.0" layoutY="146.0" prefHeight="51.0" prefWidth="203.0">
-        <columns>
-          <TableColumn fx:id="countColumn" prefWidth="202.0" text="Count" />
-        </columns>
-      </TableView>
       <Button fx:id="countTypeButton" layoutX="349.0" layoutY="159.0" mnemonicParsing="false" onAction="#onGenerateCount" prefHeight="25.0" prefWidth="152.0" text="Generate Report" />
+      <Label fx:id="countLabelHead" layoutX="673.0" layoutY="135.0" text="Count">
+         <font>
+            <Font name="Consolas Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="countLabel" layoutX="691.0" layoutY="153.0" prefHeight="37.0" prefWidth="0.0" text="0">
+         <font>
+            <Font name="Consolas Bold" size="32.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
