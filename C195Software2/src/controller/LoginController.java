@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -70,7 +72,7 @@ public class LoginController implements Initializable {
         String passwordInput = PasswordTextField.getText();
 
         if (UserDao.checkUser(usernameInput, passwordInput)) {
-            loginLogger(usernameInput);
+            loginLoggerSuccess(usernameInput);
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
             Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -78,13 +80,9 @@ public class LoginController implements Initializable {
             stage.show();
 
         } else {
+            loginLoggerFail(usernameInput);
             ResourceBundle rb = ResourceBundle.getBundle("properties/login", Locale.getDefault());
             LoginErrorLabel.setText(rb.getString("incorrect"));
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Login Error");
-//            alert.setHeaderText("Incorrect Username and/or Password");
-//            alert.setContentText("Enter valid Username and Password");
-//            Optional<ButtonType> result = alert.showAndWait();
         }
 
     }
@@ -93,29 +91,33 @@ public class LoginController implements Initializable {
      * Method to add logged in user to a log file
      * @param user
      */
-    private void loginLogger(String user) {
+    private void loginLoggerSuccess(String user) {
         try{
-            String logFile = "loginlogs.txt";
-            PrintWriter pWriter = new PrintWriter(logFile);
-            pWriter.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
-            System.out.println("New login recorded in log file.");
-            pWriter.flush();
-            pWriter.close();
+            String logFile = "login_activity.txt";
+            BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile, true));
+            bWriter.append(DateTime.getTimeStamp() + " User: " + user + " - Successful " + "\n");
+            System.out.println("login recorded");
+            bWriter.flush();
+            bWriter.close();
         } catch (IOException e) {
             System.out.println(e);
         }
     }
-//
-//    public int getCurrentUserID() throws SQLException {
-//        String userQuery = "SELECT User_ID from users WHERE User_Name = ?";
-//        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
-//        ResultSet result = userQuerySQL.executeQuery();
-//
-//        while(result.next()){
-//            userQuerySQL.setString(1, UsernameTextField.getText());
-//
-//            userIDFromUsername = result.getInt(1);
-//        }
-//        return userIDFromUsername;
-//    }
+
+    /**
+     * Method to add logged in user to a log file if fail
+     * @param user
+     */
+    private void loginLoggerFail(String user) {
+        try{
+            String logFile = "login_activity.txt";
+            BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile, true));
+            bWriter.append(DateTime.getTimeStamp() + " User: " + user + " - Unsuccessful " + "\n");
+            System.out.println("login recorded");
+            bWriter.flush();
+            bWriter.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
 }

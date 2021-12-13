@@ -22,6 +22,8 @@ import model.Contact;
 
 import javax.security.auth.callback.Callback;
 import javax.xml.transform.Result;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -31,6 +33,7 @@ import java.time.DayOfWeek;
 import java.time.Month;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class ReportsController implements Initializable {
     public AnchorPane Schedules;
@@ -58,6 +61,10 @@ public class ReportsController implements Initializable {
     private ComboBox<Month> MonthComboBox;
     @FXML
     private ComboBox<Appointment> TypeComboBox;
+    @FXML
+    private Label successfulLabel;
+    @FXML
+    private Label unsuccessfulLabel;
 
     @FXML
     private ObservableList<Appointment> appointmentList;
@@ -65,6 +72,12 @@ public class ReportsController implements Initializable {
     public ObservableList<String> countList;
 
     private Appointment appointment;
+
+    public String success = "Successful";
+    public String unsuccess = "Unsuccessful";
+
+    public int successCounter;
+    public int unsuccessCounter;
 
 
     @Override
@@ -137,7 +150,6 @@ public class ReportsController implements Initializable {
         }
         reportsByContactSQL.close();
         return appointmentList;
-
     }
 
     /**
@@ -192,8 +204,45 @@ public class ReportsController implements Initializable {
             alert.setContentText("Please select a type");
             Optional<ButtonType> result = alert.showAndWait();
         }
-        
+
         countLabel.setText(reportsByTypeAndMonth().get(0));
+    }
+
+    public void loginAuditorSuccess() throws FileNotFoundException {
+        unsuccessCounter = 0;
+        File file = new File("./login_activity.txt");
+        Scanner scanner = new Scanner(file);
+
+        while(scanner.hasNextLine()){
+            scanner.nextLine();
+            if (scanner.nextLine().contains(success)){
+                successCounter++;
+            }
+        }
+    }
+
+    public void loginAuditorUnsuccess() throws FileNotFoundException {
+        unsuccessCounter = 0;
+
+        File file = new File("./login_activity.txt");
+        Scanner scanner = new Scanner(file);
+
+        while(scanner.hasNextLine()) {
+            scanner.nextLine();
+            if (scanner.nextLine().contains(unsuccess)) {
+                unsuccessCounter++;
+            }
+        }
+    }
+
+    public void onLoginAudit() throws FileNotFoundException {
+        loginAuditorSuccess();
+        loginAuditorUnsuccess();
+        successfulLabel.setText(Integer.toString(successCounter));
+        unsuccessfulLabel.setText(Integer.toString(unsuccessCounter));
+
+        System.out.print(successCounter);
+        System.out.print(unsuccessCounter);
     }
 
     /**

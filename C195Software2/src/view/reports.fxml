@@ -27,7 +27,7 @@
             <TableColumn fx:id="CustIdColumn" minWidth="0.0" prefWidth="64.0" text="Cust ID" />
          </columns>
       </TableView>
-      <Button fx:id="SchedulesButton1" layoutX="610.0" layoutY="474.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="180.0" text="Login Audit" />
+      <Button fx:id="LoginAudit" layoutX="610.0" layoutY="474.0" mnemonicParsing="false" onAction="#onLoginAudit" prefHeight="18.0" prefWidth="180.0" text="Login Audit" />
       <ComboBox fx:id="ContactComboBox" layoutX="610.0" layoutY="334.0" onAction="#onContactSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a contact" />
       <ComboBox fx:id="MonthComboBox" layoutX="53.0" layoutY="133.0" onAction="#onMonthSelect" prefHeight="25.0" prefWidth="180.0" promptText="Please select a month" />
       <Label layoutX="286.0" layoutY="76.0" text="Count of type by month">
@@ -48,6 +48,31 @@
          </font>
       </Label>
       <Label fx:id="countLabel" layoutX="691.0" layoutY="153.0" prefHeight="37.0" prefWidth="0.0" text="0">
+         <font>
+            <Font name="Consolas Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label fx:id="countLabelHead1" layoutX="286.0" layoutY="476.0" text="Successful">
+         <font>
+            <Font name="Consolas Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="countLabelHead2" layoutX="451.0" layoutY="476.0" text="Unsuccessful">
+         <font>
+            <Font name="Consolas Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="343.0" layoutY="436.0" text="Login auditor">
+         <font>
+            <Font name="Consolas Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="successfulLabel" layoutX="334.0" layoutY="499.0" prefHeight="37.0" prefWidth="0.0" text="0">
+         <font>
+            <Font name="Consolas Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label fx:id="unsuccessfulLabel" layoutX="505.0" layoutY="499.0" prefHeight="37.0" prefWidth="0.0" text="0">
          <font>
             <Font name="Consolas Bold" size="32.0" />
          </font>
