@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
+import model.User;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -52,6 +53,8 @@ public class InsertAppointmentsController implements Initializable {
     private ComboBox<Contact> AppointmentContactComboBox;
     @FXML
     private ComboBox<Customer> AppointmentCustomerIDComboBox;
+    @FXML
+    private ComboBox<User> AppointmentUserIDComboBox;
 
     protected int prevAppointmentId;
     protected int nextAppointmentId;
@@ -66,6 +69,7 @@ public class InsertAppointmentsController implements Initializable {
         AppointmentStartComboBox.setItems(new DateTime().getStartList());
         try {
             AppointmentCustomerIDComboBox.setItems(new CustomerDao().getAll());
+            AppointmentUserIDComboBox.setItems(new UserDao().getAll());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -108,7 +112,7 @@ public class InsertAppointmentsController implements Initializable {
                     LocalDateTime.now(),
                     UserDao.getUserName(),
                     AppointmentCustomerIDComboBox.getValue().getCustomerID(),
-                    UserDao.getUserId(),
+                    AppointmentUserIDComboBox.getValue().getUserID(),
                     AppointmentContactComboBox.getValue().getContactID()
             );
         } catch (NullPointerException e) {
@@ -135,37 +139,6 @@ public class InsertAppointmentsController implements Initializable {
         }
 
         return appointment;
-    }
-
-    public boolean appointmentCheck(){
-        validAppointment = true;
-
-        if(AppointmentTitleTextField.getText() == null){
-            validAppointment = false;
-        }
-        if(AppointmentDescriptionTextField.getText() == null){
-            validAppointment = false;
-        }
-        if(AppointmentLocationTextField.getText() == null){
-            validAppointment = false;
-        }
-        if(AppointmentTypeTextField.getText() == null){
-            validAppointment = false;
-        }
-        if(AppointmentCustomerIDComboBox.getValue() == null){
-            validAppointment = false;
-        }
-        if(AppointmentContactComboBox.getValue() == null){
-            validAppointment = false;
-        }
-        if(validAppointment = false){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
-            Optional<ButtonType> result = alert.showAndWait();
-        }
-        return validAppointment;
-
     }
 
     /**

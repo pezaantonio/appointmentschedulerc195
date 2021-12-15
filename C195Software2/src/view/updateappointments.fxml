@@ -92,9 +92,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="AppointmentUserIdTextField" disable="true" editable="false" layoutX="290.0" layoutY="297.0" text="Auto-Filled" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                 <ComboBox fx:id="AppointmentContactComboBox" prefHeight="26.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <ComboBox fx:id="AppointmentCustomerIDComboBox" layoutX="290.0" layoutY="224.0" prefHeight="26.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ComboBox fx:id="AppointmentUserIDComboBox" layoutX="290.0" layoutY="258.0" prefHeight="26.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             </children>
         </GridPane>
         <Button fx:id="AppointmentBackButton" layoutX="137.0" layoutY="469.0" mnemonicParsing="false" onAction="#toAppointments" prefHeight="26.0" prefWidth="90.0" text="Back" />

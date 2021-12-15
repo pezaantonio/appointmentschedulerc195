@@ -19,6 +19,10 @@ public class ContactDao implements DataAccess {
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
 
     @Override
+    /**
+     * Method to get all contacts in the DB and return an observable list
+     * @return ObservableList<Contact> ContactList
+     */
     public ObservableList<Contact> getAll() {
         try {
             contactList.clear();
@@ -32,7 +36,6 @@ public class ContactDao implements DataAccess {
                 String contactEmail = result.getString("Email");
 
                 contactList.add(new Contact(contactID, contactName, contactEmail));
-                ;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

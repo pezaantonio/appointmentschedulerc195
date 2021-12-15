@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
+import model.User;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -56,6 +57,8 @@ public class UpdateAppointmentsController implements Initializable {
     private ComboBox<Contact> AppointmentContactComboBox;
     @FXML
     private ComboBox<Customer> AppointmentCustomerIDComboBox;
+    @FXML
+    private ComboBox<User> AppointmentUserIDComboBox;
 
     private Appointment appointmentToUpdate;
 
@@ -78,11 +81,7 @@ public class UpdateAppointmentsController implements Initializable {
         AppointmentEndComboBox.setValue(appointmentToUpdate.getAppointmentEnd());
         try {
             AppointmentCustomerIDComboBox.setValue(appointmentToUpdate.getCustomerFromCustomerId());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        AppointmentUserIdTextField.setText(Integer.toString(appointmentToUpdate.getAppointmentUserId()));
-        try {
+            AppointmentUserIDComboBox.setValue(appointmentToUpdate.getApppointmentUser());
             AppointmentContactComboBox.setValue(appointmentToUpdate.getContactFromContactId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -92,6 +91,7 @@ public class UpdateAppointmentsController implements Initializable {
         AppointmentStartComboBox.setItems(new DateTime().getStartList());
         try {
             AppointmentCustomerIDComboBox.setItems(new CustomerDao().getAll());
+            AppointmentUserIDComboBox.setItems(new UserDao().getAll());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -134,7 +134,7 @@ public class UpdateAppointmentsController implements Initializable {
                     LocalDateTime.now(),
                     UserDao.getUserName(),
                     AppointmentCustomerIDComboBox.getValue().getCustomerID(),
-                    UserDao.getUserId(),
+                    AppointmentUserIDComboBox.getValue().getUserID(),
                     AppointmentContactComboBox.getValue().getContactID()
             );
         } catch (NullPointerException e) {

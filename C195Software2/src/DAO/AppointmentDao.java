@@ -64,7 +64,7 @@ public class AppointmentDao implements DataAccess{
     public boolean update(int id, Object o) throws SQLException {
         Appointment appointment = (Appointment) o;
 
-        String updateAppointment = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = NOW(), Last_Updated_By = ?, Customer_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+        String updateAppointment = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = NOW(), Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement updateAppointmentSQL = DatabaseConnection.connection.prepareStatement(updateAppointment);
 
         updateAppointmentSQL.setString(1, appointment.getAppointmentTitle());
@@ -75,9 +75,10 @@ public class AppointmentDao implements DataAccess{
         updateAppointmentSQL.setTimestamp(6, Timestamp.valueOf(appointment.getAppointmentEnd()));
         updateAppointmentSQL.setString(7, UserDao.getUserName());
         updateAppointmentSQL.setInt(8, appointment.getAppointmentCustId());
-        updateAppointmentSQL.setInt(9, appointment.getAppointmentContactId());
+        updateAppointmentSQL.setInt(9, appointment.getAppointmentUserId());
+        updateAppointmentSQL.setInt(10, appointment.getAppointmentContactId());
 
-        updateAppointmentSQL.setInt(10, appointment.getAppointmentID());
+        updateAppointmentSQL.setInt(11, appointment.getAppointmentID());
 
         if (updateAppointmentSQL.executeUpdate() > 0){
             return true;

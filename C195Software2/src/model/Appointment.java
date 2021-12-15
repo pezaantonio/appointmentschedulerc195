@@ -29,6 +29,7 @@ public class Appointment {
 
     protected Contact contactFromContactId;
     protected Customer customerFromCustomerId;
+    private User userFromUserId;
 
     public Appointment(int appointmentID, String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, LocalDateTime appointmentCreateDate, String appointmentCreatedBy, LocalDateTime appointmentLastUpdate, String appointmentUpdatedBy, int appointmentCustId, int appointmentUserId, int appointmentContactId) {
         this.appointmentID = appointmentID;
@@ -234,5 +235,18 @@ public class Appointment {
         return appointmentComing;
     }
 
+    public User getApppointmentUser() throws SQLException {
+        String userQuery = "SELECT * FROM Users WHERE User_ID = " + appointmentUserId;
+        PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);
+        ResultSet result = userQuerySQL.executeQuery();
+
+        while(result.next()){
+            userFromUserId = new User(
+                    appointmentUserId,
+                    result.getString("User_Name")
+            );
+        }
+        return userFromUserId;
+    }
 }
 

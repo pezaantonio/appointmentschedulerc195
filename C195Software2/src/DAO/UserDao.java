@@ -7,6 +7,7 @@ package DAO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Contact;
 import model.User;
 
 import java.sql.PreparedStatement;
@@ -14,8 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDao implements DataAccess{
-
-    private ObservableList<User> userList;
 
     private static int userId;
     private static String userName;
@@ -48,8 +47,31 @@ public class UserDao implements DataAccess{
     //todo getter and setter for userID and UserName
 
     @Override
-    public ObservableList<User> getAll(){
-        return null;
+    /**
+     * Method to return all users
+     * @return ObservableList<User> userList
+     */
+    public ObservableList<User> getAll() throws SQLException{
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        userList.clear();
+        String userQuery = "SELECT * FROM users";
+        PreparedStatement userSQL = DatabaseConnection.connection.prepareStatement(userQuery);
+        ResultSet result = userSQL.executeQuery();
+
+        while (result.next()) {
+            int userID = result.getInt("User_ID");
+            String userName = result.getString("User_Name");
+
+            userList.add(new User(userID, userName));
+        }
+        return userList;
+    }
+
+
+    public static ObservableList<User> getAllUsers() throws SQLException {
+        UserDao uDao = new UserDao();
+
+        return uDao.getAll();
     }
 
     @Override
