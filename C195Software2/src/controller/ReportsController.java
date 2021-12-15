@@ -84,13 +84,11 @@ public class ReportsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ContactComboBox.setItems(new ContactDao().getAll());
         MonthComboBox.setItems(listOfMonths());
-
         try {
             TypeComboBox.setItems(AppointmentDao.getAllAppointments());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public ObservableList<String> reportsByTypeAndMonth() throws SQLException {
@@ -190,6 +188,10 @@ public class ReportsController implements Initializable {
     public void onTypeSelect(){
     }
 
+    /**
+     * This method will count the appointments my month and type
+     * @throws SQLException
+     */
     public void onGenerateCount() throws SQLException {
 
         if(MonthComboBox.getValue() == null){
@@ -210,16 +212,19 @@ public class ReportsController implements Initializable {
 
     /**
      * Method to count how many times there are successful logins
+     * Lambda expression is being used to increment the successCounter in order to return it to the reports interface
      * @throws FileNotFoundException
      */
     public void loginAuditorSuccess() throws FileNotFoundException {
         successCounter = 0;
+        LambdaInterface sCount = i -> i + 1;
         File file = new File("./login_activity.txt");
         Scanner scanner = new Scanner(file);
 
         while(scanner.hasNextLine()){
             if (scanner.nextLine().contains(success)){
-                successCounter = successCounter + 1;
+                successCounter = sCount.counter(successCounter);
+                System.out.println(successCounter);
             }
         }
     }

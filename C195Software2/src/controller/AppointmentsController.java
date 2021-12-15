@@ -2,6 +2,9 @@ package controller;
 
 import DAO.AppointmentDao;
 import DAO.CustomerDao;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +22,20 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
 
     public Button AppointmentsBackButton;
+    @FXML
+    private RadioButton AppointmentMonthRadioButton;
     @FXML
     private TableView<Appointment> AppointmentTableView;
     @FXML
@@ -50,12 +61,22 @@ public class AppointmentsController implements Initializable {
     @FXML
     private Label deleteAppointmentLabel;
 
+    private ObservableList<Appointment> monthlyList;
+
     private static Appointment appointmentToUpdate;
 
-    private boolean isWeekly;
+    private ObservableList<Appointment> weeklyList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(AppointmentMonthRadioButton.isSelected()){
+            try {
+                AppointmentTableView.setItems(isMonthly());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
 
         AppointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentID"));
         AppointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentTitle"));
@@ -68,11 +89,11 @@ public class AppointmentsController implements Initializable {
         AppointmentCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustId"));
         AppointmentUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserId"));
 
-        try {
-            AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+//        try {
+//            AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+  //      }
 }
 
     public void onDeleteAppointment(ActionEvent actionEvent) throws IOException {
@@ -105,6 +126,54 @@ public class AppointmentsController implements Initializable {
                 }
             }
         }
+    }
+
+    /**
+     * Method to set Table based on appointment month
+     * @throws SQLException
+     */
+    public void isMonthlyList() throws SQLException {
+        AppointmentTableView.setItems(isMonthly());
+    }
+
+    /**
+     * Method to set items based on appointment week
+     * @throws SQLException
+     */
+    public void isWeeklyList() throws SQLException {
+        AppointmentTableView.setItems(isWeekly());
+    }
+
+    /**
+     * Method to handle radio button for monthly
+     * @return ObservableLIst<Appointent> monthlyList
+     * @throws SQLException
+     */
+    public ObservableList<Appointment> isMonthly() throws SQLException {
+        monthlyList = FXCollections.observableArrayList();
+
+        for(Appointment appointment : AppointmentDao.getAllAppointments()){
+            if(appointment.getAppointmentMonth().equals(YearMonth.now())){
+                monthlyList.add(appointment);
+            }
+        }
+        return monthlyList;
+    }
+
+    /**
+     * Method to handle radio button for weeekly
+     * @return
+     * @throws SQLException
+     */
+    public ObservableList<Appointment> isWeekly() throws SQLException {
+        weeklyList = FXCollections.observableArrayList();
+
+        for(Appointment appointment : AppointmentDao.getAllAppointments()){
+            if(appointment.getWeekFromDay() == getCurrentWeek()){
+                weeklyList.add(appointment);
+            }
+        }
+        return weeklyList;
     }
 
     /**
@@ -157,6 +226,14 @@ public class AppointmentsController implements Initializable {
      */
     public static Appointment getAppointmentToUpdate(){
         return appointmentToUpdate;
+    }
+
+    private int getCurrentWeek(){
+        LocalDate thisWeek = LocalDate.now();
+        WeekFields thisWeekFields = WeekFields.of(Locale.getDefault());
+        int currentWeek = thisWeek.get(thisWeekFields.weekOfWeekBasedYear());
+
+        return currentWeek;
     }
 
 }

@@ -8,7 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.temporal.WeekFields;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class Appointment {
 
@@ -252,6 +258,28 @@ public class Appointment {
             );
         }
         return userFromUserId;
+    }
+
+    /**
+     * Method will check the appointment's month
+     * @return YearMonth appointmentYearMonth
+     */
+    public YearMonth getAppointmentMonth(){
+        YearMonth appointmentYearMonth = YearMonth.from(getAppointmentStart());
+
+        return appointmentYearMonth;
+    }
+
+    /**
+     * Method will return the week number of the year  based on the date
+     * @return int weekFromDay
+     */
+    public int getWeekFromDay(){
+        LocalDate date = getAppointmentStart().toLocalDate();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        int weekFromDay = date.get(weekFields.weekOfWeekBasedYear());
+
+        return weekFromDay;
     }
 }
 

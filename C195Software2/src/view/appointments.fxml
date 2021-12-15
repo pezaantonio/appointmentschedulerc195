@@ -35,7 +35,7 @@
             <TableColumn fx:id="AppointmentUserIdColumn" prefWidth="79.0" text="User ID" />
             </columns>
         </TableView>
-        <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="446.0" layoutY="538.0" mnemonicParsing="false" selected="true" text="Current Week">
+        <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="446.0" layoutY="538.0" mnemonicParsing="false" onAction="#isWeeklyList" text="Current Week">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -43,7 +43,7 @@
             <ToggleGroup fx:id="monthWeek" />
          </toggleGroup>
         </RadioButton>
-        <RadioButton fx:id="AppointmentMonthRadioButton" layoutX="705.0" layoutY="538.0" mnemonicParsing="false" text="Current Month" toggleGroup="$monthWeek">
+        <RadioButton fx:id="AppointmentMonthRadioButton" layoutX="705.0" layoutY="538.0" mnemonicParsing="false" onAction="#isMonthlyList" selected="true" text="Current Month" toggleGroup="$monthWeek">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
