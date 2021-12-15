@@ -29,13 +29,13 @@ public class UsermainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            if(Appointment.appointmentTimeCheck()){
+            if (Appointment.appointmentTimeCheck()) {
                 appointmentAlertLabel.setText("You have an appointment coming up in the next 15 minutes \n" + AppointmentDao.getUpcomingAppointment().getAppointmentID() + " : " + AppointmentDao.getUpcomingAppointment().getAppointmentTitle());
-            } else{
+            } else {
                 appointmentAlertLabel.setText("No appointments coming up");
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (NullPointerException | SQLException e) {
+            appointmentAlertLabel.setText("No appointments coming up");
         }
     }
 

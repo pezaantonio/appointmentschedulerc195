@@ -73,8 +73,8 @@ public class ReportsController implements Initializable {
 
     private Appointment appointment;
 
-    public String success = "Successful";
-    public String unsuccess = "Unsuccessful";
+    public String success = " - Successful";
+    public String unsuccess = " - Unsuccessful";
 
     public int successCounter;
     public int unsuccessCounter;
@@ -213,14 +213,15 @@ public class ReportsController implements Initializable {
      * @throws FileNotFoundException
      */
     public void loginAuditorSuccess() throws FileNotFoundException {
-        unsuccessCounter = 0;
+        successCounter = 0;
         File file = new File("./login_activity.txt");
         Scanner scanner = new Scanner(file);
 
         while(scanner.hasNextLine()){
             scanner.nextLine();
             if (scanner.nextLine().contains(success)){
-                successCounter++;
+                System.out.println("gets here");
+                successCounter = successCounter + 1;
             }
         }
     }
@@ -238,7 +239,7 @@ public class ReportsController implements Initializable {
         while(scanner.hasNextLine()) {
             scanner.nextLine();
             if (scanner.nextLine().contains(unsuccess)) {
-                unsuccessCounter++;
+                unsuccessCounter = unsuccessCounter + 1;
             }
         }
     }

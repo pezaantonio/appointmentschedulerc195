@@ -46,6 +46,8 @@ public class InsertCustomerController implements Initializable {
 
     private Customer customer;
 
+    private boolean isValid;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCountryComboBox.setItems(new CountryDao().getCountryList());
@@ -80,8 +82,14 @@ public class InsertCustomerController implements Initializable {
 
         CustomerDao addCustomer = new CustomerDao();
 
-        if(addCustomer.insert(customer)){
-            saveRedirect(actionEvent);}
+        if(addCustomer.insert(customer) && isValidCustomer()){
+            saveRedirect(actionEvent);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
         return customer;
     }
 
@@ -105,6 +113,34 @@ public class InsertCustomerController implements Initializable {
      */
     public void onCountrySelect(ActionEvent actionEvent) {
         CustomerDivisionComboBox.setItems(FirstLevelDivisionDao.getCountryDivision(CustomerCountryComboBox.getSelectionModel().getSelectedItem().getCountryID()));
+    }
+
+    /**
+     * Method will determine if all entries are filled before sending to database
+     * @return boolean isValid
+     */
+    public boolean isValidCustomer(){
+        isValid = true;
+
+        if(CustomerNameTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerAddressTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerPostalCodeTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerPhoneNumberTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerCountryComboBox.getValue() == null){
+            isValid = false;
+        }
+        if(CustomerDivisionComboBox.getValue() == null){
+            isValid = false;
+        }
+        return isValid;
     }
 
     /**

@@ -67,6 +67,10 @@ public class CustomersController implements Initializable {
     private ComboBox<Country> CustomerCountryComboBox;
     @FXML
     protected Customer selectedCustomer;
+
+    private Customer customer;
+
+    private boolean isValid;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("CustomerID"));
@@ -116,26 +120,43 @@ public class CustomersController implements Initializable {
      */
     public void onSaveUpdate(ActionEvent actionEvent) throws SQLException {
         CustomerDao updatedCustomer = new CustomerDao();
-        Customer customer = new Customer(
-                Integer.parseInt(CustomerCustomerIDTextField.getText()),
-                CustomerCustomerNameTextField.getText(),
-                CustomerAddressTextField.getText(),
-                CustomerPostalCodeTextField.getText(),
-                CustomerPhoneTextField.getText(),
-                LocalDateTime.now(),
-                "",
-                LocalDateTime.now(),
-                UserDao.getUserName(),
-                CustomerDivisionComboBox.getValue().getDivisionID()
-        );
+        try {
+            customer = new Customer(
+                    Integer.parseInt(CustomerCustomerIDTextField.getText()),
+                    CustomerCustomerNameTextField.getText(),
+                    CustomerAddressTextField.getText(),
+                    CustomerPostalCodeTextField.getText(),
+                    CustomerPhoneTextField.getText(),
+                    LocalDateTime.now(),
+                    "",
+                    LocalDateTime.now(),
+                    UserDao.getUserName(),
+                    CustomerDivisionComboBox.getValue().getDivisionID()
+            );
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
 
-        if (updatedCustomer.update(customer.getCustomerID(), customer)) {
+        if (updatedCustomer.update(customer.getCustomerID(), customer) && isValidCustomer()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Success");
             alert.setContentText("Customer has been updated");
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == ButtonType.OK){
+            if(result.isPresent() && result.get() == ButtonType.OK) {
                 CustomerTableView.setItems(CustomerDao.getAllCustomers());
+                CustomerCustomerIDTextField.clear();
+                CustomerCustomerNameTextField.clear();
+                CustomerAddressTextField.clear();
+                CustomerPostalCodeTextField.clear();
+                CustomerPhoneTextField.clear();
+            } else {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Error");
+                alert2.setContentText("One or more entries are empty. Please submit an entry for each field");
+                Optional<ButtonType> result2 = alert2.showAndWait();
             }
         }
     }
@@ -178,6 +199,37 @@ public class CustomersController implements Initializable {
             }
         }
 
+    }
+
+    /**
+     * Method will determine if all entries are filled before sending to database
+     * @return boolean isValid
+     */
+    public boolean isValidCustomer(){
+        isValid = true;
+
+        if(CustomerCustomerNameTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerAddressTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerPostalCodeTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerPhoneTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerCustomerNameTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(CustomerCountryComboBox.getValue() == null){
+            isValid = false;
+        }
+        if(CustomerDivisionComboBox.getValue() == null){
+            isValid = false;
+        }
+        return isValid;
     }
 
     /**

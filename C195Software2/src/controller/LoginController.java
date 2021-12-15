@@ -95,7 +95,7 @@ public class LoginController implements Initializable {
         try{
             String logFile = "login_activity.txt";
             BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile, true));
-            bWriter.append(DateTime.getTimeStamp() + " User: " + user + " - Successful " + "\n");
+            bWriter.append(DateTime.getTimeStamp() + " User: " + user + " - Successful" + "\n");
             System.out.println("login recorded");
             bWriter.flush();
             bWriter.close();
@@ -112,7 +112,7 @@ public class LoginController implements Initializable {
         try{
             String logFile = "login_activity.txt";
             BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile, true));
-            bWriter.append(DateTime.getTimeStamp() + " User: " + user + " - Unsuccessful " + "\n");
+            bWriter.append(DateTime.getTimeStamp() + " User: " + user + " - Unsuccessful" + "\n");
             System.out.println("login recorded");
             bWriter.flush();
             bWriter.close();
