@@ -23,6 +23,10 @@ import java.time.LocalDateTime;
 public class AppointmentDao implements DataAccess{
 
     @Override
+    /**
+     * Method to return all the appointments from the database
+     * @return appointmentList
+     */
     public ObservableList<Appointment> getAll() throws SQLException {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         String sqlQuery = "SELECT * FROM appointments";
@@ -54,6 +58,11 @@ public class AppointmentDao implements DataAccess{
         return appointmentList;
     }
 
+    /**
+     * Static method to return all appointments in the database
+     * @return all appointments
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         AppointmentDao aDao = new AppointmentDao();
 
@@ -61,6 +70,11 @@ public class AppointmentDao implements DataAccess{
     }
 
     @Override
+    /**
+     * Method to update a selected appointment
+     * @param int id, Object o
+     * @return boolean
+     */
     public boolean update(int id, Object o) throws SQLException {
         Appointment appointment = (Appointment) o;
 
@@ -88,6 +102,10 @@ public class AppointmentDao implements DataAccess{
     }
 
     @Override
+    /**
+     * Method to insert an appointment into the database
+     * @return boolean
+     */
     public boolean insert(Object o) throws SQLException{
         Appointment appointment = (Appointment) o;
         boolean validInsert = false;
@@ -120,6 +138,10 @@ public class AppointmentDao implements DataAccess{
     }
 
     @Override
+    /**
+     * Method to delete a selected appointment
+     * @return boolean
+     */
     public boolean delete(int id) throws SQLException{
         String deleteAppointment = "DELETE FROM appointments WHERE Appointment_ID =?";
         PreparedStatement deleteAppointmentSQL = DatabaseConnection.connection.prepareStatement(deleteAppointment);
@@ -141,6 +163,11 @@ public class AppointmentDao implements DataAccess{
     }
 
 
+    /**
+     * Method will find an upcoming appointment for the logged in user
+     * @return Appointment upcomingAppointment
+     * @throws SQLException
+     */
     public static Appointment getUpcomingAppointment() throws SQLException {
         String appointmentCheck = "SELECT * FROM appointments WHERE Start > current_date() AND User_ID = " + UserDao.getUserId();
         PreparedStatement appointmentCheckSQL= DatabaseConnection.connection.prepareStatement(appointmentCheck);

@@ -235,6 +235,11 @@ public class Appointment {
         return appointmentComing;
     }
 
+    /**
+     * Method to get the username from the user ID in appointment ID
+     * @return User userFromUserId
+     * @throws SQLException
+     */
     public User getApppointmentUser() throws SQLException {
         String userQuery = "SELECT * FROM Users WHERE User_ID = " + appointmentUserId;
         PreparedStatement userQuerySQL = DatabaseConnection.connection.prepareStatement(userQuery);

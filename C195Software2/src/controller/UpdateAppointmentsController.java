@@ -97,6 +97,10 @@ public class UpdateAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Method will change the end time based on the start time selection
+     * @param actionEvent
+     */
     public void onStartTimeSelect(ActionEvent actionEvent){
         AppointmentEndComboBox.setItems(new DateTime().getEndList(AppointmentStartComboBox.getSelectionModel().getSelectedItem()));
     }
@@ -163,6 +167,10 @@ public class UpdateAppointmentsController implements Initializable {
         return appointment;
     }
 
+    /**
+     * Method to save and then redirect back to the appointments menu
+     * @param actionEvent
+     */
     public void saveRedirect(ActionEvent actionEvent){
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
