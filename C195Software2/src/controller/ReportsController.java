@@ -218,9 +218,7 @@ public class ReportsController implements Initializable {
         Scanner scanner = new Scanner(file);
 
         while(scanner.hasNextLine()){
-            scanner.nextLine();
             if (scanner.nextLine().contains(success)){
-                System.out.println("gets here");
                 successCounter = successCounter + 1;
             }
         }
@@ -237,7 +235,6 @@ public class ReportsController implements Initializable {
         Scanner scanner = new Scanner(file);
 
         while(scanner.hasNextLine()) {
-            scanner.nextLine();
             if (scanner.nextLine().contains(unsuccess)) {
                 unsuccessCounter = unsuccessCounter + 1;
             }
