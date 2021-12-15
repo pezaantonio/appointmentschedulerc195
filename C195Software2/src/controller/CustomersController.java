@@ -175,7 +175,6 @@ public class CustomersController implements Initializable {
      */
     public void onDeleteCustomer(ActionEvent actionEvent) throws SQLException {
         Customer selectedCustomer = CustomerTableView.getSelectionModel().getSelectedItem();
-        int selectedCustomerId = selectedCustomer.getCustomerID();
 
         if(selectedCustomer == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -189,6 +188,7 @@ public class CustomersController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK){
+                int selectedCustomerId = selectedCustomer.getCustomerID();
                 CustomerDao deleteCustomer = new CustomerDao();
                 deleteCustomer.delete(selectedCustomerId);
                 try {
@@ -198,7 +198,6 @@ public class CustomersController implements Initializable {
                 }
             }
         }
-
     }
 
     /**

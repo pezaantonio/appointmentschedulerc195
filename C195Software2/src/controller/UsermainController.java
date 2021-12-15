@@ -19,6 +19,13 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Lambda alert used to alert the user if an appointment is coming up
+ */
+interface LambdaAlert{
+    String alert();
+}
+
 public class UsermainController implements Initializable {
 
     @FXML
@@ -28,9 +35,11 @@ public class UsermainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        LambdaAlert alert = () -> "You have an appointment coming up in the next 15 minutes \n";
+
         try {
             if (Appointment.appointmentTimeCheck()) {
-                appointmentAlertLabel.setText("You have an appointment coming up in the next 15 minutes \n" + AppointmentDao.getUpcomingAppointment().getAppointmentID() + " : " + AppointmentDao.getUpcomingAppointment().getAppointmentTitle());
+                appointmentAlertLabel.setText(alert.alert() + AppointmentDao.getUpcomingAppointment().getAppointmentID() + " : " + AppointmentDao.getUpcomingAppointment().getAppointmentTitle());
             } else {
                 appointmentAlertLabel.setText("No appointments coming up");
             }

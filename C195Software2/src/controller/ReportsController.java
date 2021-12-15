@@ -31,9 +31,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
+/**
+ * Lambda expression to count the amount of success and unsuccessful log in attempts
+ */
+interface LambdaInterface {
+
+    int counter(int i);
+
+}
 
 public class ReportsController implements Initializable {
     public AnchorPane Schedules;
@@ -255,9 +265,6 @@ public class ReportsController implements Initializable {
         loginAuditorUnsuccess();
         successfulLabel.setText(Integer.toString(successCounter));
         unsuccessfulLabel.setText(Integer.toString(unsuccessCounter));
-
-        System.out.print(successCounter);
-        System.out.print(unsuccessCounter);
     }
 
     /**

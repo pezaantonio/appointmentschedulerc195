@@ -88,12 +88,6 @@ public class AppointmentsController implements Initializable {
         AppointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentEnd"));
         AppointmentCustIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentCustId"));
         AppointmentUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserId"));
-
-//        try {
-//            AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-  //      }
 }
 
     public void onDeleteAppointment(ActionEvent actionEvent) throws IOException {
@@ -212,12 +206,19 @@ public class AppointmentsController implements Initializable {
 
         appointmentToUpdate = AppointmentTableView.getSelectionModel().getSelectedItem();
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/updateappointments.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setTitle("Update Appointment");
-        stage.setScene(scene);
-        stage.show();
+        if (appointmentToUpdate == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Please select an appointment");
+            Optional<ButtonType> result = alert.showAndWait();
+        }else{
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/updateappointments.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Update Appointment");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     /**
@@ -232,8 +233,6 @@ public class AppointmentsController implements Initializable {
         LocalDate thisWeek = LocalDate.now();
         WeekFields thisWeekFields = WeekFields.of(Locale.getDefault());
         int currentWeek = thisWeek.get(thisWeekFields.weekOfWeekBasedYear());
-
         return currentWeek;
     }
-
 }
