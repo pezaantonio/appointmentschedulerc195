@@ -188,6 +188,11 @@ public class CustomersController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK){
+                Alert okalert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Delete");
+                alert.setContentText(selectedCustomer.getCustomerName() + " : " + selectedCustomer.getCustomerID() + " has been deleted");
+                Optional<ButtonType> okresult = alert.showAndWait();
+
                 int selectedCustomerId = selectedCustomer.getCustomerID();
                 CustomerDao deleteCustomer = new CustomerDao();
                 deleteCustomer.delete(selectedCustomerId);

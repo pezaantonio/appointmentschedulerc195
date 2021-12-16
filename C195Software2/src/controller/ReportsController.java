@@ -45,6 +45,9 @@ interface LambdaInterface {
 
 }
 
+/**
+ * Class to control the reports.fxml
+ */
 public class ReportsController implements Initializable {
     public AnchorPane Schedules;
     public Button ReportsMainMenuButton;
@@ -90,6 +93,11 @@ public class ReportsController implements Initializable {
     public int unsuccessCounter;
 
 
+    /**
+     * Method to initialize the reports page with contact, month, and type combo boxes
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ContactComboBox.setItems(new ContactDao().getAll());
@@ -101,6 +109,11 @@ public class ReportsController implements Initializable {
         }
     }
 
+    /**
+     * Method to return the count of appointments based on the selected types and months
+     * @return ObservableList<String> countList
+     * @throws SQLException
+     */
     public ObservableList<String> reportsByTypeAndMonth() throws SQLException {
         countList = FXCollections.observableArrayList();
         String countByType = "SELECT Count(*) FROM appointments WHERE EXTRACT(MONTH FROM Start) = ? AND Type = ?";
@@ -192,9 +205,15 @@ public class ReportsController implements Initializable {
         return monthList;
     }
 
+    /**
+     * Method to handle the selection of a month
+     */
     public void onMonthSelect(){
     }
 
+    /**
+     * Method to handle the selection of a type
+     */
     public void onTypeSelect(){
     }
 

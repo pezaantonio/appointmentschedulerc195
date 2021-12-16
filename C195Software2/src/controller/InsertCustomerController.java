@@ -26,6 +26,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Class used to handle the insertCUstomerController.fxml
+ */
 public class InsertCustomerController implements Initializable {
     @FXML
     private TextField CustomerNameTextField;
@@ -40,14 +43,17 @@ public class InsertCustomerController implements Initializable {
     @FXML
     private ComboBox<Country> CustomerCountryComboBox;
     @FXML
-    protected int prevCustomerId;
-    @FXML
     protected int nextCustomerId;
 
     private Customer customer;
 
     private boolean isValid;
 
+    /**
+     * Method to initialize the Country Combo Box with the countries available from the database
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CustomerCountryComboBox.setItems(new CountryDao().getCountryList());

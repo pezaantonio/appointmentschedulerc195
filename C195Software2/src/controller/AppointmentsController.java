@@ -2,6 +2,7 @@ package controller;
 
 import DAO.AppointmentDao;
 import DAO.CustomerDao;
+import com.mysql.cj.xdevapi.Table;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,11 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
+/**
+ * Class to handle the appointments.fxml view
+ */
 public class AppointmentsController implements Initializable {
 
     public Button AppointmentsBackButton;
@@ -67,6 +72,11 @@ public class AppointmentsController implements Initializable {
 
     private ObservableList<Appointment> weeklyList;
 
+    /**
+     * Method to initialize the page with a tableview populated with information from the database
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -90,9 +100,13 @@ public class AppointmentsController implements Initializable {
         AppointmentUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("AppointmentUserId"));
 }
 
+    /**
+     * Method to handle the deletion of a selected appointment
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onDeleteAppointment(ActionEvent actionEvent) throws IOException {
         Appointment selectedAppointment = AppointmentTableView.getSelectionModel().getSelectedItem();
-        int selectedAppointmentId = selectedAppointment.getAppointmentID();
 
         if(selectedAppointment == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -106,6 +120,7 @@ public class AppointmentsController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                int selectedAppointmentId = selectedAppointment.getAppointmentID();
                 AppointmentDao deleteAppointment = new AppointmentDao();
                 try {
                     deleteAppointment.delete(selectedAppointmentId);
@@ -114,7 +129,7 @@ public class AppointmentsController implements Initializable {
                 }
                 try {
                     AppointmentTableView.setItems(AppointmentDao.getAllAppointments());
-                    deleteAppointmentLabel.setText(selectedAppointment.getAppointmentType() + " appointment has been deleted");
+                    deleteAppointmentLabel.setText(selectedAppointment.getAppointmentType() + " : " + selectedAppointment.getAppointmentID() + " appointment has been deleted");
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }

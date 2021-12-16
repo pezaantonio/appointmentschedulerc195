@@ -15,7 +15,11 @@ import java.time.YearMonth;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
+/**
+ * Class to hold appointment information that comes from the database
+ */
 public class Appointment {
 
     private int appointmentID;
@@ -37,6 +41,23 @@ public class Appointment {
     protected Customer customerFromCustomerId;
     private User userFromUserId;
 
+    /**
+     * Construcotr
+     * @param appointmentID
+     * @param appointmentTitle
+     * @param appointmentDescription
+     * @param appointmentLocation
+     * @param appointmentType
+     * @param appointmentStart
+     * @param appointmentEnd
+     * @param appointmentCreateDate
+     * @param appointmentCreatedBy
+     * @param appointmentLastUpdate
+     * @param appointmentUpdatedBy
+     * @param appointmentCustId
+     * @param appointmentUserId
+     * @param appointmentContactId
+     */
     public Appointment(int appointmentID, String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, LocalDateTime appointmentCreateDate, String appointmentCreatedBy, LocalDateTime appointmentLastUpdate, String appointmentUpdatedBy, int appointmentCustId, int appointmentUserId, int appointmentContactId) {
         this.appointmentID = appointmentID;
         this.appointmentTitle = appointmentTitle;
@@ -54,42 +75,82 @@ public class Appointment {
         this.appointmentContactId = appointmentContactId;
     }
 
+    /**
+     * returns appointmentID
+     * @return appointmentID
+     */
     public int getAppointmentID() {
         return appointmentID;
     }
 
+    /**
+     * Sets the appointment ID
+     * @param appointmentID
+     */
     public void setAppointmentID(int appointmentID) {
         this.appointmentID = appointmentID;
     }
 
+    /**
+     * returns appointmentTitle
+     * @return appointmentTitle
+     */
     public String getAppointmentTitle() {
         return appointmentTitle;
     }
 
+    /**
+     * sets appointmentTitle
+     * @param appointmentTitle
+     */
     public void setAppointmentTitle(String appointmentTitle) {
         this.appointmentTitle = appointmentTitle;
     }
 
+    /**
+     * returns appointmentDescription
+     * @return appointmentDescription
+     */
     public String getAppointmentDescription() {
         return appointmentDescription;
     }
 
+    /**
+     * sets appointmentDescription
+     * @param appointmentDescription
+     */
     public void setAppointmentDescription(String appointmentDescription) {
         this.appointmentDescription = appointmentDescription;
     }
 
+    /**
+     * returns appointmentLocation
+     * @return
+     */
     public String getAppointmentLocation() {
         return appointmentLocation;
     }
 
+    /**
+     * sets appopintmentLocation
+     * @param appointmentLocation
+     */
     public void setAppointmentLocation(String appointmentLocation) {
         this.appointmentLocation = appointmentLocation;
     }
 
+    /**
+     * returns appointmentType
+     * @return
+     */
     public String getAppointmentType() {
         return appointmentType;
     }
 
+    /**
+     * sets appointmentType
+     * @param appointmentType
+     */
     public void setAppointmentType(String appointmentType) {
         this.appointmentType = appointmentType;
     }
@@ -98,70 +159,138 @@ public class Appointment {
         return appointmentStart;
     }
 
+    /**
+     * sets AppointmentStart
+     * @param appointmentStart
+     */
     public void setAppointmentStart(LocalDateTime appointmentStart) {
         this.appointmentStart = appointmentStart;
     }
 
+    /**
+     * returns AppointmentEnd
+     * @return appointmentEnd
+     */
     public LocalDateTime getAppointmentEnd() {
         return appointmentEnd;
     }
 
+    /**
+     * sets appointmentEnd
+     * @param appointmentEnd
+     */
     public void setAppointmentEnd(LocalDateTime appointmentEnd) {
         this.appointmentEnd = appointmentEnd;
     }
 
+    /**
+     * returns appointmentCreateDate
+     * @return appointmentCreateDate
+     */
     public LocalDateTime getAppointmentCreateDate() {
         return appointmentCreateDate;
     }
 
+    /**
+     * sets appointmentCreateDate
+     * @param appointmentCreateDate
+     */
     public void setAppointmentCreateDate(LocalDateTime appointmentCreateDate) {
         this.appointmentCreateDate = appointmentCreateDate;
     }
 
+    /**
+     * returns appointmentCreatedBy
+     * @return appointmentCreatedBy
+     */
     public String getAppointmentCreatedBy() {
         return appointmentCreatedBy;
     }
 
+    /**
+     * sets appointmentCreatedBy
+     * @param appointmentCreatedBy
+     */
     public void setAppointmentCreatedBy(String appointmentCreatedBy) {
         this.appointmentCreatedBy = appointmentCreatedBy;
     }
 
+    /**
+     * returns appointmentLastUpdate
+     * @return appointmentLastUpdate
+     */
     public LocalDateTime getAppointmentLastUpdate() {
         return appointmentLastUpdate;
     }
 
+    /**
+     * sets appointmentLastupdate
+     * @param appointmentLastUpdate
+     */
     public void setAppointmentLastUpdate(LocalDateTime appointmentLastUpdate) {
         this.appointmentLastUpdate = appointmentLastUpdate;
     }
 
+    /**
+     * returns appointmentUpdatedBy
+     * @return
+     */
     public String getAppointmentUpdatedBy() {
         return appointmentUpdatedBy;
     }
 
+    /**
+     * sets appointmentUpdateBy
+     * @param appointmentUpdatedBy
+     */
     public void setAppointmentUpdatedBy(String appointmentUpdatedBy) {
         this.appointmentUpdatedBy = appointmentUpdatedBy;
     }
 
+    /**
+     * returns appointmentCustId
+     * @return appointmentCustId
+     */
     public int getAppointmentCustId() {
         return appointmentCustId;
     }
 
+    /**
+     * sets appointmentCustId
+     * @param appointmentCustId
+     */
     public void setAppointmentCustId(int appointmentCustId) {
         this.appointmentCustId = appointmentCustId;
     }
 
+    /**
+     * returns appointmentUserId
+     * @return appointmentUserId
+     */
     public int getAppointmentUserId() {
         return appointmentUserId;
     }
 
+    /**
+     * sets appointmentUserId
+     * @param appointmentUserId
+     */
     public void setAppointmentUserId(int appointmentUserId) {
         this.appointmentUserId = appointmentUserId;
     }
 
+    /**
+     * returns appointmentContactID
+     * @return appointmentContactId
+     */
     public int getAppointmentContactId() {
         return appointmentContactId;
     }
 
+    /**
+     * sets AppointmentContact Id
+     * @param appointmentContactId
+     */
     public void setAppointmentContactId(int appointmentContactId) {
         this.appointmentContactId = appointmentContactId;
     }
@@ -216,6 +345,10 @@ public class Appointment {
         return customerFromCustomerId;
     }
 
+    /**
+     * returns appointmentType as a string
+     * @return appointmentType
+     */
     public String toString(){
         return appointmentType;
     }

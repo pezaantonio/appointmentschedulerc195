@@ -31,6 +31,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import controller.LoginController;
 
+/**
+ * Method to handle the updateAppointmentsController.fxml
+ */
 public class UpdateAppointmentsController implements Initializable {
 
     @FXML
@@ -50,10 +53,6 @@ public class UpdateAppointmentsController implements Initializable {
     @FXML
     private ComboBox<LocalDateTime> AppointmentEndComboBox;
     @FXML
-    private TextField AppointmentCustomerIdTextField;
-    @FXML
-    private TextField AppointmentUserIdTextField;
-    @FXML
     private ComboBox<Contact> AppointmentContactComboBox;
     @FXML
     private ComboBox<Customer> AppointmentCustomerIDComboBox;
@@ -62,12 +61,16 @@ public class UpdateAppointmentsController implements Initializable {
 
     private Appointment appointmentToUpdate;
 
-    protected int prevAppointmentId;
-    protected int nextAppointmentId;
-
     private Appointment appointment;
 
+    private boolean isValid;
 
+
+    /**
+     * Method to inialize the updateappointmentscontroller with the selected appointment information
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appointmentToUpdate = AppointmentsController.getAppointmentToUpdate();
@@ -153,7 +156,7 @@ public class UpdateAppointmentsController implements Initializable {
 
         AppointmentDao newAppointment = new AppointmentDao();
 
-        if (isBusinessHours(apptStartDate, apptStartTime)){
+        if (isBusinessHours(apptStartDate, apptStartTime) && isValidAppointment()){
             if (newAppointment.update(appointment.getAppointmentID(), appointment)) {
                 saveRedirect(actionEvent);
             }
@@ -218,5 +221,26 @@ public class UpdateAppointmentsController implements Initializable {
             withinBusinessHours = true;
         }
         return withinBusinessHours;
+    }
+
+    /**
+     * Method to verify that no fields are left empty
+     * @return isValid
+     */
+    public boolean isValidAppointment(){
+        isValid = true;
+        if(AppointmentTitleTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(AppointmentDescriptionTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(AppointmentLocationTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(AppointmentTypeTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        return isValid;
     }
 }

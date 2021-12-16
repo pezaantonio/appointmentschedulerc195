@@ -14,10 +14,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class to handle all database queries for First level Divisions
+ */
 public class FirstLevelDivisionDao implements DataAccess{
 
     private static ObservableList<FirstLevelDivisions> firstLevelDivisionsList = FXCollections.observableArrayList();
 
+    /**
+     * Method to get all first level division Objects
+     * @return ObservableList First Level Divisions
+     */
     @Override
     public ObservableList<FirstLevelDivisions> getAll() {
         //ObservableList<String> countryComboBox = FXCollections.observableArrayList();
@@ -41,16 +48,32 @@ public class FirstLevelDivisionDao implements DataAccess{
         return firstLevelDivisionsList;
     }
 
+    /**
+     * Method to insert a first level division into the database
+     * @param o
+     * @return false
+     */
     @Override
     public boolean insert(Object o) {
         return false;
     }
 
+    /**
+     * Method to update a selected first level division
+     * @param id
+     * @param o
+     * @return false
+     */
     @Override
     public boolean update(int id, Object o) {
         return false;
     }
 
+    /**
+     * Method to delete a selected first level division
+     * @param id
+     * @return false
+     */
     @Override
     public boolean delete(int id) {
         return false;
@@ -67,6 +90,11 @@ public class FirstLevelDivisionDao implements DataAccess{
         return firstLevelDivisionsList;
     }
 
+    /**
+     * Method to return a list of countries based on the country division
+     * @param countryID
+     * @return ObservableList FirstLevelDivisions
+     */
     public static ObservableList<FirstLevelDivisions> getCountryDivision(int countryID){
         ObservableList<FirstLevelDivisions> filteredList = FXCollections.observableArrayList();
         for (FirstLevelDivisions div : getFirstLevelDivisionsList()){

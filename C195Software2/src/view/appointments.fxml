@@ -21,18 +21,18 @@
             <Font name="Consolas" size="19.0" />
          </font>
       </Label>
-        <TableView fx:id="AppointmentTableView" layoutY="94.0" prefHeight="357.0" prefWidth="1230.0">
+        <TableView fx:id="AppointmentTableView" layoutY="81.0" prefHeight="357.0" prefWidth="1230.0">
             <columns>
-                <TableColumn fx:id="AppointmentIDColumn" prefWidth="112.0" text="Appt ID" />
-                <TableColumn fx:id="AppointmentTitleColumn" prefWidth="114.0" text="Title" />
-                <TableColumn fx:id="AppointmentDescColumn" prefWidth="256.0" text="Description" />
-                <TableColumn fx:id="AppointmentLocationColumn" prefWidth="135.0" text="Location" />
-                <TableColumn fx:id="AppointmentContactColumn" prefWidth="86.0" text="Contact Id" />
-                <TableColumn fx:id="AppointmentTypeColumn" prefWidth="107.0" text="Type" />
-            <TableColumn fx:id="AppointmentStartColumn" prefWidth="119.0" text="Start" />
-            <TableColumn fx:id="AppointmentEndColumn" prefWidth="125.0" text="End" />
-            <TableColumn fx:id="AppointmentCustIdColumn" prefWidth="96.0" text="Customer ID" />
-            <TableColumn fx:id="AppointmentUserIdColumn" prefWidth="79.0" text="User ID" />
+                <TableColumn fx:id="AppointmentIDColumn" prefWidth="65.0" text="Appt ID" />
+                <TableColumn fx:id="AppointmentTitleColumn" prefWidth="113.0" text="Title" />
+                <TableColumn fx:id="AppointmentDescColumn" prefWidth="214.0" text="Description" />
+                <TableColumn fx:id="AppointmentLocationColumn" prefWidth="137.0" text="Location" />
+                <TableColumn fx:id="AppointmentContactColumn" prefWidth="98.0" text="Contact Id" />
+                <TableColumn fx:id="AppointmentTypeColumn" prefWidth="114.0" text="Type" />
+            <TableColumn fx:id="AppointmentStartColumn" prefWidth="138.0" text="Start" />
+            <TableColumn fx:id="AppointmentEndColumn" prefWidth="146.0" text="End" />
+            <TableColumn fx:id="AppointmentCustIdColumn" prefWidth="102.0" text="Customer ID" />
+            <TableColumn fx:id="AppointmentUserIdColumn" prefWidth="102.0" text="User ID" />
             </columns>
         </TableView>
         <RadioButton fx:id="AppointmentWeekRadioButton" layoutX="446.0" layoutY="538.0" mnemonicParsing="false" onAction="#isWeeklyList" text="Current Week">

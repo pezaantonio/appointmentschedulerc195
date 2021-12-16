@@ -43,11 +43,14 @@ public class LoginController implements Initializable {
     private Label ZoneIdLabel;
     @FXML
     private Label LoginErrorLabel;
-    @FXML
-    public int userIDFromUsername;
 
     protected ZoneId localZoneId = ZoneId.systemDefault();
 
+    /**
+     * Method to initialize the login page with the correct language based on workstation
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

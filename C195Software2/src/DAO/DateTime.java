@@ -10,6 +10,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.*;
 
+/**
+ * Class to handle the dates and time for all the objects that require it
+ */
 public class DateTime {
 
     protected ObservableList<LocalDateTime> startList = FXCollections.observableArrayList();
@@ -20,7 +23,6 @@ public class DateTime {
 
     /**
      * Function to return time stamp
-     *
      * @return timeStamp
      */
     public static java.sql.Timestamp getTimeStamp() {
@@ -39,15 +41,27 @@ public class DateTime {
         return date;
     }
 
+    /**
+     * Method to get the local date
+     * @return localdate.now()
+     */
     public static LocalDate getLocalDate(){
         return LocalDate.now();
     }
 
+    /**
+     * Method to return the startdate
+     * @return LocalDate startDate
+     */
     public LocalDate getStartDate(){
         LocalDate startDate = LocalDate.now();
         return startDate;
     }
 
+    /**
+     * Method to return the local time
+     * @return localtime.now()
+     */
     public LocalTime getStartTime(){
         return LocalTime.now();
     }

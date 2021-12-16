@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import controller.LoginController;
 
+/**
+ * Method to handle the InsertAppointmentsController.fxml
+ */
 public class InsertAppointmentsController implements Initializable {
 
     @FXML
@@ -56,13 +61,19 @@ public class InsertAppointmentsController implements Initializable {
     @FXML
     private ComboBox<User> AppointmentUserIDComboBox;
 
-    protected int prevAppointmentId;
-    protected int nextAppointmentId;
-
-    public boolean validAppointment;
-
     private Appointment appointment;
 
+    private boolean isValid;
+
+    private boolean isNotOverlapping;
+
+    private AppointmentDao newAppointment;
+
+    /**
+     * Method to initialize the insertappointments page's combo boxes
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentContactComboBox.setItems(new ContactDao().getAll());
@@ -75,6 +86,10 @@ public class InsertAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * method will populate the EndComboBox based on the Start time that was selected
+     * @param actionEvent
+     */
     public void onStartTimeSelect(ActionEvent actionEvent){
         AppointmentEndComboBox.setItems(new DateTime().getEndList(AppointmentStartComboBox.getSelectionModel().getSelectedItem()));
     }
@@ -94,7 +109,7 @@ public class InsertAppointmentsController implements Initializable {
 
     /**
      * This method grabs the information from text fields and creates an Appointment object with it that will be sent to DB
-     * @return
+     * @return Appointment
      * @throws SQLException
      */
     public Appointment insertAppointment(ActionEvent actionEvent) throws SQLException, NullPointerException {
@@ -125,11 +140,22 @@ public class InsertAppointmentsController implements Initializable {
         LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
         LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();
 
-        AppointmentDao newAppointment = new AppointmentDao();
+        if (isOverlapping()) {
+            newAppointment = new AppointmentDao();
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("This customer has an overlapping appointment. Please pick a new time");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
 
-        if (isBusinessHours(apptStartDate, apptStartTime)){
-            if (newAppointment.insert(appointment)) {
-                saveRedirect(actionEvent);
+        if (isBusinessHours(apptStartDate, apptStartTime) && isValidAppointment()){
+            try {
+                if (newAppointment.insert(appointment)) {
+                    saveRedirect(actionEvent);
+                }
+            } catch (NullPointerException e) {
+                System.out.println("there was an overlap");
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -197,5 +223,57 @@ public class InsertAppointmentsController implements Initializable {
             withinBusinessHours = true;
         }
         return withinBusinessHours;
+    }
+
+    /**
+     * Method to verify that no fields are left empty
+     * @return isValid
+     */
+    public boolean isValidAppointment(){
+        isValid = true;
+        if(AppointmentTitleTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(AppointmentDescriptionTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(AppointmentLocationTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        if(AppointmentTypeTextField.getText().isEmpty()){
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    /**
+     * Method to determine if the customer has any overlapping appointments
+     * @return
+     * @throws SQLException
+     */
+    public boolean isOverlapping() throws SQLException {
+        ObservableList<Appointment> allAppoints = AppointmentDao.getAllAppointments();
+        LocalDateTime aStart = AppointmentStartComboBox.getValue();
+        LocalDateTime aEnd = AppointmentEndComboBox.getValue();
+        int cId = AppointmentCustomerIDComboBox.getValue().getCustomerID();
+
+        for(Appointment appointment : allAppoints){
+            System.out.print(appointment.getAppointmentStart());
+            System.out.println("\n" + aStart);
+            if (appointment.getAppointmentCustId() == cId) {
+                if(aStart.isEqual(appointment.getAppointmentStart())){
+                    isNotOverlapping = false;
+                    System.out.println("atStart");
+                }
+                if (aStart.isAfter(appointment.getAppointmentStart()) && aStart.isBefore(appointment.getAppointmentEnd())){
+                    isNotOverlapping = false;
+                    System.out.println("checking between");
+                }
+            } else {
+                isNotOverlapping = true;
+            }
+        }
+        System.out.println(isNotOverlapping);
+        return isNotOverlapping;
     }
 }

@@ -14,6 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Method to handle the User database queries
+ */
 public class UserDao implements DataAccess{
 
     private static int userId;
@@ -36,16 +39,21 @@ public class UserDao implements DataAccess{
         UserDao.userId = userId;
     }
 
+    /**
+     * Method to return the username
+     * @return userName
+     */
     public static String getUserName() {
         return userName;
     }
 
+    /**
+     * Method to set the username
+     * @param userName
+     */
     public static void setUserName(String userName) {
         UserDao.userName = userName;
     }
-
-    //todo getter and setter for userID and UserName
-
     @Override
     /**
      * Method to return all users
@@ -68,22 +76,43 @@ public class UserDao implements DataAccess{
     }
 
 
+    /**
+     * Method to get all users in the database
+     * @return ObservableList User
+     * @throws SQLException
+     */
     public static ObservableList<User> getAllUsers() throws SQLException {
         UserDao uDao = new UserDao();
 
         return uDao.getAll();
     }
 
+    /**
+     * Method to insert a user object in the database
+     * @param o
+     * @return
+     */
     @Override
     public boolean insert(Object o) {
         return false;
     }
 
+    /**
+     * Method to update an object in the database
+     * @param id
+     * @param o
+     * @return false
+     */
     @Override
     public boolean update(int id, Object o) {
         return false;
     }
 
+    /**
+     * Method to delete a selected object
+     * @param id
+     * @return false
+     */
     @Override
     public boolean delete(int id) {
         return false;

@@ -17,11 +17,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * method to handle all customer related database queries
+ */
 public class CustomerDao implements DataAccess{
 
-    private ComboBox<String> CustomerDivisionComboBox;
-
-    protected int prevCustomerId;
     protected int nextCustomerId;
 
     /**
@@ -35,6 +35,11 @@ public class CustomerDao implements DataAccess{
         return cDao.getAll();
     }
 
+    /**
+     * Method to return all customers in an array
+     * @return ObservableList Customer
+     * @throws SQLException
+     */
     @Override
     public ObservableList<Customer> getAll() throws SQLException {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
@@ -92,6 +97,13 @@ public class CustomerDao implements DataAccess{
         return false;
     }
 
+    /**
+     * Method to handle all customer update queries
+     * @param id
+     * @param o
+     * @return true
+     * @throws SQLException
+     */
     @Override
     public boolean update(int id, Object o) throws SQLException{
         Customer customer = (Customer) o;
@@ -115,10 +127,13 @@ public class CustomerDao implements DataAccess{
         return false;
     }
 
-    @Override
     /**
-     * Method to delete customer based on selected customer ID
+     * Method to handle the delete queries of customers
+     * @param id
+     * @return true
+     * @throws SQLException
      */
+    @Override
     public boolean delete(int id) throws SQLException{
         String deleteCustomer = "DELETE FROM customers WHERE CUSTOMER_ID =?";
         PreparedStatement deleteCustomerSQL = DatabaseConnection.connection.prepareStatement(deleteCustomer);

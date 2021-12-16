@@ -1,8 +1,14 @@
 package model;
+/**
+ * Class to handle the Country Object
+ */
 
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+/**
+ * Class to hold each country object form the database
+ */
 public class Country{
     
     private int countryID;
@@ -12,12 +18,17 @@ public class Country{
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
+    /**
+     * Parameterized constructor
+     * @param countryID
+     * @param country
+     */
     public Country(int countryID, String country) {
         this(countryID, country, LocalDateTime.now(), "", LocalDateTime.now(),"");
     }
 
-    /*
-     * Constructor
+    /**
+     * Default Constructor
      */
     public Country(int countryID, String country, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy){
         this.countryID = countryID;
@@ -28,7 +39,7 @@ public class Country{
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    /*
+    /**
     * returns countryID
     * @return countryID
     * */
@@ -36,7 +47,7 @@ public class Country{
         return countryID;
     }
 
-    /*
+    /**
     * sets countryID
     * @param countryID
     * */
@@ -44,7 +55,7 @@ public class Country{
         this.countryID = countryID;
     }
 
-    /*
+    /**
     * returns country
     * @return country
     * */
@@ -52,7 +63,7 @@ public class Country{
         return country;
     }
 
-    /*
+    /**
     * sets country
     * @param country
     * */
@@ -60,7 +71,7 @@ public class Country{
         this.country = country;
     }
 
-    /*
+    /**
     * returns create date
     * @return createDate
     * */
@@ -68,7 +79,7 @@ public class Country{
         return createDate;
     }
 
-    /*
+    /**
     * sets createDate
     * @param createDate
     * */
@@ -76,7 +87,7 @@ public class Country{
         this.createDate = createDate;
     }
 
-    /*
+    /**
     * returns createdBy
     * @return createdBy
     * */
@@ -84,7 +95,7 @@ public class Country{
         return createdBy;
     }
 
-    /*
+    /**
     * sets createdBy
     * @param createdBy
     * */
@@ -92,9 +103,7 @@ public class Country{
         this.createdBy = createdBy;
     }
 
-
-
-    /*
+    /**
      * returns lastUpdate
      * @return lastUpdate
      */
@@ -102,7 +111,7 @@ public class Country{
         return lastUpdate;
     }
 
-    /*
+    /**
     * sets last Update
     * @param lastUpdate
     * */
@@ -110,7 +119,7 @@ public class Country{
         this.lastUpdate = lastUpdate;
     }
 
-    /*
+    /**
     * returns last updated by
     * @return lastUpdatedBy
     * */
@@ -118,7 +127,7 @@ public class Country{
         return lastUpdatedBy;
     }
 
-    /*
+    /**
     * sets lastUpdatedBy
     * @param lastUpdatedBy
     * */
@@ -126,6 +135,10 @@ public class Country{
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    /**
+     * Returns the country
+     * @return
+     */
     public String toString(){
         return country;
     }

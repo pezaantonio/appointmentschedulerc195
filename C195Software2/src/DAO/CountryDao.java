@@ -15,6 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Method to handle all database queries for the Country Items
+ */
 public class CountryDao implements DataAccess{
 
     private ObservableList<Country> countryList = FXCollections.observableArrayList();
@@ -43,6 +46,12 @@ public class CountryDao implements DataAccess{
         }
         return countryList;
     }
+
+    /**
+     * Method to handle the insert queries for Country
+     * @param o
+     * @return false
+     */
     @Override
     public boolean insert(Object o) {
 
@@ -50,11 +59,23 @@ public class CountryDao implements DataAccess{
         return false;
     }
 
+    /**
+     * Method to handle the update queries for Country
+     * @param id
+     * @param o
+     * @return false
+     */
     @Override
     public boolean update(int id, Object o) {
         return false;
     }
 
+
+    /**
+     * Method to handle the delete database queries
+     * @param id
+     * @return false
+     */
 
     @Override
     public boolean delete(int id) {

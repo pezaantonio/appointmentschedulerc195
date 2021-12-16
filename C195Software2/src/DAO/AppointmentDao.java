@@ -20,6 +20,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Method to communicate with the database for appointment queries
+ */
 public class AppointmentDao implements DataAccess{
 
     @Override
@@ -155,14 +158,6 @@ public class AppointmentDao implements DataAccess{
         return false;
     }
 
-    public ObservableList<Appointment> appointmentsByWeek(){
-        ObservableList<Appointment> weekAppointments = FXCollections.observableArrayList();
-
-
-        return weekAppointments;
-    }
-
-
     /**
      * Method will find an upcoming appointment for the logged in user
      * @return Appointment upcomingAppointment
@@ -192,5 +187,6 @@ public class AppointmentDao implements DataAccess{
         );
         return upcomingAppointment;
     }
+
 }
 

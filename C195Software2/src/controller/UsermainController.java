@@ -26,12 +26,22 @@ interface LambdaAlert{
     String alert();
 }
 
+/**
+ * Class used to control the usermain.fxml
+ */
 public class UsermainController implements Initializable {
 
     @FXML
     private Label appointmentAlertLabel;
 
 
+    /**
+     * Description
+     *
+     * Lambda: LambdaAlert alert is being used to display alerts to the user if an appointment is coming up
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -75,6 +85,11 @@ public class UsermainController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method to send the user to the reports page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toReports(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -84,6 +99,10 @@ public class UsermainController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Method used to close the app
+     * @param actionEvent
+     */
     public void onExitMain(ActionEvent actionEvent){
         System.exit(0);
     }

@@ -11,6 +11,9 @@ import java.time.Instant;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * This abstract class connects to the database
+ */
 public abstract class DatabaseConnection {
 
     private static final String protocol = "jdbc";

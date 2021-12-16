@@ -1,4 +1,7 @@
 package model;
+/**
+ * Class to hold customers from the database
+ */
 
 import DAO.DatabaseConnection;
 import DAO.FirstLevelDivisionDao;
@@ -10,6 +13,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * class to hold customers from the database
+ */
 public class Customer {
 
     private int customerID;
@@ -57,47 +63,87 @@ public class Customer {
         this.customerDivisionID = customerDivisionID;
     }
 
+    /**
+     * returns customer create date
+     * @return customerCreateDate
+     */
     public LocalDateTime getCustomerCreateDate() {
         return customerCreateDate;
     }
 
+    /**
+     * Sets customerCreateDate
+     * @param customerCreateDate
+     */
     public void setCustomerCreateDate(LocalDateTime customerCreateDate) {
         this.customerCreateDate = customerCreateDate;
     }
 
+    /**
+     * returns customerLastUpdate
+     * @return customerLastUpdate
+     */
     public LocalDateTime getCustomerLastUpdate() {
         return customerLastUpdate;
     }
 
+    /**
+     * sets customerlastupdate
+     * @param customerLastUpdate
+     */
     public void setCustomerLastUpdate(LocalDateTime customerLastUpdate) {
         this.customerLastUpdate = customerLastUpdate;
     }
 
+    /**
+     * returns customerlastupdatedby
+     * @return customerLastUpdateBy
+     */
     public String getCustomerLastUpdatedBy() {
         return customerLastUpdatedBy;
     }
 
+    /**
+     * sets customerLastUpdatedBy
+     * @param customerLastUpdatedBy
+     */
     public void setCustomerLastUpdatedBy(String customerLastUpdatedBy) {
         this.customerLastUpdatedBy = customerLastUpdatedBy;
     }
 
+    /**
+     * return customerDivisionID
+     * @return
+     */
     public int getCustomerDivisionID() {
         return customerDivisionID;
     }
 
+    /**
+     * sets customerDivisionID
+     * @param customerDivisionID
+     */
     public void setCustomerDivisionID(int customerDivisionID) {
         this.customerDivisionID = customerDivisionID;
     }
 
+    /**
+     * return customerCreatedBy
+     * @return customerCreatedBy
+     */
     public String getCustomerCreatedBy() {
         return customerCreatedBy;
     }
 
+    /**
+     * sets customerCreatedBy
+     * @param customerCreatedBy
+     */
     public void setCustomerCreatedBy(String customerCreatedBy) {
         this.customerCreatedBy = customerCreatedBy;
     }
 
-    /*
+    /**
      * Function to set customer ID
      * @param customerID
      */
@@ -105,7 +151,7 @@ public class Customer {
         this.customerID = customerID;
     }
 
-    /*
+    /**
      * Function to return customer ID
      * @return customerID
      */
@@ -113,7 +159,7 @@ public class Customer {
         return customerID;
     }
 
-    /*
+    /**
      * Function to set Customer Name
      * @param customerName
      */
@@ -121,7 +167,7 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    /*
+    /**
      * Function to return customer Name
      * @return customerName
      */
@@ -129,7 +175,7 @@ public class Customer {
         return customerName;
     }
 
-    /*
+    /**
      * Function to set customer Address
      * @param customerAddress
      */
@@ -137,7 +183,7 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    /*
+    /**
      * Function to return customer Address
      * @return customerAddress
      */
@@ -149,7 +195,7 @@ public class Customer {
         this.customerPostalCode = customerPostalCode;
     }
 
-    /*
+    /**
      * Function to return customerPostalCode
      * @return customerPostalCode
      */
@@ -157,7 +203,7 @@ public class Customer {
         return customerPostalCode;
     }
 
-    /*
+    /**
      * Function to set customerPhone
      * @param customerPhone
      */
@@ -165,7 +211,7 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    /*
+    /**
      * Function to return customerPhone
      * @return customerPhone
      */
@@ -252,6 +298,10 @@ public class Customer {
         return customerCountry;
     }
 
+    /**
+     * return customerName
+     * @return cursomterName
+     */
     public String toString(){
         return customerName;
     }

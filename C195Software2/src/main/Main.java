@@ -1,4 +1,10 @@
 package main;
+/**
+ * Appointment Scheduler Application
+ * Purpose: Allow users in a company to create, remove, update, and delete appointments and customers in a database
+ *
+ * @author Antonio Peza
+ */
 
 import DAO.DatabaseConnection;
 import DAO.DatabaseQuery;
@@ -13,6 +19,9 @@ import java.sql.Statement;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Main Method
+ */
 public class Main extends Application {
 
     @Override

@@ -14,6 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * class used to handle the database communications for all contact queries
+ */
 public class ContactDao implements DataAccess {
 
     private ObservableList<Contact> contactList = FXCollections.observableArrayList();
@@ -43,16 +46,32 @@ public class ContactDao implements DataAccess {
         return contactList;
     }
 
+    /**
+     * method to return if a successful insert was made
+     * @param o
+     * @return false
+     */
     @Override
     public boolean insert(Object o) {
         return false;
     }
 
+    /**
+     * Method to update the database with a selected contact
+     * @param id
+     * @param o
+     * @return false
+     */
     @Override
     public boolean update(int id, Object o) {
         return false;
     }
 
+    /**
+     * Method to delete a selected contact
+     * @param id
+     * @return false
+     */
     @Override
     public boolean delete(int id) {
         return false;

@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 
+/**
+ * This class is used to construct all the statements to send to the database
+ */
 public class DatabaseQuery {
     private static String query;
     private static Statement statement;
