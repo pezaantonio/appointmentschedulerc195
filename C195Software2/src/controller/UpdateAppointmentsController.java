@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,17 +19,13 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.sql.*;
+import java.time.*;
 import java.time.temporal.ChronoField;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+
 import controller.LoginController;
 
 /**
@@ -63,7 +60,12 @@ public class UpdateAppointmentsController implements Initializable {
 
     private Appointment appointment;
 
+    private AppointmentDao newAppointment;
+
     private boolean isValid;
+    private boolean isNotOverlapping;
+    private ZoneId localZoneId = ZoneId.systemDefault();
+    private ZoneId eastZoneId = ZoneId.of("US/Eastern");
 
 
     /**
@@ -81,7 +83,6 @@ public class UpdateAppointmentsController implements Initializable {
         AppointmentLocationTextField.setText(appointmentToUpdate.getAppointmentLocation());
         AppointmentTypeTextField.setText(appointmentToUpdate.getAppointmentType());
         AppointmentStartComboBox.setValue(appointmentToUpdate.getAppointmentStart());
-        AppointmentEndComboBox.setValue(appointmentToUpdate.getAppointmentEnd());
         try {
             AppointmentCustomerIDComboBox.setValue(appointmentToUpdate.getCustomerFromCustomerId());
             AppointmentUserIDComboBox.setValue(appointmentToUpdate.getApppointmentUser());
@@ -154,7 +155,15 @@ public class UpdateAppointmentsController implements Initializable {
         LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
         LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();
 
-        AppointmentDao newAppointment = new AppointmentDao();
+
+        if (isOverlapping()) {
+            newAppointment = new AppointmentDao();
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("This customer has an overlapping appointment. Please pick a new time");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
 
         if (isBusinessHours(apptStartDate, apptStartTime) && isValidAppointment()){
             if (newAppointment.update(appointment.getAppointmentID(), appointment)) {
@@ -206,14 +215,23 @@ public class UpdateAppointmentsController implements Initializable {
         boolean businessDay = false;
         boolean withinBusinessHours = false;
 
+        LocalDateTime appointmentDateTime = LocalDateTime.of(apptLocalStartDate, apptStartTime);
+        LocalTime localTimeStart = LocalTime.of(7,50);
+        LocalTime localTimeEnd = LocalTime.of(22,0);
+        ZonedDateTime eastCoastStart = ZonedDateTime.of(apptLocalStartDate, localTimeStart, eastZoneId);
+        ZonedDateTime eastCoastEnd = ZonedDateTime.of(apptLocalStartDate, localTimeEnd, eastZoneId);
+
+        ZonedDateTime localToEast = appointmentDateTime.atZone(localZoneId).withZoneSameInstant(eastZoneId);
+
         DayOfWeek startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
 
-        if (apptStartTime.isAfter(LocalTime.of(8, 0)) && apptStartTime.isBefore(LocalTime.of(22, 0))) {
+        if(localToEast.isAfter(eastCoastStart) && localToEast.isBefore(eastCoastEnd)){
             System.out.println("Inside of business hours");
             businessTime = true;
         }
         if (startDayOfWeek != DayOfWeek.SATURDAY && startDayOfWeek != DayOfWeek.SUNDAY) {
             System.out.println("on weekday");
+            System.out.println("\n" + localToEast);
             businessDay = true;
         }
 
@@ -242,5 +260,37 @@ public class UpdateAppointmentsController implements Initializable {
             isValid = false;
         }
         return isValid;
+    }
+
+    /**
+     * Method to determine if the customer has any overlapping appointments
+     * @return
+     * @throws SQLException
+     */
+    public boolean isOverlapping() throws SQLException {
+        isNotOverlapping = true;
+        ObservableList<Appointment> allAppoints = AppointmentDao.getAllAppointments();
+        LocalDateTime aStart = AppointmentStartComboBox.getValue();
+        LocalDateTime aEnd = AppointmentEndComboBox.getValue();
+        int cId = AppointmentCustomerIDComboBox.getValue().getCustomerID();
+
+        for(Appointment appointment : allAppoints){
+            System.out.print(appointment.getAppointmentStart());
+            System.out.println("\n" + aStart);
+            if (appointment.getAppointmentCustId() == cId) {
+                if(aStart.isEqual(appointment.getAppointmentStart())){
+                    isNotOverlapping = false;
+                    System.out.println("atStart");
+                }
+                if (aStart.isAfter(appointment.getAppointmentStart()) && aStart.isBefore(appointment.getAppointmentEnd())){
+                    isNotOverlapping = false;
+                    System.out.println("checking between");
+                }
+            } else {
+                isNotOverlapping = true;
+            }
+        }
+        System.out.println(isNotOverlapping);
+        return isNotOverlapping;
     }
 }

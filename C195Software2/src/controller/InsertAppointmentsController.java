@@ -21,10 +21,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.Optional;
@@ -68,6 +65,9 @@ public class InsertAppointmentsController implements Initializable {
     private boolean isNotOverlapping;
 
     private AppointmentDao newAppointment;
+
+    private ZoneId localZoneId = ZoneId.systemDefault();
+    private ZoneId eastZoneId = ZoneId.of("US/Eastern");
 
     /**
      * Method to initialize the insertappointments page's combo boxes
@@ -198,28 +198,31 @@ public class InsertAppointmentsController implements Initializable {
      * @param apptStartTime
      * @return isBusinessHours
      */
-    public boolean isBusinessHours(LocalDate apptLocalStartDate, LocalTime apptStartTime){
+    public boolean isBusinessHours(LocalDate apptLocalStartDate, LocalTime apptStartTime) {
         boolean businessTime = false;
         boolean businessDay = false;
         boolean withinBusinessHours = false;
 
-        DayOfWeek startDayOfWeek = null;
-        try {
-            startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
-        } catch (NullPointerException e) {
-            System.out.println("Pick start time");
-        }
+        LocalDateTime appointmentDateTime = LocalDateTime.of(apptLocalStartDate, apptStartTime);
+        LocalTime localTimeStart = LocalTime.of(7,50);
+        LocalTime localTimeEnd = LocalTime.of(22,0);
+        ZonedDateTime eastCoastStart = ZonedDateTime.of(apptLocalStartDate, localTimeStart, eastZoneId);
+        ZonedDateTime eastCoastEnd = ZonedDateTime.of(apptLocalStartDate, localTimeEnd, eastZoneId);
 
-        if(apptStartTime.isAfter(LocalTime.of(8,0)) && apptStartTime.isBefore(LocalTime.of(22,0))){
+        ZonedDateTime localToEast = appointmentDateTime.atZone(localZoneId).withZoneSameInstant(eastZoneId);
+
+        DayOfWeek startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
+
+        if(localToEast.isAfter(eastCoastStart) && localToEast.isBefore(eastCoastEnd)){
             System.out.println("Inside of business hours");
             businessTime = true;
         }
-        if(startDayOfWeek != DayOfWeek.SATURDAY && startDayOfWeek != DayOfWeek.SUNDAY){
+        if (startDayOfWeek != DayOfWeek.SATURDAY && startDayOfWeek != DayOfWeek.SUNDAY) {
             System.out.println("on weekday");
             businessDay = true;
         }
 
-        if(businessDay && businessTime){
+        if (businessDay && businessTime) {
             withinBusinessHours = true;
         }
         return withinBusinessHours;
@@ -252,6 +255,7 @@ public class InsertAppointmentsController implements Initializable {
      * @throws SQLException
      */
     public boolean isOverlapping() throws SQLException {
+        isNotOverlapping = true;
         ObservableList<Appointment> allAppoints = AppointmentDao.getAllAppointments();
         LocalDateTime aStart = AppointmentStartComboBox.getValue();
         LocalDateTime aEnd = AppointmentEndComboBox.getValue();

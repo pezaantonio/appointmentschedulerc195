@@ -40,6 +40,7 @@ public class Appointment {
     protected Contact contactFromContactId;
     protected Customer customerFromCustomerId;
     private User userFromUserId;
+    private static LocalDateTime appointmentTime;
 
     /**
      * Construcotr
@@ -359,7 +360,6 @@ public class Appointment {
      * @throws SQLException
      */
     public static boolean appointmentTimeCheck() throws SQLException {
-        LocalDateTime appointmentTime = null;
         String timeCheck = "SELECT * FROM appointments WHERE User_ID = " + UserDao.getUserId();
         PreparedStatement timeCheckSQL = DatabaseConnection.connection.prepareStatement(timeCheck);
         ResultSet result = timeCheckSQL.executeQuery();
@@ -367,7 +367,6 @@ public class Appointment {
         while(result.next()){
             appointmentTime = result.getTimestamp("Start").toLocalDateTime();
         }
-
         if(appointmentTime.isAfter(LocalDateTime.now()) && appointmentTime.isBefore(LocalDateTime.now().plusMinutes(15))){
             appointmentComing = true;
         }
