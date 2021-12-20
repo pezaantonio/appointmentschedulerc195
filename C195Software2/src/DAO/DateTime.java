@@ -15,10 +15,12 @@ import java.time.*;
  */
 public class DateTime {
 
-    protected ObservableList<LocalDateTime> startList = FXCollections.observableArrayList();
+    protected ObservableList<LocalTime> startList = FXCollections.observableArrayList();
     protected ObservableList<LocalDateTime> endList = FXCollections.observableArrayList();
-    protected LocalDateTime startDateTime;
-    protected LocalDateTime endDateTime;
+//    protected LocalDateTime startDateTime;
+//    protected LocalDateTime endDateTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
 
     /**
@@ -70,31 +72,19 @@ public class DateTime {
      * Method returns a list of start times
      * @return startlist
      */
-    public ObservableList<LocalDateTime> getStartList(){
-        startDateTime = LocalDateTime.of(getLocalDate(), LocalTime.of(8,0));
-        LocalDateTime endDateTimeAppointment = startDateTime.plusDays(30);
+    public ObservableList<LocalTime> getStartList() {
+        startTime = LocalTime.of(0, 0);
+        endTime = LocalTime.of(23, 45);
 
-        while(startDateTime.isBefore(endDateTimeAppointment)){
-            startList.add(startDateTime);
-            startDateTime = startDateTime.plusMinutes(15);
+        try {
+            while(startTime.isBefore(endTime)) {
+                startList.add(startTime);
+                startTime = startTime.plusMinutes(15);
+            }
+        } catch (OutOfMemoryError e) {
+            System.out.println("Failed here");
         }
 
         return startList;
-    }
-
-    /**
-     * method returns list of end times based on selected start time
-     * @param startOfAppointment
-     * @return endList
-     */
-    public ObservableList<LocalDateTime> getEndList(LocalDateTime startOfAppointment){
-        endDateTime = startOfAppointment.plusMinutes(15);
-        LocalDateTime endListAppointment = endDateTime.plusDays(30);
-
-        while(endDateTime.isBefore(endListAppointment)){
-            endList.add(endDateTime);
-            endDateTime = endDateTime.plusMinutes(15);
-        }
-        return endList;
     }
 }

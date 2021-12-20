@@ -8,10 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.YearMonth;
+import java.time.*;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Locale;
@@ -41,6 +38,9 @@ public class Appointment {
     protected Customer customerFromCustomerId;
     private User userFromUserId;
     private static LocalDateTime appointmentTime;
+
+    private static ZoneId eastZoneId = ZoneId.of("US/Eastern");
+    private static ZoneId localZoneId = ZoneId.systemDefault();
 
     /**
      * Construcotr
@@ -367,7 +367,13 @@ public class Appointment {
         while(result.next()){
             appointmentTime = result.getTimestamp("Start").toLocalDateTime();
         }
-        if(appointmentTime.isAfter(LocalDateTime.now()) && appointmentTime.isBefore(LocalDateTime.now().plusMinutes(15))){
+
+        LocalDate dateCheckLocal = LocalDate.from(appointmentTime);
+        LocalTime timeCheckLocal = LocalTime.from(appointmentTime);
+        ZonedDateTime localtoEast = ZonedDateTime.of(dateCheckLocal, timeCheckLocal, eastZoneId);
+        ZonedDateTime timeonEast = ZonedDateTime.of(LocalDateTime.now(), eastZoneId);
+
+        if(localtoEast.isAfter(timeonEast) && localtoEast.isBefore(timeonEast.plusMinutes(15))){
             appointmentComing = true;
         }
         return appointmentComing;

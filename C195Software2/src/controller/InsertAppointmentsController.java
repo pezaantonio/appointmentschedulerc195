@@ -28,6 +28,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import controller.LoginController;
 
+import javax.swing.*;
+
 /**
  * Method to handle the InsertAppointmentsController.fxml
  */
@@ -44,9 +46,9 @@ public class InsertAppointmentsController implements Initializable {
     @FXML
     private DatePicker AppointmentDatePicker;
     @FXML
-    private ComboBox<LocalDateTime> AppointmentStartComboBox;
+    private ComboBox<LocalTime> AppointmentStartComboBox;
     @FXML
-    private ComboBox<LocalDateTime> AppointmentEndComboBox;
+    private ComboBox<LocalTime> AppointmentEndComboBox;
     @FXML
     private TextField AppointmentCustomerIdTextField;
     @FXML
@@ -61,6 +63,27 @@ public class InsertAppointmentsController implements Initializable {
     private Appointment appointment;
 
     private boolean isValid;
+    private boolean isTitleEmpty;
+    private boolean isDescriptionEmpty;
+    private boolean isLocationEmpty;
+    private boolean isTypeEmpty;
+    private boolean isDateEmpty;
+    private boolean isStartEmpty;
+    private boolean isEndEmpty;
+    private boolean isCustEmpty;
+    private boolean isUserEmpty;
+    private boolean isContactEmpty;
+
+    String emptyTitle = "";
+    String emptyDesc = "";
+    String emptyLoc = "";
+    String emptyType = "";
+    String emptyDate = "";
+    String emptyStart = "";
+    String emptyEnd = "";
+    String emptyCust = "";
+    String emptyUser = "";
+    String emptyContact = "";
 
     private boolean isNotOverlapping;
 
@@ -68,6 +91,9 @@ public class InsertAppointmentsController implements Initializable {
 
     private ZoneId localZoneId = ZoneId.systemDefault();
     private ZoneId eastZoneId = ZoneId.of("US/Eastern");
+
+    private LocalDateTime appointmentStartDateTime;
+    private LocalDateTime appointmentEndDateTime;
 
     /**
      * Method to initialize the insertappointments page's combo boxes
@@ -78,6 +104,7 @@ public class InsertAppointmentsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentContactComboBox.setItems(new ContactDao().getAll());
         AppointmentStartComboBox.setItems(new DateTime().getStartList());
+        AppointmentEndComboBox.setItems(new DateTime().getStartList());
         try {
             AppointmentCustomerIDComboBox.setItems(new CustomerDao().getAll());
             AppointmentUserIDComboBox.setItems(new UserDao().getAll());
@@ -90,9 +117,25 @@ public class InsertAppointmentsController implements Initializable {
      * method will populate the EndComboBox based on the Start time that was selected
      * @param actionEvent
      */
-    public void onStartTimeSelect(ActionEvent actionEvent){
-        AppointmentEndComboBox.setItems(new DateTime().getEndList(AppointmentStartComboBox.getSelectionModel().getSelectedItem()));
+    public void onStartTimeSelect(ActionEvent actionEvent) {
+        // AppointmentEndComboBox.setItems(new DateTime().getEndList(AppointmentStartComboBox.getSelectionModel().getSelectedItem()));
+//        if (AppointmentEndComboBox.getValue().isBefore(AppointmentStartComboBox.getValue())) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setContentText("End time can not be before start time");
+//            Optional<ButtonType> result = alert.showAndWait();
+//        }
     }
+
+    public void onEndTimeSelect(ActionEvent actionEvent){
+//        if(AppointmentEndComboBox.getValue().isBefore(AppointmentStartComboBox.getValue())){
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setContentText("End time can not be before start time");
+//            Optional<ButtonType> result = alert.showAndWait();
+//        }
+    }
+
     /**
      * Method to send user to appointments page
      * @param actionEvent
@@ -120,8 +163,8 @@ public class InsertAppointmentsController implements Initializable {
                     AppointmentDescriptionTextField.getText(),
                     AppointmentLocationTextField.getText(),
                     AppointmentTypeTextField.getText(),
-                    AppointmentStartComboBox.getValue(),
-                    AppointmentEndComboBox.getValue(),
+                    getAppointmentStartDateTime(AppointmentDatePicker.getValue(), AppointmentStartComboBox.getValue()),
+                    getAppointmentEndDateTime(AppointmentDatePicker.getValue(), AppointmentEndComboBox.getValue()),
                     LocalDateTime.now(),
                     UserDao.getUserName(),
                     LocalDateTime.now(),
@@ -131,14 +174,28 @@ public class InsertAppointmentsController implements Initializable {
                     AppointmentContactComboBox.getValue().getContactID()
             );
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("One or more entries are empty. Please submit an entry for each field");
-            Optional<ButtonType> result = alert.showAndWait();
+           if(isValidAppointment() == false){
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setTitle("Error");
+               alert.setContentText(
+                       emptyTitle +
+                               "\n" + emptyDesc +
+                               "\n" + emptyLoc +
+                               "\n" + emptyType +
+                               "\n" + emptyDate +
+                               "\n" + emptyStart +
+                               "\n" + emptyEnd +
+                               "\n" + emptyCust +
+                               "\n" + emptyUser +
+                               "\n" + emptyContact
+               );
+               Optional<ButtonType> result = alert.showAndWait();
+           }
         }
 
-        LocalDate apptStartDate = AppointmentStartComboBox.getValue().toLocalDate();
-        LocalTime apptStartTime = AppointmentStartComboBox.getValue().toLocalTime();
+        LocalDate apptStartDate = AppointmentDatePicker.getValue();
+        LocalTime apptStartTime = AppointmentStartComboBox.getValue();
+        LocalTime apptEndTime = AppointmentEndComboBox.getValue();
 
         if (isOverlapping()) {
             newAppointment = new AppointmentDao();
@@ -149,18 +206,45 @@ public class InsertAppointmentsController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
         }
 
-        if (isBusinessHours(apptStartDate, apptStartTime) && isValidAppointment()){
-            try {
-                if (newAppointment.insert(appointment)) {
-                    saveRedirect(actionEvent);
+
+        if (isValidAppointment()) {
+            if (apptStartTime.isBefore(apptEndTime)) {
+                if (isBusinessHours(apptStartDate, apptStartTime, apptEndTime)){
+                    try {
+                        if (newAppointment.insert(appointment)) {
+                            saveRedirect(actionEvent);
+                        }
+                    } catch (NullPointerException e) {
+                        System.out.println("there was an overlap");
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("ERROR");
+                    alert.setContentText("The appointment cannot be scheduled outside of working business hours. Business hours are Monday - Friday 8am - 10pm EST");
+                    Optional<ButtonType> result = alert.showAndWait();
                 }
-            } catch (NullPointerException e) {
-                System.out.println("there was an overlap");
+            } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("End time can not be before start time");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    isValid = false;
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("The appointment cannot be scheduled outside of working business hours. Business hours are Monday - Friday 8am - 10pm EST");
+            alert.setTitle("Error");
+            alert.setContentText(
+                    emptyTitle +
+                            "\n" + emptyDesc +
+                            "\n" + emptyLoc +
+                            "\n" + emptyType +
+                            "\n" + emptyDate +
+                            "\n" + emptyStart +
+                            "\n" + emptyEnd +
+                            "\n" + emptyCust +
+                            "\n" + emptyUser +
+                            "\n" + emptyContact
+            );
             Optional<ButtonType> result = alert.showAndWait();
         }
 
@@ -198,18 +282,22 @@ public class InsertAppointmentsController implements Initializable {
      * @param apptStartTime
      * @return isBusinessHours
      */
-    public boolean isBusinessHours(LocalDate apptLocalStartDate, LocalTime apptStartTime) {
+    public boolean isBusinessHours(LocalDate apptLocalStartDate, LocalTime apptStartTime, LocalTime apptEndTime) {
         boolean businessTime = false;
         boolean businessDay = false;
         boolean withinBusinessHours = false;
+        boolean isBeforeESTend = false;
 
-        LocalDateTime appointmentDateTime = LocalDateTime.of(apptLocalStartDate, apptStartTime);
+        LocalDateTime appointmentStartDateTime = LocalDateTime.of(apptLocalStartDate, apptStartTime);
+        LocalDateTime appointmentEndDateTime = LocalDateTime.of(apptLocalStartDate, apptEndTime);
+
         LocalTime localTimeStart = LocalTime.of(7,50);
         LocalTime localTimeEnd = LocalTime.of(22,0);
         ZonedDateTime eastCoastStart = ZonedDateTime.of(apptLocalStartDate, localTimeStart, eastZoneId);
         ZonedDateTime eastCoastEnd = ZonedDateTime.of(apptLocalStartDate, localTimeEnd, eastZoneId);
 
-        ZonedDateTime localToEast = appointmentDateTime.atZone(localZoneId).withZoneSameInstant(eastZoneId);
+        ZonedDateTime localToEast = appointmentStartDateTime.atZone(localZoneId).withZoneSameInstant(eastZoneId);
+        ZonedDateTime endLocalToEast = appointmentEndDateTime.atZone(localZoneId).withZoneSameInstant(eastZoneId);
 
         DayOfWeek startDayOfWeek = DayOfWeek.of(apptLocalStartDate.get(ChronoField.DAY_OF_WEEK));
 
@@ -217,12 +305,16 @@ public class InsertAppointmentsController implements Initializable {
             System.out.println("Inside of business hours");
             businessTime = true;
         }
+        if(endLocalToEast.isBefore(eastCoastEnd)){
+            System.out.println("End is before 10pm EST");
+            isBeforeESTend = true;
+        }
         if (startDayOfWeek != DayOfWeek.SATURDAY && startDayOfWeek != DayOfWeek.SUNDAY) {
             System.out.println("on weekday");
             businessDay = true;
         }
 
-        if (businessDay && businessTime) {
+        if ((businessDay && businessTime) && isBeforeESTend) {
             withinBusinessHours = true;
         }
         return withinBusinessHours;
@@ -234,18 +326,68 @@ public class InsertAppointmentsController implements Initializable {
      */
     public boolean isValidAppointment(){
         isValid = true;
+        isTitleEmpty = false;
+        isDescriptionEmpty = false;
+        isLocationEmpty = false;
+        isTypeEmpty = false;
+        isDateEmpty = false;
+        isStartEmpty = false;
+        isEndEmpty = false;
+        isCustEmpty = false;
+        isUserEmpty = false;
+        isContactEmpty = false;
+
         if(AppointmentTitleTextField.getText().isEmpty()){
+            emptyTitle = "Please enter a title";
+            isTitleEmpty = true;
             isValid = false;
         }
         if(AppointmentDescriptionTextField.getText().isEmpty()){
+            emptyDesc = "Please enter a description";
+            isDescriptionEmpty = true;
             isValid = false;
         }
         if(AppointmentLocationTextField.getText().isEmpty()){
+            emptyLoc = "Please enter a location";
+            isLocationEmpty = true;
             isValid = false;
         }
         if(AppointmentTypeTextField.getText().isEmpty()){
+            emptyType = "Please enter a type";
+            isTypeEmpty = true;
             isValid = false;
         }
+        if(AppointmentDatePicker.getValue() == null){
+            emptyDate = "Please choose a date";
+            isDateEmpty = true;
+            isValid = false;
+        }
+        if(AppointmentStartComboBox.getValue() == null){
+            emptyStart = "Please choose a start time";
+            isStartEmpty = true;
+            isValid = false;
+        }
+        if(AppointmentEndComboBox.getValue() == null){
+            emptyEnd = "Please enter an end time";
+            isEndEmpty = true;
+            isValid = false;
+        }
+        if(AppointmentCustomerIDComboBox.getValue() == null){
+            emptyCust = "Please select a customer";
+            isCustEmpty = true;
+            isValid = false;
+        }
+        if(AppointmentUserIDComboBox.getValue() == null){
+            emptyUser = "Please select a user";
+            isUserEmpty = true;
+            isValid = false;
+        }
+        if(AppointmentContactComboBox.getValue() == null){
+            emptyContact = "Please select a contact";
+            isContactEmpty = true;
+            isValid = false;
+        }
+
         return isValid;
     }
 
@@ -257,8 +399,8 @@ public class InsertAppointmentsController implements Initializable {
     public boolean isOverlapping() throws SQLException {
         isNotOverlapping = true;
         ObservableList<Appointment> allAppoints = AppointmentDao.getAllAppointments();
-        LocalDateTime aStart = AppointmentStartComboBox.getValue();
-        LocalDateTime aEnd = AppointmentEndComboBox.getValue();
+        LocalDateTime aStart = getAppointmentStartDateTime(AppointmentDatePicker.getValue(), AppointmentStartComboBox.getValue());
+        LocalDateTime aEnd = getAppointmentEndDateTime(AppointmentDatePicker.getValue(), AppointmentEndComboBox.getValue());
         int cId = AppointmentCustomerIDComboBox.getValue().getCustomerID();
 
         for(Appointment appointment : allAppoints){
@@ -279,5 +421,37 @@ public class InsertAppointmentsController implements Initializable {
         }
         System.out.println(isNotOverlapping);
         return isNotOverlapping;
+    }
+
+    /**
+     * returns appointment Date from appointmentDate Picker
+     * @return AppointmentDatePicker
+     */
+    public LocalDate appointmentDate(){
+        return AppointmentDatePicker.getValue();
+    }
+
+    /**
+     * returns appointment StartDate Time
+     * @param date
+     * @param time
+     * @return appointmentStartDateTime
+     */
+    public LocalDateTime getAppointmentStartDateTime(LocalDate date, LocalTime time){
+        appointmentStartDateTime = LocalDateTime.of(date, time);
+
+        return appointmentStartDateTime;
+    }
+
+    /**
+     * Method returns appointment end date time
+     * @param date
+     * @param time
+     * @return AppointmentEndDateTime
+     */
+    public LocalDateTime getAppointmentEndDateTime(LocalDate date, LocalTime time){
+        appointmentEndDateTime = LocalDateTime.of(date, time);
+
+        return appointmentEndDateTime;
     }
 }
