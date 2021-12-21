@@ -405,7 +405,7 @@ public class InsertAppointmentsController implements Initializable {
 
         for(Appointment appointment : allAppoints){
             System.out.print(appointment.getAppointmentStart());
-            System.out.println("\n" + aStart);
+            System.out.println("\n end of appt " + aEnd);
             if (appointment.getAppointmentCustId() == cId) {
                 if(aStart.isEqual(appointment.getAppointmentStart())){
                     isNotOverlapping = false;
@@ -414,6 +414,14 @@ public class InsertAppointmentsController implements Initializable {
                 if (aStart.isAfter(appointment.getAppointmentStart()) && aStart.isBefore(appointment.getAppointmentEnd())){
                     isNotOverlapping = false;
                     System.out.println("checking between");
+                }
+                if(aEnd.isAfter(appointment.getAppointmentStart()) && aEnd.isBefore(appointment.getAppointmentEnd())){
+                    isNotOverlapping = false;
+                    System.out.println("end overlaps with start");
+                }
+                if(aStart.isBefore(appointment.getAppointmentStart()) && aEnd.isAfter(appointment.getAppointmentEnd())){
+                    isNotOverlapping = false;
+                    System.out.println("This surrounds an existing appointment");
                 }
             } else {
                 isNotOverlapping = true;

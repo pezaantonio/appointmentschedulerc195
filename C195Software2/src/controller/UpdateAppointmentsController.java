@@ -397,13 +397,13 @@ public class UpdateAppointmentsController implements Initializable {
     public boolean isOverlapping() throws SQLException {
         isNotOverlapping = true;
         ObservableList<Appointment> allAppoints = AppointmentDao.getAllAppointments();
-        LocalDateTime aStart = getAppointmentStartDateTime(appointmentDate(), AppointmentStartComboBox.getValue());
-        LocalDateTime aEnd = getAppointmentEndDateTime(appointmentDate(), AppointmentEndComboBox.getValue());
+        LocalDateTime aStart = getAppointmentStartDateTime(AppointmentDatePicker.getValue(), AppointmentStartComboBox.getValue());
+        LocalDateTime aEnd = getAppointmentEndDateTime(AppointmentDatePicker.getValue(), AppointmentEndComboBox.getValue());
         int cId = AppointmentCustomerIDComboBox.getValue().getCustomerID();
 
         for(Appointment appointment : allAppoints){
             System.out.print(appointment.getAppointmentStart());
-            System.out.println("\n" + aStart);
+            System.out.println("\n end of appt " + aEnd);
             if (appointment.getAppointmentCustId() == cId) {
                 if(aStart.isEqual(appointment.getAppointmentStart())){
                     isNotOverlapping = false;
@@ -412,6 +412,14 @@ public class UpdateAppointmentsController implements Initializable {
                 if (aStart.isAfter(appointment.getAppointmentStart()) && aStart.isBefore(appointment.getAppointmentEnd())){
                     isNotOverlapping = false;
                     System.out.println("checking between");
+                }
+                if(appointment.getAppointmentStart().isBefore(aEnd) && appointment.getAppointmentEnd().isBefore(aEnd)){
+                    isNotOverlapping = false;
+                    System.out.println("end overlaps with start");
+                }
+                if(aStart.isBefore(appointment.getAppointmentStart()) && aEnd.isAfter(appointment.getAppointmentEnd())){
+                    isNotOverlapping = false;
+                    System.out.println("This surrounds an existing appointment");
                 }
             } else {
                 isNotOverlapping = true;
