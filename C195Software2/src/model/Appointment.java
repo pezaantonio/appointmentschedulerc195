@@ -42,6 +42,9 @@ public class Appointment {
     private static ZoneId eastZoneId = ZoneId.of("US/Eastern");
     private static ZoneId localZoneId = ZoneId.systemDefault();
 
+    private static String upcomingAppointmentTitle;
+    private static int upcomingAppointmentID;
+
     /**
      * Construcotr
      * @param appointmentID
@@ -366,6 +369,8 @@ public class Appointment {
 
         while(result.next()){
             appointmentTime = result.getTimestamp("Start").toLocalDateTime();
+            upcomingAppointmentID = result.getInt("Appointment_ID");
+            upcomingAppointmentTitle = result.getString("Title");
         }
 
         LocalDate dateCheckLocal = LocalDate.from(appointmentTime);
@@ -418,6 +423,22 @@ public class Appointment {
         int weekFromDay = date.get(weekFields.weekOfWeekBasedYear());
 
         return weekFromDay;
+    }
+
+    /**
+     * Returns upcoming appointment ID
+     * @return int upcomingAppointmentID
+     */
+    public static int getUpcomingAppointmentID(){
+        return upcomingAppointmentID;
+    }
+
+    /**
+     * returns upcoming appointment title
+     * @return String upcoming appointmenttitle
+     */
+    public static String getUpcomingAppointmentTitle(){
+        return upcomingAppointmentTitle;
     }
 }
 

@@ -49,7 +49,7 @@ public class UsermainController implements Initializable {
 
         try {
             if (Appointment.appointmentTimeCheck()) {
-                appointmentAlertLabel.setText(alert.alert() + AppointmentDao.getUpcomingAppointment().getAppointmentID() + " : " + AppointmentDao.getUpcomingAppointment().getAppointmentTitle());
+                appointmentAlertLabel.setText(alert.alert() + Appointment.getUpcomingAppointmentID() + " : " + Appointment.getUpcomingAppointmentTitle());
             } else {
                 appointmentAlertLabel.setText("No appointments coming up");
             }
