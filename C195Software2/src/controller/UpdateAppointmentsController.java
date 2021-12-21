@@ -210,7 +210,7 @@ public class UpdateAppointmentsController implements Initializable {
             if (apptStartTime.isBefore(apptEndTime)) {
                 if (isBusinessHours(apptStartDate, apptStartTime, apptEndTime)){
                     try {
-                        if (newAppointment.insert(appointment)) {
+                        if (newAppointment.update(appointment.getAppointmentID(), appointment)) {
                             saveRedirect(actionEvent);
                         }
                     } catch (NullPointerException e) {
@@ -400,22 +400,25 @@ public class UpdateAppointmentsController implements Initializable {
         LocalDateTime aStart = getAppointmentStartDateTime(AppointmentDatePicker.getValue(), AppointmentStartComboBox.getValue());
         LocalDateTime aEnd = getAppointmentEndDateTime(AppointmentDatePicker.getValue(), AppointmentEndComboBox.getValue());
         int cId = AppointmentCustomerIDComboBox.getValue().getCustomerID();
+        int aId = Integer.parseInt(AppointmentIdTextField.getText());
 
         for(Appointment appointment : allAppoints){
-            System.out.print(appointment.getAppointmentStart());
-            System.out.println("\n end of appt " + aEnd);
             if (appointment.getAppointmentCustId() == cId) {
                 if(aStart.isEqual(appointment.getAppointmentStart())){
-                    isNotOverlapping = false;
-                    System.out.println("atStart");
+                    if(appointment.getAppointmentID() != aId) {
+                        isNotOverlapping = false;
+                        System.out.println("atStart");
+                    }
                 }
                 if (aStart.isAfter(appointment.getAppointmentStart()) && aStart.isBefore(appointment.getAppointmentEnd())){
                     isNotOverlapping = false;
                     System.out.println("checking between");
                 }
-                if(appointment.getAppointmentStart().isBefore(aEnd) && appointment.getAppointmentEnd().isBefore(aEnd)){
-                    isNotOverlapping = false;
-                    System.out.println("end overlaps with start");
+                if(aEnd.isAfter(appointment.getAppointmentStart()) && aEnd.isBefore(appointment.getAppointmentEnd())){
+                    if(appointment.getAppointmentID() != aId) {
+                        isNotOverlapping = false;
+                        System.out.println("end overlaps with start");
+                    }
                 }
                 if(aStart.isBefore(appointment.getAppointmentStart()) && aEnd.isAfter(appointment.getAppointmentEnd())){
                     isNotOverlapping = false;
@@ -425,7 +428,6 @@ public class UpdateAppointmentsController implements Initializable {
                 isNotOverlapping = true;
             }
         }
-        System.out.println(isNotOverlapping);
         return isNotOverlapping;
     }
 
