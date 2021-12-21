@@ -2,6 +2,7 @@
 WGU C195 Project
 
 Title: Schedules Purpose: The application is to allow users to create and manage there schedule up to a month in advance. Author: Antonio Peza Contact: apeza1@wgu.edu Version Number: 1.0 (Initial Release) IDE: IntelliJ 2021.1, Java SE 11.0.4, JavaFX-SDK-11.0.2
+SQL Version: mysql-connector-java-8.0.25
 
 Instructions:
 
