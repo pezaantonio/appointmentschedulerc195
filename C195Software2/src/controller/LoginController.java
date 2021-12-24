@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.User;
 
 import java.io.BufferedWriter;
@@ -26,6 +27,13 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+/**
+ * Lambda alert used to alert the user if an appointment is coming up
+ */
+interface LambdaAlert{
+    String alert();
+}
 
 public class LoginController implements Initializable {
 
@@ -69,18 +77,37 @@ public class LoginController implements Initializable {
     @FXML
     /**
      * Method to handle Login button
+     *
+     * Lambda: LambdaAlert alert is being used to display alerts to the user if an appointment is coming up
      */
     private void LoginButtonHandler(ActionEvent actionEvent) throws SQLException, IOException {
+
+        LambdaAlert lAlert = () -> "You have an appointment coming up in the next 15 minutes \n";
+
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
 
         if (UserDao.checkUser(usernameInput, passwordInput)) {
             loginLoggerSuccess(usernameInput);
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
-            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Upcoming Appointment");
+            try {
+                if(Appointment.appointmentTimeCheck()) {
+                    alert.setContentText(lAlert.alert() + Appointment.getUpcomingAppointmentID() + " : " + Appointment.getUpcomingAppointmentTitle());
+                } else{
+                    alert.setContentText("No appointments coming up");
+                }
+            } catch (NullPointerException | SQLException e) {
+                alert.setContentText("No appointments coming up");
+            }
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK) {
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/usermain.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
 
         } else {
             loginLoggerFail(usernameInput);

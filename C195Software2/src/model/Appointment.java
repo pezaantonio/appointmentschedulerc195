@@ -44,6 +44,7 @@ public class Appointment {
 
     private static String upcomingAppointmentTitle;
     private static int upcomingAppointmentID;
+    private static boolean appointmentComing;
 
     /**
      * Construcotr
@@ -299,9 +300,6 @@ public class Appointment {
         this.appointmentContactId = appointmentContactId;
     }
 
-    private static boolean appointmentComing = false;
-
-
     /**
      * Method to get the entire contact based on the contact id
      * @return Contact
@@ -380,6 +378,8 @@ public class Appointment {
 
         if(localtoEast.isAfter(timeonEast) && localtoEast.isBefore(timeonEast.plusMinutes(15))){
             appointmentComing = true;
+        } else {
+            appointmentComing = false;
         }
         return appointmentComing;
     }

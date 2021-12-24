@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.AppointmentDao;
+import DAO.DatabaseConnection;
 import DAO.UserDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -16,15 +19,20 @@ import model.Appointment;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.*;
+import java.time.temporal.TemporalAccessor;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-/**
- * Lambda alert used to alert the user if an appointment is coming up
- */
-interface LambdaAlert{
-    String alert();
-}
+///**
+// * Lambda alert used to alert the user if an appointment is coming up
+// */
+//interface LambdaAlert{
+//    String alert();
+//}
 
 /**
  * Class used to control the usermain.fxml
@@ -34,28 +42,30 @@ public class UsermainController implements Initializable {
     @FXML
     private Label appointmentAlertLabel;
 
-
     /**
-     * Description
-     *
-     * Lambda: LambdaAlert alert is being used to display alerts to the user if an appointment is coming up
+     * Method to Initialize Usermain controller
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        LambdaAlert alert = () -> "You have an appointment coming up in the next 15 minutes \n";
-
-        try {
-            if (Appointment.appointmentTimeCheck()) {
-                appointmentAlertLabel.setText(alert.alert() + Appointment.getUpcomingAppointmentID() + " : " + Appointment.getUpcomingAppointmentTitle());
-            } else {
-                appointmentAlertLabel.setText("No appointments coming up");
-            }
-        } catch (NullPointerException | SQLException e) {
-            appointmentAlertLabel.setText("No appointments coming up");
-        }
+//        LambdaAlert alert = () -> "You have an appointment coming up in the next 15 minutes \n";
+//
+//        try {
+//            if (Appointment.appointmentTimeCheck()) {
+//                appointmentAlertLabel.setText(alert.alert() + Appointment.getUpcomingAppointmentID() + " : " + Appointment.getUpcomingAppointmentTitle());
+//            } else {
+//                appointmentAlertLabel.setText("No appointments coming up");
+//            }
+//        } catch (NullPointerException | SQLException e) {
+//            appointmentAlertLabel.setText("No appointments coming up");
+//        }
+//        try {
+//            System.out.println(Appointment.appointmentTimeCheck());
+//        } catch (NullPointerException | SQLException e) {
+//            System.out.println("No appointments");
+//        }
     }
 
     @FXML
