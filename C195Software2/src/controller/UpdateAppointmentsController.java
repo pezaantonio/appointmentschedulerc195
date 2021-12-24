@@ -290,7 +290,7 @@ public class UpdateAppointmentsController implements Initializable {
         LocalDateTime appointmentEndDateTime = LocalDateTime.of(apptLocalStartDate, apptEndTime);
 
         LocalTime localTimeStart = LocalTime.of(7,50);
-        LocalTime localTimeEnd = LocalTime.of(22,0);
+        LocalTime localTimeEnd = LocalTime.of(22,10);
         ZonedDateTime eastCoastStart = ZonedDateTime.of(apptLocalStartDate, localTimeStart, eastZoneId);
         ZonedDateTime eastCoastEnd = ZonedDateTime.of(apptLocalStartDate, localTimeEnd, eastZoneId);
 
@@ -411,8 +411,10 @@ public class UpdateAppointmentsController implements Initializable {
                     }
                 }
                 if (aStart.isAfter(appointment.getAppointmentStart()) && aStart.isBefore(appointment.getAppointmentEnd())){
-                    isNotOverlapping = false;
-                    System.out.println("checking between");
+                    if(appointment.getAppointmentID() != aId) {
+                        isNotOverlapping = false;
+                        System.out.println("checking between");
+                    }
                 }
                 if(aEnd.isAfter(appointment.getAppointmentStart()) && aEnd.isBefore(appointment.getAppointmentEnd())){
                     if(appointment.getAppointmentID() != aId) {

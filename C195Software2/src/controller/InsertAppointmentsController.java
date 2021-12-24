@@ -292,7 +292,7 @@ public class InsertAppointmentsController implements Initializable {
         LocalDateTime appointmentEndDateTime = LocalDateTime.of(apptLocalStartDate, apptEndTime);
 
         LocalTime localTimeStart = LocalTime.of(7,50);
-        LocalTime localTimeEnd = LocalTime.of(22,0);
+        LocalTime localTimeEnd = LocalTime.of(22,10);
         ZonedDateTime eastCoastStart = ZonedDateTime.of(apptLocalStartDate, localTimeStart, eastZoneId);
         ZonedDateTime eastCoastEnd = ZonedDateTime.of(apptLocalStartDate, localTimeEnd, eastZoneId);
 
