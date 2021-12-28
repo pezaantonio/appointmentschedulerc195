@@ -93,7 +93,7 @@ public class LoginController implements Initializable {
             alert.setTitle("Upcoming Appointment");
             try {
                 if(Appointment.appointmentTimeCheck()) {
-                    alert.setContentText(lAlert.alert() + Appointment.getUpcomingAppointmentID() + " : " + Appointment.getUpcomingAppointmentTitle());
+                    alert.setContentText(lAlert.alert() + Appointment.getUpcomingAppointmentID() + " : " + Appointment.getUpcomingAppointmentTitle() + " \nDate: " + Appointment.getUpcomingAppointmentDate() + " \nTime: " + Appointment.getUpcomingAppointmentTime() + " - " + Appointment.getUpcomingAppointmentEnd());
                 } else{
                     alert.setContentText("No appointments coming up");
                 }

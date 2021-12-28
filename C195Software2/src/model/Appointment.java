@@ -1,6 +1,7 @@
 package model;
 
 import DAO.DatabaseConnection;
+import DAO.DateTime;
 import DAO.UserDao;
 
 import javax.xml.transform.Result;
@@ -11,6 +12,7 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -45,6 +47,9 @@ public class Appointment {
     private static String upcomingAppointmentTitle;
     private static int upcomingAppointmentID;
     private static boolean appointmentComing;
+    private static LocalDate upcomingAppointmentDate;
+    private static LocalTime upcomingAppointmentTime;
+    public static LocalTime upcomingAppointmentEnd;
 
     /**
      * Construcotr
@@ -369,6 +374,9 @@ public class Appointment {
             appointmentTime = result.getTimestamp("Start").toLocalDateTime();
             upcomingAppointmentID = result.getInt("Appointment_ID");
             upcomingAppointmentTitle = result.getString("Title");
+            upcomingAppointmentDate = result.getTimestamp("Start").toLocalDateTime().toLocalDate();
+            upcomingAppointmentTime = result.getTimestamp("Start").toLocalDateTime().toLocalTime();
+            upcomingAppointmentEnd = result.getTimestamp("End").toLocalDateTime().toLocalTime();
         }
 
         LocalDate dateCheckLocal = LocalDate.from(appointmentTime);
@@ -440,5 +448,23 @@ public class Appointment {
     public static String getUpcomingAppointmentTitle(){
         return upcomingAppointmentTitle;
     }
+
+    /**
+     * Method to return the upcoming appointmentDate
+     * @return LocalDate upcomingAppointmentDate
+     */
+    public static LocalDate getUpcomingAppointmentDate(){ return upcomingAppointmentDate;}
+
+    /**
+     * Method to return the upcoming appointment time start
+     * @return LocalTime upcomingappointmenttime
+     */
+    public static LocalTime getUpcomingAppointmentTime(){ return upcomingAppointmentTime;}
+
+    /**
+     * Mehtod to return the upcoming appointment time end
+     * @return LocalTime upcomingAppointmentEnd
+     */
+    public static LocalTime getUpcomingAppointmentEnd(){ return upcomingAppointmentEnd;}
 }
 
